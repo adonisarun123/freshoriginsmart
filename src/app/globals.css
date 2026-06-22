@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Fresh Origins brand tokens (mirrors Brand Guidelines §10, §12)
+   ========================================================================== */
+:root {
+  --fo-green-900: #205830;
+  --fo-green-600: #5aac55;
+  --fo-green-500: #77b156;
+  --fo-lime-500: #94b853;
+  --fo-sage-100: #d9eacc;
+  --fo-cream-50: #f7f5ec;
+  --fo-earth-700: #6d4c3d;
+  --fo-charcoal-900: #1f2a22;
+  --fo-white: #ffffff;
+
+  --fo-success: #2f7d4a;
+  --fo-warning: #b87924;
+  --fo-error: #b33a3a;
+  --fo-info: #356a7a;
+  --fo-whatsapp: #25d366;
+
+  --fo-line: #e6e3d6;
+  --fo-muted: #5d6b60;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-fo-cream-50 text-fo-charcoal-900 font-sans antialiased;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-fo-green-900;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+  }
+  h1 {
+    font-weight: 650;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  /* Visible focus for accessibility (WCAG 2.2 AA) */
+  :focus-visible {
+    outline: 3px solid var(--fo-lime-500);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .fo-container {
+    @apply mx-auto w-full max-w-content px-6;
+  }
+  .fo-btn {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-control border-2 border-transparent px-[22px] py-[14px] text-[0.95rem] font-bold transition;
+  }
+  .fo-btn-primary {
+    @apply fo-btn bg-fo-green-900 text-white hover:-translate-y-px hover:bg-[#1a4a28];
+  }
+  .fo-btn-secondary {
+    @apply fo-btn border-fo-green-900 bg-white text-fo-green-900 hover:bg-fo-sage-100;
+  }
+  .fo-btn-whatsapp {
+    @apply fo-btn border-[#cdeed6] bg-[#effaf1] text-fo-green-900 hover:bg-[#e2f6e8];
+  }
+  .fo-badge {
+    @apply inline-flex items-center gap-1.5 rounded-pill bg-fo-sage-100 px-2.5 py-[5px] text-[0.72rem] font-bold text-fo-green-900;
+  }
+  .fo-card {
+    @apply overflow-hidden rounded-card border border-fo-line bg-white;
+  }
+  .fo-eyebrow {
+    @apply mb-3 text-[0.8rem] font-bold uppercase tracking-[0.08em] text-fo-green-600;
+  }
+  /* Legal / policy prose */
+  .fo-legal-body h2 {
+    @apply mt-12 scroll-mt-24 text-[1.5rem];
+  }
+  .fo-legal-body h2:first-of-type {
+    @apply mt-8;
+  }
+  .fo-legal-body h3 {
+    @apply mt-6 text-[1.05rem];
+  }
+  .fo-legal-body p {
+    @apply mt-3 text-fo-charcoal-900;
+  }
+  .fo-legal-body ul {
+    @apply my-3 list-disc pl-5;
+  }
+  .fo-legal-body li {
+    @apply mb-1.5;
+  }
+  .fo-legal-body a {
+    @apply text-fo-green-900 underline;
+  }
+  /* Skip link */
+  .fo-skip-link {
+    @apply absolute left-[-999px] top-0 z-[200] rounded-br-control bg-fo-green-900 px-4 py-3 text-white focus:left-0;
+  }
+}

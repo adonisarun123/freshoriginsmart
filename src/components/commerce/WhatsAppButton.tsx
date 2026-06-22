@@ -1,0 +1,28 @@
+import Link from "next/link";
+
+/**
+ * Assisted-ordering action. Per spec §12.5 this must NOT match the visual
+ * weight of Add to Cart (the primary commerce action). Icon-only on cards.
+ */
+export function WhatsAppButton({
+  href = "/cart",
+  iconOnly = false,
+  small = false,
+}: {
+  href?: string;
+  iconOnly?: boolean;
+  small?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-label="Order on WhatsApp"
+      className={`fo-btn-whatsapp ${iconOnly ? "w-11 flex-none px-0" : ""} ${
+        small ? "min-h-[38px] px-4 py-2.5 text-[0.85rem]" : ""
+      }`}
+    >
+      <span className="inline-block h-[18px] w-[18px] rounded-full bg-fo-whatsapp" />
+      {!iconOnly && "Order on WhatsApp"}
+    </Link>
+  );
+}
