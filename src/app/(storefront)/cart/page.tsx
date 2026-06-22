@@ -9,6 +9,9 @@ import { CartLineControls } from "@/features/cart/CartLineControls";
 import { PincodeCheck } from "@/features/cart/PincodeCheck";
 import { WhatsAppOrderForm } from "@/features/cart/WhatsAppOrderForm";
 
+// Reads the per-user / guest cart (cookies) — never prerender at build time.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Your cart",
   description:
