@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section, SectionHead } from "@/components/content/Section";
 import { Disclaimer } from "@/components/content/Disclaimer";
+import { Icon } from "@/components/ui/Icon";
 import { getHealthGoals } from "@/features/catalogue/queries";
 
 export const metadata: Metadata = {
@@ -57,8 +58,8 @@ export default async function HealthGoalsPage() {
               href={`/health-goals/${goal.slug}`}
               className="group flex flex-col rounded-card border border-fo-line bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-card"
             >
-              <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-fo-sage-100 text-[1.3rem] text-fo-green-900">
-                {goal.icon ?? "◎"}
+              <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-fo-sage-100 text-fo-green-900">
+                <Icon name="leaf" size={22} />
               </div>
               <h2 className="mb-1.5 text-[1.1rem]">{goal.name}</h2>
               {goal.summary && (

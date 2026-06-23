@@ -4,6 +4,10 @@ import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Disclaimer } from "@/components/content/Disclaimer";
 import { Accordion } from "@/components/content/Accordion";
 import { Placeholder } from "@/components/ui/Placeholder";
+import {
+  Illustration,
+  productIllustration,
+} from "@/components/brand/Illustration";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { productJsonLd, breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { productBadges } from "@/lib/commerce/badges";
@@ -98,7 +102,11 @@ export default async function ProductPage({ params }: PageProps) {
       <div className="grid items-start gap-12 pt-6 md:grid-cols-2">
         {/* Gallery */}
         <div className="md:sticky md:top-[90px]">
-          <Placeholder label={`Pack front — ${product.name}`} className="mb-3" />
+          <Illustration
+            name={productIllustration(product)}
+            className="mb-3 aspect-square rounded-card"
+            title={product.name}
+          />
           <div className="grid grid-cols-5 gap-2.5">
             {["Front", "Back", "Ingredients", "Cooked dish", "Origin"].map(
               (thumb, i) => (

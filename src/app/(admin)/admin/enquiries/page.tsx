@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import {
   AdminContent,
   AdminSection,
@@ -8,6 +8,17 @@ import {
   tdClass,
   thClass,
 } from "../_components/AdminShell";
+
+function DataUnavailableNotice() {
+  return (
+    <div className="max-w-[640px] rounded-card border border-fo-line bg-white p-6">
+      <p className="text-[0.9rem] text-fo-muted">
+        Admin data is unavailable. Confirm SUPABASE_SERVICE_ROLE_KEY is set in
+        the environment.
+      </p>
+    </div>
+  );
+}
 
 export const metadata = { title: "Enquiries" };
 export const dynamic = "force-dynamic";
@@ -24,25 +35,40 @@ interface EnquiryRow {
 }
 
 export default async function AdminEnquiriesPage() {
-  const supabase = createAdminClient();
-  const { data } = await supabase
-    .from("enquiries")
-    .select(
-      "id, enquiry_type, name, organisation, email, city, status, created_at",
-    )
-    .order("created_at", { ascending: false })
-    .limit(100);
-
-  const enquiries = (data as EnquiryRow[] | null) ?? [];
+  let enquiries: EnquiryRow[] = [];
+  let dataError = false;
+  try {
+    if (hasSupabaseAdminEnv()) {
+      const supabase = createAdminClient();
+      const { data, error } = await supabase
+        .from("enquiries")
+        .select(
+          "id, enquiry_type, name, organisation, email, city, status, created_at",
+        )
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      enquiries = (data as EnquiryRow[] | null) ?? [];
+    } else {
+      dataError = true;
+    }
+  } catch {
+    dataError = true;
+  }
 
   return (
     <>
       <AdminTopbar
         title="Enquiries"
-        subtitle={`${enquiries.length} enquiries`}
+        subtitle={
+          dataError ? "Data unavailable" : `${enquiries.length} enquiries`
+        }
       />
       <AdminContent>
         <AdminSection>
+          {dataError ? (
+            <DataUnavailableNotice />
+          ) : (
           <TableWrap>
             <thead>
               <tr>
@@ -83,6 +109,7 @@ export default async function AdminEnquiriesPage() {
               )}
             </tbody>
           </TableWrap>
+          )}
         </AdminSection>
       </AdminContent>
     </>

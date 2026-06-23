@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import {
   AdminContent,
   AdminSection,
@@ -8,6 +8,17 @@ import {
   tdClass,
   thClass,
 } from "../_components/AdminShell";
+
+function DataUnavailableNotice() {
+  return (
+    <div className="max-w-[640px] rounded-card border border-fo-line bg-white p-6">
+      <p className="text-[0.9rem] text-fo-muted">
+        Admin data is unavailable. Confirm SUPABASE_SERVICE_ROLE_KEY is set in
+        the environment.
+      </p>
+    </div>
+  );
+}
 
 export const metadata = { title: "Products" };
 export const dynamic = "force-dynamic";
@@ -24,21 +35,37 @@ interface ProductRow {
 }
 
 export default async function AdminProductsPage() {
-  const supabase = createAdminClient();
-  const { data } = await supabase
-    .from("products")
-    .select(
-      "id, name, slug, product_type, status, featured, allergen_information, storage_instructions",
-    )
-    .order("name");
-
-  const products = (data as ProductRow[] | null) ?? [];
+  let products: ProductRow[] = [];
+  let dataError = false;
+  try {
+    if (hasSupabaseAdminEnv()) {
+      const supabase = createAdminClient();
+      const { data, error } = await supabase
+        .from("products")
+        .select(
+          "id, name, slug, product_type, status, featured, allergen_information, storage_instructions",
+        )
+        .order("name");
+      if (error) throw error;
+      products = (data as ProductRow[] | null) ?? [];
+    } else {
+      dataError = true;
+    }
+  } catch {
+    dataError = true;
+  }
 
   return (
     <>
-      <AdminTopbar title="Products" subtitle={`${products.length} products`} />
+      <AdminTopbar
+        title="Products"
+        subtitle={dataError ? "Data unavailable" : `${products.length} products`}
+      />
       <AdminContent>
         <AdminSection>
+          {dataError ? (
+            <DataUnavailableNotice />
+          ) : (
           <TableWrap>
             <thead>
               <tr>
@@ -89,6 +116,7 @@ export default async function AdminProductsPage() {
               )}
             </tbody>
           </TableWrap>
+          )}
         </AdminSection>
       </AdminContent>
     </>

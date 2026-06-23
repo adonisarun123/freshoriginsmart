@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { Section, SectionHead } from "@/components/content/Section";
-import { Placeholder } from "@/components/ui/Placeholder";
+import {
+  Illustration,
+  type IllustrationName,
+} from "@/components/brand/Illustration";
 import { ProductCard } from "@/components/commerce/ProductCard";
 import { Icon } from "@/components/ui/Icon";
 import {
@@ -19,13 +22,6 @@ const heroProofChips = [
   "No added sugar",
   "Bangalore & Hosur delivery",
 ] as const;
-
-const heroImages: { label: string; ratio: "square" | "4x3" }[] = [
-  { label: "Millet pack + prepared bowl", ratio: "4x3" },
-  { label: "Whole pulses & grains", ratio: "square" },
-  { label: "Family meal moment", ratio: "square" },
-  { label: "Ready-to-cook mix", ratio: "4x3" },
-];
 
 const ordinaryStaples = [
   "Refined grains & maida",
@@ -116,21 +112,29 @@ const sampleTestimonials = [
   },
 ] as const;
 
-const categoryTiles = [
+const categoryTiles: {
+  name: string;
+  desc: string;
+  href: string;
+  illu: IllustrationName;
+}[] = [
   {
     name: "Millets",
     desc: "Whole grains, flours & blends",
     href: "/shop/millets",
+    illu: "millets",
   },
   {
     name: "Traditional Rice",
     desc: "Red, black, brown & regional varieties",
     href: "/shop/traditional-rice",
+    illu: "rice",
   },
   {
     name: "Ready-to-Cook Mixes",
     desc: "Khichdi, adai, kanji & roti mixes",
     href: "/shop/ready-to-cook-mixes",
+    illu: "mixes",
   },
 ];
 
@@ -252,15 +256,11 @@ export default async function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4" aria-hidden="true">
-            {heroImages.map((img) => (
-              <Placeholder
-                key={img.label}
-                label={img.label}
-                ratio={img.ratio}
-              />
-            ))}
-          </div>
+          <Illustration
+            name="hero"
+            className="aspect-[4/3] rounded-hero"
+            title="Fresh Origins millets, pulses and a ready-to-cook pack"
+          />
         </div>
       </section>
 
@@ -390,7 +390,11 @@ export default async function HomePage() {
       <Section id="in-focus">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div className="rounded-hero bg-fo-sage-100 p-12">
-            <Placeholder ratio="4x3" label="Prepared dish — khichdi bowl" />
+            <Illustration
+              name="bowl"
+              className="aspect-[4/3] rounded-card"
+              title="Vegetable millet khichdi bowl"
+            />
           </div>
           <div>
             <p className="fo-eyebrow">Product in focus</p>
@@ -432,7 +436,11 @@ export default async function HomePage() {
       <Section surface id="promise">
         <div className="grid items-center gap-12 md:grid-cols-[0.8fr_1.2fr]">
           <div className="mx-auto w-full max-w-[320px]">
-            <Placeholder ratio="4x3" label="Founder portrait" />
+            <Illustration
+              name="field"
+              className="aspect-[4/3] rounded-card"
+              title="Fresh Origins sourcing fields"
+            />
           </div>
           <figure className="max-w-editorial">
             <p className="fo-eyebrow">Our promise</p>
@@ -490,7 +498,11 @@ export default async function HomePage() {
               href={tile.href}
               className="relative flex min-h-[280px] items-end overflow-hidden rounded-hero text-white"
             >
-              <Placeholder fill className="absolute inset-0 !rounded-none" />
+              <Illustration
+                name={tile.illu}
+                className="absolute inset-0"
+                title={tile.name}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-fo-charcoal-900/75 to-transparent" />
               <div className="relative z-10 p-6">
                 <h3 className="mb-1 text-white">{tile.name}</h3>
@@ -517,7 +529,11 @@ export default async function HomePage() {
               href={recipe.href}
               className="overflow-hidden rounded-card border border-fo-line bg-white transition hover:shadow-card"
             >
-              <Placeholder ratio="4x3" className="!rounded-none" />
+              <Illustration
+                name="bowl"
+                className="aspect-[4/3]"
+                title={recipe.title}
+              />
               <div className="p-4">
                 <h3 className="mb-1 text-[1rem]">{recipe.title}</h3>
                 <p className="text-[0.82rem] text-fo-muted">{recipe.meta}</p>

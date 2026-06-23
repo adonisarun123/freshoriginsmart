@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import { formatINR } from "@/lib/commerce/format";
 import {
   AdminContent,
@@ -12,6 +12,17 @@ import {
   tdClass,
   thClass,
 } from "../_components/AdminShell";
+
+function DataUnavailableNotice() {
+  return (
+    <div className="max-w-[640px] rounded-card border border-fo-line bg-white p-6">
+      <p className="text-[0.9rem] text-fo-muted">
+        Admin data is unavailable. Confirm SUPABASE_SERVICE_ROLE_KEY is set in
+        the environment.
+      </p>
+    </div>
+  );
+}
 
 export const metadata = { title: "Orders" };
 export const dynamic = "force-dynamic";
@@ -28,22 +39,35 @@ interface OrderRow {
 }
 
 export default async function AdminOrdersPage() {
-  const supabase = createAdminClient();
-  const { data } = await supabase
-    .from("orders")
-    .select(
-      "id, public_order_number, customer_name, pincode, status, payment_status, total_paise, created_at",
-    )
-    .order("created_at", { ascending: false })
-    .limit(50);
-
-  const orders = (data as OrderRow[] | null) ?? [];
+  let orders: OrderRow[] = [];
+  let dataError = false;
+  try {
+    if (hasSupabaseAdminEnv()) {
+      const supabase = createAdminClient();
+      const { data, error } = await supabase
+        .from("orders")
+        .select(
+          "id, public_order_number, customer_name, pincode, status, payment_status, total_paise, created_at",
+        )
+        .order("created_at", { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      orders = (data as OrderRow[] | null) ?? [];
+    } else {
+      dataError = true;
+    }
+  } catch {
+    dataError = true;
+  }
 
   return (
     <>
       <AdminTopbar title="Orders" subtitle="Most recent 50 orders" />
       <AdminContent>
         <AdminSection>
+          {dataError ? (
+            <DataUnavailableNotice />
+          ) : (
           <TableWrap>
             <thead>
               <tr>
@@ -93,6 +117,7 @@ export default async function AdminOrdersPage() {
               )}
             </tbody>
           </TableWrap>
+          )}
         </AdminSection>
       </AdminContent>
     </>

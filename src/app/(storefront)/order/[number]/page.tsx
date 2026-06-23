@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { createHash } from "crypto";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import { formatINR } from "@/lib/commerce/format";
 import { buildWhatsAppUrl } from "@/lib/whatsapp/order-message";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
@@ -74,6 +74,7 @@ export default async function OrderSummaryPage({
 }) {
   const token = searchParams.t;
   if (!token) notFound();
+  if (!hasSupabaseAdminEnv()) notFound();
 
   const admin = createAdminClient();
   const { data: order } = await admin

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section, SectionHead } from "@/components/content/Section";
 import { Disclaimer } from "@/components/content/Disclaimer";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { Illustration } from "@/components/brand/Illustration";
 
 export const metadata: Metadata = {
   title: "Our Sourcing",
@@ -68,9 +68,10 @@ export default function OurSourcingPage() {
       <Section tight>
         <SectionHead eyebrow="Where our grains grow" title="Sourcing regions" />
         <div className="grid items-center gap-12 md:grid-cols-[1fr_1.1fr]">
-          <Placeholder
-            ratio="4x3"
-            label="Sourcing regions map — Karnataka & Tamil Nadu drylands"
+          <Illustration
+            name="origin"
+            className="aspect-[4/3] rounded-card"
+            title="Sourcing regions map — Karnataka & Tamil Nadu drylands"
           />
           <div className="grid gap-4">
             {regions.map((region) => (
@@ -79,7 +80,11 @@ export default function OurSourcingPage() {
                 href={region.href}
                 className="grid grid-cols-[72px_1fr] items-center gap-4 rounded-card border border-fo-line bg-white p-4 transition hover:shadow-soft"
               >
-                <Placeholder label="Region" className="!text-[0.6rem]" />
+                <Illustration
+                  name="field"
+                  className="aspect-square rounded-card"
+                  title={`${region.name} region`}
+                />
                 <div>
                   <h3 className="mb-0.5 flex items-center gap-2 text-[1rem]">
                     {region.name}

@@ -27,7 +27,14 @@ export async function POST(request: Request) {
     const result = await createWhatsAppOrder(parsed.data);
     return NextResponse.json({ ok: true, ...result });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Could not create order.";
+    console.error("whatsapp-order failed:", err);
+    // Only surface our own intentional, user-safe messages; never leak raw
+    // DB/internal error text to the client.
+    const safe = new Set(["Your cart is empty."]);
+    const message =
+      err instanceof Error && safe.has(err.message)
+        ? err.message
+        : "We couldn't create your order right now. Please try again.";
     return NextResponse.json({ ok: false, error: message }, { status: 400 });
   }
 }

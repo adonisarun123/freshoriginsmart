@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { Placeholder } from "@/components/ui/Placeholder";
+import {
+  Illustration,
+  productIllustration,
+} from "@/components/brand/Illustration";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { WhatsAppButton } from "@/components/commerce/WhatsAppButton";
 import { formatINR, discountPercent } from "@/lib/commerce/format";
@@ -25,7 +28,11 @@ export function ProductCard({ product }: { product: ProductWithVariants }) {
           </div>
         )}
         <Link href={`/products/${product.slug}`}>
-          <Placeholder label={product.name} className="!rounded-none" />
+          <Illustration
+            name={productIllustration(product)}
+            className="aspect-square"
+            title={product.name}
+          />
         </Link>
       </div>
       <div className="flex flex-1 flex-col p-4 pb-6">

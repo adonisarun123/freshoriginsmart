@@ -4,7 +4,10 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section, SectionHead } from "@/components/content/Section";
 import { ProductCard } from "@/components/commerce/ProductCard";
-import { Placeholder } from "@/components/ui/Placeholder";
+import {
+  Illustration,
+  type IllustrationName,
+} from "@/components/brand/Illustration";
 import {
   getCategories,
   getProductsByCategory,
@@ -428,6 +431,12 @@ function GuideTable({ table }: { table: TableSpec }) {
 /*  Page                                                                       */
 /* -------------------------------------------------------------------------- */
 
+const categoryIllustration: Record<string, IllustrationName> = {
+  millets: "millets",
+  "traditional-rice": "rice",
+  "ready-to-cook-mixes": "mixes",
+};
+
 export default async function CategoryPage({ params }: PageProps) {
   const category = await resolveCategory(params.slug);
   if (!category) notFound();
@@ -436,6 +445,7 @@ export default async function CategoryPage({ params }: PageProps) {
   const content = categoryContent[params.slug];
 
   const intro = content?.intro ?? category.description ?? undefined;
+  const heroIllu = categoryIllustration[params.slug] ?? "field";
 
   return (
     <>
@@ -471,12 +481,11 @@ export default async function CategoryPage({ params }: PageProps) {
               </Link>
             </div>
           </div>
-          <div aria-hidden="true">
-            <Placeholder
-              ratio="4x3"
-              label={content?.heroImageLabel ?? category.name}
-            />
-          </div>
+          <Illustration
+            name={heroIllu}
+            className="aspect-[4/3] rounded-hero"
+            title={content?.heroImageLabel ?? category.name}
+          />
         </div>
       </section>
 
@@ -548,7 +557,11 @@ export default async function CategoryPage({ params }: PageProps) {
         <Section id="how-to-choose">
           <div className="grid items-start gap-12 md:grid-cols-2">
             <div className="rounded-hero bg-fo-sage-100 p-12">
-              <Placeholder ratio="4x3" label="Preparation & cooking" />
+              <Illustration
+                name="field"
+                className="aspect-[4/3] rounded-card"
+                title="Preparation & cooking"
+              />
             </div>
             <div>
               <p className="fo-eyebrow">How to choose &amp; cook</p>

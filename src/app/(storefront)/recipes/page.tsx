@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section } from "@/components/content/Section";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { Illustration } from "@/components/brand/Illustration";
 
 export const metadata: Metadata = {
   title: "Recipes",
@@ -77,7 +77,11 @@ export default function RecipesPage() {
               href={recipe.href}
               className="overflow-hidden rounded-card border border-fo-line bg-white transition hover:shadow-card"
             >
-              <Placeholder ratio="4x3" className="!rounded-none" />
+              <Illustration
+                name="bowl"
+                className="aspect-[4/3]"
+                title={recipe.title}
+              />
               <div className="p-5">
                 <h2 className="mb-1 text-[1.05rem]">{recipe.title}</h2>
                 <p className="mb-1.5 text-[0.85rem] text-fo-muted">{recipe.desc}</p>

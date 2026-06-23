@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section } from "@/components/content/Section";
 import { Disclaimer } from "@/components/content/Disclaimer";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { Illustration } from "@/components/brand/Illustration";
 
 export const metadata: Metadata = {
   title: "Health Education",
@@ -65,7 +65,11 @@ export default function LearnPage() {
               href={article.href}
               className="overflow-hidden rounded-card border border-fo-line bg-white transition hover:shadow-card"
             >
-              <Placeholder ratio="16x9" className="!rounded-none" />
+              <Illustration
+                name="origin"
+                className="aspect-video"
+                title={article.title}
+              />
               <div className="p-5">
                 <p className="mb-1.5 text-[0.78rem] font-bold uppercase tracking-[0.06em] text-fo-accent">
                   {article.meta}

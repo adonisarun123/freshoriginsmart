@@ -57,62 +57,83 @@ export async function addToCart(variantId: string, quantity = 1) {
   const parsed = cartItemSchema.safeParse({ variantId, quantity });
   if (!parsed.success) return { ok: false, error: "Invalid item" };
 
-  const admin = createAdminClient();
-  const cartId = await resolveCartId();
+  try {
+    const admin = createAdminClient();
+    const cartId = await resolveCartId();
 
-  // Validate variant is active + priced server-side (never trust client).
-  const { data: variant } = await admin
-    .from("product_variants")
-    .select("id, active")
-    .eq("id", parsed.data.variantId)
-    .maybeSingle();
-  if (!variant || !variant.active) {
-    return { ok: false, error: "Item unavailable" };
-  }
+    // Validate variant is active + priced server-side (never trust client).
+    const { data: variant, error: variantErr } = await admin
+      .from("product_variants")
+      .select("id, active")
+      .eq("id", parsed.data.variantId)
+      .maybeSingle();
+    if (variantErr) throw variantErr;
+    if (!variant || !variant.active) {
+      return { ok: false, error: "Item unavailable" };
+    }
 
-  const { data: existing } = await admin
-    .from("cart_items")
-    .select("id, quantity")
-    .eq("cart_id", cartId)
-    .eq("variant_id", parsed.data.variantId)
-    .maybeSingle();
-
-  if (existing) {
-    await admin
+    const { data: existing } = await admin
       .from("cart_items")
-      .update({ quantity: existing.quantity + parsed.data.quantity })
-      .eq("id", existing.id);
-  } else {
-    await admin.from("cart_items").insert({
-      cart_id: cartId,
-      variant_id: parsed.data.variantId,
-      quantity: parsed.data.quantity,
-    });
-  }
+      .select("id, quantity")
+      .eq("cart_id", cartId)
+      .eq("variant_id", parsed.data.variantId)
+      .maybeSingle();
 
-  revalidatePath("/cart");
-  return { ok: true };
+    if (existing) {
+      const { error } = await admin
+        .from("cart_items")
+        .update({ quantity: existing.quantity + parsed.data.quantity })
+        .eq("id", existing.id);
+      if (error) throw error;
+    } else {
+      const { error } = await admin.from("cart_items").insert({
+        cart_id: cartId,
+        variant_id: parsed.data.variantId,
+        quantity: parsed.data.quantity,
+      });
+      if (error) throw error;
+    }
+
+    revalidatePath("/cart");
+    return { ok: true };
+  } catch (err) {
+    console.error("addToCart failed:", err);
+    return {
+      ok: false,
+      error: "We couldn't add that to your cart. Please try again.",
+    };
+  }
 }
 
 export async function updateCartItem(itemId: string, quantity: number) {
-  const admin = createAdminClient();
-  if (quantity <= 0) {
-    await admin.from("cart_items").delete().eq("id", itemId);
-  } else {
-    await admin
-      .from("cart_items")
-      .update({ quantity: Math.min(quantity, 50) })
-      .eq("id", itemId);
+  try {
+    const admin = createAdminClient();
+    if (quantity <= 0) {
+      await admin.from("cart_items").delete().eq("id", itemId);
+    } else {
+      await admin
+        .from("cart_items")
+        .update({ quantity: Math.min(quantity, 50) })
+        .eq("id", itemId);
+    }
+    revalidatePath("/cart");
+    return { ok: true };
+  } catch (err) {
+    console.error("updateCartItem failed:", err);
+    return { ok: false, error: "Could not update your cart. Please try again." };
   }
-  revalidatePath("/cart");
-  return { ok: true };
 }
 
 export async function removeCartItem(itemId: string) {
-  const admin = createAdminClient();
-  await admin.from("cart_items").delete().eq("id", itemId);
-  revalidatePath("/cart");
-  return { ok: true };
+  try {
+    const admin = createAdminClient();
+    await admin.from("cart_items").delete().eq("id", itemId);
+    revalidatePath("/cart");
+    return { ok: true };
+  } catch (err) {
+    console.error("removeCartItem failed:", err);
+    return { ok: false, error: "Could not update your cart. Please try again." };
+  }
 }
 
 /**
@@ -128,49 +149,57 @@ export async function saveCartContact(input: {
   const parsed = cartContactSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Enter a valid email." };
 
-  const admin = createAdminClient();
-  const ssr = createClient();
-  const {
-    data: { user },
-  } = await ssr.auth.getUser();
+  try {
+    const admin = createAdminClient();
+    const ssr = createClient();
+    const {
+      data: { user },
+    } = await ssr.auth.getUser();
 
-  let cartId: string | null = null;
-  if (user) {
-    const { data } = await admin
-      .from("carts")
-      .select("id")
-      .eq("user_id", user.id)
-      .eq("status", "active")
-      .maybeSingle();
-    cartId = data?.id ?? null;
-  } else {
-    const token = readCartToken();
-    if (token) {
+    let cartId: string | null = null;
+    if (user) {
       const { data } = await admin
         .from("carts")
         .select("id")
-        .eq("guest_token_hash", hashToken(token))
+        .eq("user_id", user.id)
         .eq("status", "active")
         .maybeSingle();
       cartId = data?.id ?? null;
+    } else {
+      const token = readCartToken();
+      if (token) {
+        const { data } = await admin
+          .from("carts")
+          .select("id")
+          .eq("guest_token_hash", hashToken(token))
+          .eq("status", "active")
+          .maybeSingle();
+        cartId = data?.id ?? null;
+      }
     }
+    if (!cartId) return { ok: false, error: "No active cart." };
+
+    const { error } = await admin
+      .from("carts")
+      .update({
+        contact_email: parsed.data.email,
+        contact_name: parsed.data.name ?? null,
+        marketing_consent: parsed.data.marketingConsent,
+      })
+      .eq("id", cartId);
+    if (error) throw error;
+
+    return { ok: true };
+  } catch (err) {
+    console.error("saveCartContact failed:", err);
+    return { ok: false, error: "Could not save. Please try again." };
   }
-  if (!cartId) return { ok: false, error: "No active cart." };
-
-  await admin
-    .from("carts")
-    .update({
-      contact_email: parsed.data.email,
-      contact_name: parsed.data.name ?? null,
-      marketing_consent: parsed.data.marketingConsent,
-    })
-    .eq("id", cartId);
-
-  return { ok: true };
 }
 
-/** Merges a guest cart into the user's cart after login (spec §25.1). */
+/** Merges a guest cart into the user's cart after login (spec §25.1).
+ *  Best-effort: never throw — a merge failure must not break sign-in. */
 export async function mergeGuestCart(userId: string) {
+  try {
   const raw = readCartToken();
   if (!raw) return;
   const admin = createAdminClient();
@@ -228,4 +257,7 @@ export async function mergeGuestCart(userId: string) {
   }
 
   await admin.from("carts").update({ status: "merged" }).eq("id", guestCart.id);
+  } catch (err) {
+    console.error("mergeGuestCart failed:", err);
+  }
 }

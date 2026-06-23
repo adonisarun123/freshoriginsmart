@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import { formatINR } from "@/lib/commerce/format";
 import { site } from "@/config/site";
 import {
@@ -10,6 +10,17 @@ import {
   tdClass,
   thClass,
 } from "../_components/AdminShell";
+
+function DataUnavailableNotice() {
+  return (
+    <div className="max-w-[640px] rounded-card border border-fo-line bg-white p-6">
+      <p className="text-[0.9rem] text-fo-muted">
+        Admin data is unavailable. Confirm SUPABASE_SERVICE_ROLE_KEY is set in
+        the environment.
+      </p>
+    </div>
+  );
+}
 
 export const metadata = { title: "Abandoned carts" };
 export const dynamic = "force-dynamic";
@@ -37,22 +48,35 @@ function idleLabel(iso: string): string {
 }
 
 export default async function AdminAbandonedCartsPage() {
-  const supabase = createAdminClient();
-  const cutoff = new Date(Date.now() - IDLE_MINUTES * 60000).toISOString();
+  let carts: CartRow[] = [];
+  let dataError = false;
+  try {
+    if (hasSupabaseAdminEnv()) {
+      const supabase = createAdminClient();
+      const cutoff = new Date(
+        Date.now() - IDLE_MINUTES * 60000,
+      ).toISOString();
 
-  const { data } = await supabase
-    .from("carts")
-    .select(
-      "id, contact_email, contact_name, marketing_consent, last_activity_at, reminded_at, cart_items(quantity, product_variants(selling_price_paise, title, products(name)))",
-    )
-    .eq("status", "active")
-    .lt("last_activity_at", cutoff)
-    .order("last_activity_at", { ascending: false })
-    .limit(200);
+      const { data, error } = await supabase
+        .from("carts")
+        .select(
+          "id, contact_email, contact_name, marketing_consent, last_activity_at, reminded_at, cart_items(quantity, product_variants(selling_price_paise, title, products(name)))",
+        )
+        .eq("status", "active")
+        .lt("last_activity_at", cutoff)
+        .order("last_activity_at", { ascending: false })
+        .limit(200);
+      if (error) throw error;
 
-  const carts = ((data as CartRow[] | null) ?? []).filter(
-    (c) => c.cart_items && c.cart_items.length > 0,
-  );
+      carts = ((data as unknown as CartRow[] | null) ?? []).filter(
+        (c) => c.cart_items && c.cart_items.length > 0,
+      );
+    } else {
+      dataError = true;
+    }
+  } catch {
+    dataError = true;
+  }
 
   function cartTotal(c: CartRow): number {
     return c.cart_items.reduce(
@@ -75,10 +99,18 @@ export default async function AdminAbandonedCartsPage() {
     <>
       <AdminTopbar
         title="Abandoned carts"
-        subtitle={`${carts.length} idle > ${IDLE_MINUTES} min · ${contactable.length} contactable`}
+        subtitle={
+          dataError
+            ? "Data unavailable"
+            : `${carts.length} idle > ${IDLE_MINUTES} min · ${contactable.length} contactable`
+        }
       />
       <AdminContent>
         <AdminSection>
+          {dataError ? (
+            <DataUnavailableNotice />
+          ) : (
+          <>
           <p style={{ fontSize: "0.85rem", color: "var(--fo-muted)", marginBottom: "12px" }}>
             Active carts with items, idle for over {IDLE_MINUTES} minutes. Only
             carts where the customer left an email can be reached out to — and
@@ -154,6 +186,8 @@ export default async function AdminAbandonedCartsPage() {
             step — so cart reach-out here is by email. Send to {site.name} customers
             responsibly and honour unsubscribe requests.
           </p>
+          </>
+          )}
         </AdminSection>
       </AdminContent>
     </>

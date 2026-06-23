@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section, SectionHead } from "@/components/content/Section";
 import { Disclaimer } from "@/components/content/Disclaimer";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { Illustration } from "@/components/brand/Illustration";
 
 type PageProps = { params: { slug: string } };
 
@@ -67,10 +67,10 @@ export default function RegionDetailPage({ params }: PageProps) {
           work here with verified farmer groups to source traditional varieties suited to
           the region&apos;s soil and seasons.
         </p>
-        <Placeholder
-          ratio="16x9"
-          label="Karnataka dryland millet fields"
-          className="mt-6 !rounded-hero"
+        <Illustration
+          name="origin"
+          className="mt-6 aspect-video rounded-hero"
+          title="Karnataka dryland millet fields"
         />
       </section>
 
@@ -117,7 +117,12 @@ export default function RegionDetailPage({ params }: PageProps) {
         <SectionHead eyebrow="From the region" title="Photographs from the field" />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {photos.map((caption) => (
-            <Placeholder key={caption} label={caption} />
+            <Illustration
+              key={caption}
+              name="field"
+              className="aspect-square rounded-card"
+              title={caption}
+            />
           ))}
         </div>
       </Section>
@@ -141,7 +146,11 @@ export default function RegionDetailPage({ params }: PageProps) {
               href={item.href}
               className="flex items-center gap-3 rounded-card border border-fo-line bg-white p-3 transition hover:shadow-soft"
             >
-              <Placeholder label={item.label} className="!h-14 !w-14 !text-[0.55rem]" />
+              <Illustration
+                name="field"
+                className="h-14 w-14 flex-none rounded-card"
+                title={item.label}
+              />
               <div>
                 <h3 className="m-0 text-[0.92rem]">{item.title}</h3>
                 <p className="m-0 text-[0.8rem] text-fo-muted">{item.body}</p>

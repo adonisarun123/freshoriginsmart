@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { Illustration } from "@/components/brand/Illustration";
 
 type PageProps = { params: { slug: string } };
 
@@ -98,7 +98,11 @@ export default function RecipeDetailPage({ params }: PageProps) {
             Shop the product
           </Link>
         </div>
-        <Placeholder ratio="4x3" label="Prepared dish — vegetable millet khichdi bowl" />
+        <Illustration
+          name="bowl"
+          className="aspect-[4/3] rounded-card"
+          title="Prepared dish — vegetable millet khichdi bowl"
+        />
       </div>
 
       {/* Body */}
@@ -173,7 +177,11 @@ export default function RecipeDetailPage({ params }: PageProps) {
                 href={item.href}
                 className="flex items-center gap-3 rounded-card border border-fo-line bg-white p-3 transition hover:shadow-soft"
               >
-                <Placeholder label={item.label} className="!h-14 !w-14 !text-[0.55rem]" />
+                <Illustration
+                  name="bowl"
+                  className="h-14 w-14 flex-none rounded-card"
+                  title={item.label}
+                />
                 <div>
                   <h3 className="m-0 text-[0.9rem]">{item.title}</h3>
                   <span className="text-[0.85rem] font-bold text-fo-green-900">

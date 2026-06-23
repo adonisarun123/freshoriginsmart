@@ -1,7 +1,7 @@
 import "server-only";
 
 import { randomBytes, createHash } from "crypto";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { getCart } from "@/features/cart/queries";
 import { site } from "@/config/site";
@@ -27,6 +27,9 @@ export interface CreatedWhatsAppOrder {
 export async function createWhatsAppOrder(
   input: WhatsAppOrderInput,
 ): Promise<CreatedWhatsAppOrder> {
+  if (!hasSupabaseAdminEnv()) {
+    throw new Error("Ordering is temporarily unavailable. Please try again.");
+  }
   const admin = createAdminClient();
   const ssr = createClient();
   const {
@@ -85,9 +88,10 @@ export async function createWhatsAppOrder(
     unit_price_paise: l.unitPricePaise,
     total_price_paise: l.unitPricePaise * l.quantity,
   }));
-  await admin.from("order_items").insert(items);
+  const { error: itemsError } = await admin.from("order_items").insert(items);
+  if (itemsError) throw itemsError;
 
-  // Close the cart so it isn't reused
+  // Close the cart so it isn't reused (non-fatal if it fails)
   await admin
     .from("carts")
     .update({ status: "ordered" })

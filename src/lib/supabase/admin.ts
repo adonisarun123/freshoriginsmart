@@ -2,6 +2,14 @@ import "server-only";
 
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 
+/** True when both the Supabase URL and service-role key are configured. */
+export function hasSupabaseAdminEnv(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
+  );
+}
+
 /**
  * Service-role Supabase client. BYPASSES RLS — use ONLY in trusted server
  * modules (route handlers, server actions) for operations that genuinely need

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section, SectionHead } from "@/components/content/Section";
 import { Disclaimer } from "@/components/content/Disclaimer";
+import { Illustration } from "@/components/brand/Illustration";
 import { ProductCard } from "@/components/commerce/ProductCard";
 import {
   getHealthGoals,
@@ -56,7 +57,7 @@ export default async function HealthGoalPage({ params }: PageProps) {
     <>
       {/* 1. Hero */}
       <section className="bg-fo-sage-100 py-16">
-        <div className="fo-container max-w-[900px]">
+        <div className="fo-container">
           <Breadcrumbs
             items={[
               { label: "Home", href: "/" },
@@ -64,17 +65,23 @@ export default async function HealthGoalPage({ params }: PageProps) {
               { label: goal.name },
             ]}
           />
-          <div className="mt-6 grid h-[60px] w-[60px] place-items-center rounded-full bg-white text-[1.6rem] text-fo-green-900">
-            {goal.icon ?? "◎"}
+          <div className="mt-6 grid items-center gap-10 md:grid-cols-[1.2fr_0.8fr]">
+            <div>
+              <p className="fo-eyebrow">Health goal · Educational guidance</p>
+              <h1 className="mb-4 text-[clamp(2.1rem,4.4vw,3.1rem)]">
+                Food choices for {goalName}
+              </h1>
+              <p className="mb-0 max-w-[58ch] text-[1.1rem] text-fo-muted">
+                {goal.summary ??
+                  `Everyday foods, grouped to help you build meals around ${goalName} — practical guidance, not medical treatment.`}
+              </p>
+            </div>
+            <Illustration
+              name="goal"
+              title={`${goal.name} — food guidance`}
+              className="aspect-[4/3] rounded-hero"
+            />
           </div>
-          <p className="fo-eyebrow mt-4">Health goal · Educational guidance</p>
-          <h1 className="mb-4 text-[clamp(2.1rem,4.4vw,3.1rem)]">
-            Food choices for {goalName}
-          </h1>
-          <p className="mb-0 max-w-[58ch] text-[1.1rem] text-fo-muted">
-            {goal.summary ??
-              `Everyday foods, grouped to help you build meals around ${goalName} — practical guidance, not medical treatment.`}
-          </p>
         </div>
       </section>
 

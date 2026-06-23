@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Disclaimer } from "@/components/content/Disclaimer";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { Illustration } from "@/components/brand/Illustration";
 
 type PageProps = { params: { slug: string } };
 
@@ -75,7 +75,11 @@ export default function ArticleDetailPage({ params }: PageProps) {
 
       {/* Body */}
       <article className="mx-auto mt-8 max-w-editorial fo-legal-body">
-        <Placeholder ratio="16x9" label="Millets and rice side by side" className="my-6" />
+        <Illustration
+          name="origin"
+          className="my-6 aspect-video rounded-card"
+          title="Millets and rice side by side"
+        />
 
         <p>
           White rice is a staple in many Indian homes, and there&apos;s nothing wrong
@@ -146,7 +150,11 @@ export default function ArticleDetailPage({ params }: PageProps) {
               href={item.href}
               className="flex items-center gap-3 rounded-card border border-fo-line bg-white p-3 no-underline transition hover:shadow-soft"
             >
-              <Placeholder label={item.label} className="!h-14 !w-14 !text-[0.55rem]" />
+              <Illustration
+                name="field"
+                className="h-14 w-14 flex-none rounded-card"
+                title={item.label}
+              />
               <div>
                 <h3 className="m-0 text-[0.9rem]">{item.title}</h3>
                 <span className="text-[0.85rem] font-bold text-fo-green-900">

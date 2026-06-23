@@ -2,6 +2,7 @@ import "server-only";
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
+import { hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import { readCartToken, hashToken } from "@/features/cart/cart-token";
 
 export interface CartLineView {
@@ -37,6 +38,7 @@ const EMPTY: CartView = {
  * without an anon RLS policy (spec §25.1, §42).
  */
 export async function getCart(): Promise<CartView> {
+  if (!hasSupabaseAdminEnv()) return EMPTY;
   const admin = createAdminClient();
   const ssr = createClient();
   const {

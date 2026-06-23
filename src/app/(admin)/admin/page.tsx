@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import { formatINR } from "@/lib/commerce/format";
 import {
   AdminContent,
@@ -97,74 +97,106 @@ interface EnquiryRow {
 }
 
 export default async function AdminDashboardPage() {
-  const supabase = createAdminClient();
+  let ordersAwaiting = 0;
+  let newEnquiries = 0;
+  let draftContent = 0;
+  let productsMissing = 0;
+  let lowStockRows: LowStockRow[] = [];
+  let pendingOrders: PendingOrderRow[] = [];
+  let recentEnquiries: EnquiryRow[] = [];
+  let dataError = false;
 
-  // --- Widget counts (run in parallel) ---------------------------------------
-  const [
-    pendingOrdersCountRes,
-    enquiriesCountRes,
-    draftArticlesRes,
-    draftRecipesRes,
-    inventoryRes,
-    productsMissingRes,
-    pendingOrdersRes,
-    enquiriesRes,
-  ] = await Promise.all([
-    supabase
-      .from("orders")
-      .select("id", { count: "exact", head: true })
-      .in("status", PENDING_ORDER_STATUSES),
-    supabase
-      .from("enquiries")
-      .select("id", { count: "exact", head: true })
-      .eq("status", "new"),
-    supabase
-      .from("articles")
-      .select("id", { count: "exact", head: true })
-      .neq("status", "published"),
-    supabase
-      .from("recipes")
-      .select("id", { count: "exact", head: true })
-      .neq("status", "published"),
-    // Inventory: fetch threshold pairs and filter in JS (no column-to-column
-    // comparison operator in PostgREST filters).
-    supabase
-      .from("inventory")
-      .select(
-        "available_quantity, low_stock_threshold, product_variants(sku, title, products(name))",
-      ),
-    supabase
-      .from("products")
-      .select("id", { count: "exact", head: true })
-      .or("allergen_information.is.null,storage_instructions.is.null"),
-    supabase
-      .from("orders")
-      .select(
-        "id, public_order_number, customer_name, pincode, status, total_paise, order_items(count)",
-      )
-      .in("status", PENDING_ORDER_STATUSES)
-      .order("created_at", { ascending: true })
-      .limit(10),
-    supabase
-      .from("enquiries")
-      .select("id, enquiry_type, name, organisation, city, created_at, status")
-      .order("created_at", { ascending: false })
-      .limit(6),
-  ]);
+  try {
+    if (hasSupabaseAdminEnv()) {
+      const supabase = createAdminClient();
 
-  const ordersAwaiting = pendingOrdersCountRes.count ?? 0;
-  const newEnquiries = enquiriesCountRes.count ?? 0;
-  const draftContent =
-    (draftArticlesRes.count ?? 0) + (draftRecipesRes.count ?? 0);
-  const productsMissing = productsMissingRes.count ?? 0;
+      // --- Widget counts (run in parallel) -----------------------------------
+      const [
+        pendingOrdersCountRes,
+        enquiriesCountRes,
+        draftArticlesRes,
+        draftRecipesRes,
+        inventoryRes,
+        productsMissingRes,
+        pendingOrdersRes,
+        enquiriesRes,
+      ] = await Promise.all([
+        supabase
+          .from("orders")
+          .select("id", { count: "exact", head: true })
+          .in("status", PENDING_ORDER_STATUSES),
+        supabase
+          .from("enquiries")
+          .select("id", { count: "exact", head: true })
+          .eq("status", "new"),
+        supabase
+          .from("articles")
+          .select("id", { count: "exact", head: true })
+          .neq("status", "published"),
+        supabase
+          .from("recipes")
+          .select("id", { count: "exact", head: true })
+          .neq("status", "published"),
+        // Inventory: fetch threshold pairs and filter in JS (no column-to-column
+        // comparison operator in PostgREST filters).
+        supabase
+          .from("inventory")
+          .select(
+            "available_quantity, low_stock_threshold, product_variants(sku, title, products(name))",
+          ),
+        supabase
+          .from("products")
+          .select("id", { count: "exact", head: true })
+          .or("allergen_information.is.null,storage_instructions.is.null"),
+        supabase
+          .from("orders")
+          .select(
+            "id, public_order_number, customer_name, pincode, status, total_paise, order_items(count)",
+          )
+          .in("status", PENDING_ORDER_STATUSES)
+          .order("created_at", { ascending: true })
+          .limit(10),
+        supabase
+          .from("enquiries")
+          .select(
+            "id, enquiry_type, name, organisation, city, created_at, status",
+          )
+          .order("created_at", { ascending: false })
+          .limit(6),
+      ]);
 
-  const lowStockRows = ((inventoryRes.data as LowStockRow[] | null) ?? []).filter(
-    (row) => row.available_quantity <= row.low_stock_threshold,
-  );
+      const firstError =
+        pendingOrdersCountRes.error ??
+        enquiriesCountRes.error ??
+        draftArticlesRes.error ??
+        draftRecipesRes.error ??
+        inventoryRes.error ??
+        productsMissingRes.error ??
+        pendingOrdersRes.error ??
+        enquiriesRes.error;
+      if (firstError) throw firstError;
+
+      ordersAwaiting = pendingOrdersCountRes.count ?? 0;
+      newEnquiries = enquiriesCountRes.count ?? 0;
+      draftContent =
+        (draftArticlesRes.count ?? 0) + (draftRecipesRes.count ?? 0);
+      productsMissing = productsMissingRes.count ?? 0;
+
+      lowStockRows = ((inventoryRes.data as LowStockRow[] | null) ?? []).filter(
+        (row) => row.available_quantity <= row.low_stock_threshold,
+      );
+
+      pendingOrders =
+        (pendingOrdersRes.data as PendingOrderRow[] | null) ?? [];
+      recentEnquiries = (enquiriesRes.data as EnquiryRow[] | null) ?? [];
+    } else {
+      dataError = true;
+    }
+  } catch {
+    dataError = true;
+  }
+
   const lowStockCount = lowStockRows.length;
-
-  const pendingOrders = (pendingOrdersRes.data as PendingOrderRow[] | null) ?? [];
-  const recentEnquiries = (enquiriesRes.data as EnquiryRow[] | null) ?? [];
 
   return (
     <>
@@ -182,6 +214,17 @@ export default async function AdminDashboardPage() {
       />
 
       <AdminContent>
+        {dataError ? (
+          <AdminSection>
+            <div className="max-w-[640px] rounded-card border border-fo-line bg-white p-6">
+              <p className="text-[0.9rem] text-fo-muted">
+                Admin data is unavailable. Confirm SUPABASE_SERVICE_ROLE_KEY is
+                set in the environment.
+              </p>
+            </div>
+          </AdminSection>
+        ) : (
+          <>
         {/* Metrics ----------------------------------------------------------- */}
         <AdminSection>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
@@ -354,6 +397,8 @@ export default async function AdminDashboardPage() {
             </tbody>
           </TableWrap>
         </AdminSection>
+          </>
+        )}
 
         {/* Product publish checklist note ------------------------------------ */}
         <AdminSection>
