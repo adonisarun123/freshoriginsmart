@@ -4,7 +4,10 @@ import { getCart } from "@/features/cart/queries";
 import { formatINR, discountPercent } from "@/lib/commerce/format";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import Image from "next/image";
-import { Placeholder } from "@/components/ui/Placeholder";
+import {
+  Illustration,
+  productIllustration,
+} from "@/components/brand/Illustration";
 import { resolveProductImageUrl } from "@/lib/commerce/product-image";
 import { Section } from "@/components/content/Section";
 import { CartLineControls } from "@/features/cart/CartLineControls";
@@ -67,9 +70,10 @@ export default async function CartPage() {
                             />
                           </div>
                         ) : (
-                          <Placeholder
-                            label={line.productName}
-                            className="h-[88px] w-[88px] text-[0.62rem]"
+                          <Illustration
+                            name={productIllustration({ slug: line.slug })}
+                            title={line.productName}
+                            className="h-[88px] w-[88px]"
                           />
                         )}
                       </Link>
@@ -208,7 +212,7 @@ export default async function CartPage() {
 function EmptyCart() {
   return (
     <div className="fo-card my-8 flex flex-col items-center gap-4 p-12 text-center">
-      <Placeholder label="Fresh Origins" className="h-24 w-24" />
+      <Illustration name="bowl" title="Fresh Origins" className="h-24 w-24" />
       <h3 className="text-[1.3rem]">Your cart is empty</h3>
       <p className="max-w-md text-fo-muted">
         Explore our purposeful millet blends, traditional rice, and ready-to-cook

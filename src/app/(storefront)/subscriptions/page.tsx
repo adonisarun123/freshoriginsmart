@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section, SectionHead } from "@/components/content/Section";
 import { Disclaimer } from "@/components/content/Disclaimer";
-import { Placeholder } from "@/components/ui/Placeholder";
+import {
+  Illustration,
+  type IllustrationName,
+} from "@/components/brand/Illustration";
 
 export const metadata: Metadata = {
   title: "Subscriptions — Coming soon",
@@ -10,31 +13,41 @@ export const metadata: Metadata = {
     "Fresh Origins subscriptions are coming soon — monthly essentials chosen by meal preference and household size. Join the waitlist to hear when our subscription boxes launch.",
 };
 
-const boxes = [
+const boxes: {
+  name: string;
+  label: string;
+  desc: string;
+  illustration: IllustrationName;
+}[] = [
   {
     name: "Monthly Family Staples Box",
     label: "Monthly Family Staples Box — millets, rice & mixes",
     desc: "A reliable monthly refill of everyday grains, rice and ready-to-cook mixes for the whole household.",
+    illustration: "mixes",
   },
   {
     name: "Millet Breakfast Box",
     label: "Millet Breakfast Box — breakfast grains & blends",
     desc: "Breakfast-friendly millets, porridge bases and quick mixes to start the day with traditional grains.",
+    illustration: "millets",
   },
   {
     name: "Protein & Fibre Box",
     label: "Protein & Fibre Box — high-protein, high-fibre staples",
     desc: "A selection chosen around protein and fibre — pulses, blends and grains for fuller, balanced meals.",
+    illustration: "goal",
   },
   {
     name: "Senior-Friendly Staples Box",
     label: "Senior-Friendly Staples Box — gentle, easy-to-cook staples",
     desc: "Easy-to-digest, easy-to-cook staples thoughtfully selected for older family members.",
+    illustration: "bowl",
   },
   {
     name: "Custom recurring basket",
     label: "Custom recurring basket — your own chosen items",
     desc: "Build your own basket from our range and have exactly what you want delivered on repeat.",
+    illustration: "rice",
   },
 ];
 
@@ -90,7 +103,11 @@ export default function SubscriptionsPage() {
               <span className="absolute right-4 top-4 rounded-pill bg-fo-sage-100 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.05em] text-fo-green-900">
                 Planned
               </span>
-              <Placeholder ratio="4x3" label={box.label} className="mb-4" />
+              <Illustration
+                name={box.illustration}
+                title={box.label}
+                className="mb-4 aspect-[4/3]"
+              />
               <h2 className="mb-1.5 text-[1.1rem]">{box.name}</h2>
               <p className="m-0 text-[0.9rem] text-fo-muted">{box.desc}</p>
             </div>

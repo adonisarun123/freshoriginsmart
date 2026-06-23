@@ -6,7 +6,7 @@ import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import { formatINR } from "@/lib/commerce/format";
 import { buildWhatsAppUrl } from "@/lib/whatsapp/order-message";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { Illustration } from "@/components/brand/Illustration";
 
 export const dynamic = "force-dynamic";
 
@@ -184,9 +184,10 @@ export default async function OrderSummaryPage({
                   key={`${item.sku ?? item.product_name}-${i}`}
                   className="grid grid-cols-[64px_1fr_auto] items-center gap-4 border-b border-fo-line py-3 last:border-b-0"
                 >
-                  <Placeholder
-                    label={item.product_name}
-                    className="h-16 w-16 text-[0.6rem]"
+                  <Illustration
+                    name="mixes"
+                    title={item.product_name}
+                    className="h-16 w-16"
                   />
                   <div>
                     <h4 className="mb-0.5 text-[0.98rem]">{item.product_name}</h4>

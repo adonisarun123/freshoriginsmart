@@ -1,0 +1,30 @@
+version: 2
+updates:
+  # npm dependencies
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    groups:
+      # Batch low-risk updates into one PR to reduce noise.
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # Next.js majors often need manual migration — handle deliberately.
+      - dependency-name: next
+        update-types: ["version-update:semver-major"]
+
+  # Keep GitHub Actions versions current
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - ci
