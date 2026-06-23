@@ -2,8 +2,17 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { primaryNav } from "@/config/navigation";
 import { CartButton } from "@/components/commerce/CartButton";
+import { getCart } from "@/features/cart/queries";
 
-export function Header() {
+export async function Header() {
+  let cartCount = 0;
+  try {
+    const cart = await getCart();
+    cartCount = cart.itemCount;
+  } catch {
+    // Cart unavailable (e.g. Supabase not configured) — show an empty badge.
+  }
+
   return (
     <header className="sticky top-0 z-[100] border-b border-fo-line bg-fo-cream-50/90 backdrop-blur">
       <div className="fo-container flex items-center gap-6 py-3.5">
@@ -34,7 +43,7 @@ export function Header() {
           >
             ☻
           </Link>
-          <CartButton />
+          <CartButton count={cartCount} />
         </div>
       </div>
     </header>

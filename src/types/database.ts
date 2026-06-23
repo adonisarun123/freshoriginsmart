@@ -86,6 +86,44 @@ export interface ProductWithVariants extends Product {
   product_variants: ProductVariant[];
 }
 
+/** Structured PDP content stored in products.description (see migration 0009). */
+export interface ProductContent {
+  positioning?: string;
+  why?: string;
+  benefits?: string[];
+  cooking?: { title: string; steps: string[] }[];
+  cookingNotes?: string[];
+  fopClaims?: string[];
+  faq?: { q: string; a: string }[];
+}
+
+export interface ProductIngredient {
+  percentage: number | null;
+  label_order: number;
+  display_name_override: string | null; // carries the functional role
+  ingredients: { common_name: string; allergen_flag: boolean } | null;
+}
+
+export interface NutritionFacts {
+  serving_size_value: number | null;
+  serving_size_unit: string | null;
+  servings_per_pack: number | null;
+  energy_kcal_100g: number | null;
+  energy_kcal_serving: number | null;
+  protein_g_100g: number | null;
+  protein_g_serving: number | null;
+  carbohydrate_g_100g: number | null;
+  dietary_fibre_g_100g: number | null;
+  dietary_fibre_g_serving: number | null;
+  fat_g_100g: number | null;
+  status: NutritionStatus;
+}
+
+export interface ProductDetail extends ProductWithVariants {
+  product_ingredients: ProductIngredient[];
+  nutrition_facts: NutritionFacts[];
+}
+
 export interface Category {
   id: string;
   name: string;

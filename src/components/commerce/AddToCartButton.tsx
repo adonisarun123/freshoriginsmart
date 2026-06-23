@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { addToCart } from "@/features/cart/actions";
+import { track } from "@/lib/analytics/track";
 
 export function AddToCartButton({
   variantId,
@@ -16,6 +17,7 @@ export function AddToCartButton({
   function handleAdd() {
     startTransition(async () => {
       await addToCart(variantId, 1);
+      track("add_to_cart", { variantId });
       setAdded(true);
       setTimeout(() => setAdded(false), 1800);
     });

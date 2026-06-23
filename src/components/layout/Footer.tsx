@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { footerColumns, policyLinks } from "@/config/navigation";
 import { site } from "@/config/site";
+import { NewsletterForm } from "@/features/forms/NewsletterForm";
 
 export function Footer() {
   return (
@@ -15,6 +16,14 @@ export function Footer() {
             <p className="max-w-[34ch] text-[0.9rem] text-[#c8ddce]">
               {site.positioning}
             </p>
+            <div className="mt-6 max-w-[34ch] rounded-card border border-white/15 bg-white/[0.06] p-6">
+              <strong className="text-white">Join our newsletter</strong>
+              <p className="mb-3 mt-1.5 text-[0.85rem] text-[#c8ddce]">
+                Practical recipes, grain education, and new-product updates —
+                without wellness noise.
+              </p>
+              <NewsletterForm source="footer" />
+            </div>
           </div>
           {footerColumns.map((col) => (
             <div key={col.title}>

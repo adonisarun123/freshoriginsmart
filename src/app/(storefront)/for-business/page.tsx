@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Section, SectionHead } from "@/components/content/Section";
 import { WhatsAppButton } from "@/components/commerce/WhatsAppButton";
+import { EnquiryForm } from "@/features/forms/EnquiryForm";
 
 export const metadata: Metadata = {
   title: "For Business — Partnerships & Enquiries",
@@ -113,18 +113,7 @@ export default function ForBusinessPage() {
               review — not paid medical endorsement.
             </p>
           </div>
-          <div className="rounded-card border border-fo-line bg-white p-6">
-            <h3 className="text-[1.1rem]">Start your enquiry</h3>
-            <p className="mb-4 text-[0.9rem] text-fo-muted">
-              A tailored enquiry form (retail, distributor, corporate, and professional)
-              is coming to this page. In the meantime, get in touch through our contact
-              channels and tell us your partner type — we&apos;ll send the right next
-              steps.
-            </p>
-            <Link href="/contact" className="fo-btn-primary">
-              Contact us
-            </Link>
-          </div>
+          <EnquiryForm />
         </div>
       </Section>
     </>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section, SectionHead } from "@/components/content/Section";
 import { WhatsAppButton } from "@/components/commerce/WhatsAppButton";
+import { ContactForm } from "@/features/forms/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact & FAQ",
@@ -84,21 +85,8 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* WhatsApp-first note */}
-          <div className="rounded-card border border-fo-line bg-fo-cream-50 p-6">
-            <h2 className="text-[1.2rem]">Send us a message</h2>
-            <p className="mb-4 text-[0.9rem] text-fo-muted">
-              The quickest way to get help with an order, a product question, or
-              serviceability is to message us on WhatsApp. We aim to reply within one
-              working day. A full contact form will be added to this page before launch.
-            </p>
-            <ul className="grid gap-2 text-[0.9rem] text-fo-muted">
-              <li>• Order help &amp; delivery status</li>
-              <li>• Product &amp; ingredient questions</li>
-              <li>• Delivery &amp; serviceability checks</li>
-              <li>• Feedback &amp; suggestions</li>
-            </ul>
-          </div>
+          {/* Contact form */}
+          <ContactForm />
         </div>
       </Section>
 

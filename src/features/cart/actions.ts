@@ -8,7 +8,7 @@ import {
   readCartToken,
   hashToken,
 } from "@/features/cart/cart-token";
-import { cartItemSchema } from "@/lib/validation/schemas";
+import { cartItemSchema, cartContactSchema } from "@/lib/validation/schemas";
 
 /** Finds or creates the active cart for the current user/guest. */
 async function resolveCartId(): Promise<string> {
@@ -112,6 +112,60 @@ export async function removeCartItem(itemId: string) {
   const admin = createAdminClient();
   await admin.from("cart_items").delete().eq("id", itemId);
   revalidatePath("/cart");
+  return { ok: true };
+}
+
+/**
+ * Saves an OPT-IN contact email (and optional name) onto the active cart so we
+ * can follow up on abandoned carts. Only stored with explicit consent
+ * (spec §52 / privacy). Does not create a cart if none exists.
+ */
+export async function saveCartContact(input: {
+  email: string;
+  name?: string;
+  marketingConsent: boolean;
+}) {
+  const parsed = cartContactSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Enter a valid email." };
+
+  const admin = createAdminClient();
+  const ssr = createClient();
+  const {
+    data: { user },
+  } = await ssr.auth.getUser();
+
+  let cartId: string | null = null;
+  if (user) {
+    const { data } = await admin
+      .from("carts")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("status", "active")
+      .maybeSingle();
+    cartId = data?.id ?? null;
+  } else {
+    const token = readCartToken();
+    if (token) {
+      const { data } = await admin
+        .from("carts")
+        .select("id")
+        .eq("guest_token_hash", hashToken(token))
+        .eq("status", "active")
+        .maybeSingle();
+      cartId = data?.id ?? null;
+    }
+  }
+  if (!cartId) return { ok: false, error: "No active cart." };
+
+  await admin
+    .from("carts")
+    .update({
+      contact_email: parsed.data.email,
+      contact_name: parsed.data.name ?? null,
+      marketing_consent: parsed.data.marketingConsent,
+    })
+    .eq("id", cartId);
+
   return { ok: true };
 }
 

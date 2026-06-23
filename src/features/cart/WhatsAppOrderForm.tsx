@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/analytics/track";
 
 interface OrderResult {
   ok: boolean;
@@ -41,6 +42,7 @@ export function WhatsAppOrderForm({ cartId }: { cartId: string }) {
     };
 
     try {
+      track("begin_whatsapp_order");
       const res = await fetch("/api/whatsapp-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

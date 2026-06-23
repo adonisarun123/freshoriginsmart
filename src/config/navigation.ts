@@ -61,6 +61,7 @@ export const adminNav: NavItem[] = [
   { label: "Categories", href: "/admin/categories" },
   { label: "Inventory", href: "/admin/inventory" },
   { label: "Orders", href: "/admin/orders" },
+  { label: "Abandoned Carts", href: "/admin/abandoned-carts" },
   { label: "Customers", href: "/admin/customers" },
   { label: "Enquiries", href: "/admin/enquiries" },
   { label: "Discounts", href: "/admin/discounts" },

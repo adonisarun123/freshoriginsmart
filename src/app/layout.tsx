@@ -5,6 +5,7 @@ import { site } from "@/config/site";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -53,6 +54,7 @@ export default function RootLayout({
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <GoogleAnalytics />
       </body>
     </html>
   );

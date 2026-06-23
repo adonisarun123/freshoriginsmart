@@ -6,6 +6,7 @@ import type {
   Category,
   HealthGoal,
   ProductWithVariants,
+  ProductDetail,
 } from "@/types/database";
 
 const PRODUCT_SELECT = "*, product_variants(*)";
@@ -77,6 +78,31 @@ export async function getProductBySlug(
     .eq("status", "active")
     .maybeSingle();
   return data ? sortVariants(data as ProductWithVariants) : null;
+}
+
+/** Full product detail incl. ingredient composition + nutrition for the PDP. */
+export async function getProductDetail(
+  slug: string,
+): Promise<ProductDetail | null> {
+  if (!hasSupabaseEnv()) return null;
+  const supabase = createClient();
+  const { data } = await supabase
+    .from("products")
+    .select(
+      "*, product_variants(*), product_ingredients(percentage, label_order, display_name_override, ingredients(common_name, allergen_flag)), nutrition_facts(*)",
+    )
+    .eq("slug", slug)
+    .eq("status", "active")
+    .maybeSingle();
+  if (!data) return null;
+  const detail = data as unknown as ProductDetail;
+  detail.product_variants = (detail.product_variants ?? [])
+    .filter((v) => v.active)
+    .sort((a, b) => a.sort_order - b.sort_order);
+  detail.product_ingredients = (detail.product_ingredients ?? []).sort(
+    (a, b) => a.label_order - b.label_order,
+  );
+  return detail;
 }
 
 export async function getProductSlugs(): Promise<string[]> {

@@ -54,5 +54,11 @@ export const newsletterSchema = z.object({
   source: z.string().trim().max(80).optional(),
 });
 
+export const cartContactSchema = z.object({
+  email: z.string().trim().email(),
+  name: z.string().trim().max(120).optional(),
+  marketingConsent: z.boolean(),
+});
+
 export type WhatsAppOrderInput = z.infer<typeof whatsappOrderSchema>;
 export type EnquiryInput = z.infer<typeof enquirySchema>;

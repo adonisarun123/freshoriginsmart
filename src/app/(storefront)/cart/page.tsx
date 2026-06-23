@@ -8,6 +8,7 @@ import { Section } from "@/components/content/Section";
 import { CartLineControls } from "@/features/cart/CartLineControls";
 import { PincodeCheck } from "@/features/cart/PincodeCheck";
 import { WhatsAppOrderForm } from "@/features/cart/WhatsAppOrderForm";
+import { CartContactCapture } from "@/features/cart/CartContactCapture";
 
 // Reads the per-user / guest cart (cookies) — never prerender at build time.
 export const dynamic = "force-dynamic";
@@ -98,6 +99,10 @@ export default async function CartPage() {
                 <Link href="/shop" className="fo-btn-secondary">
                   ← Continue shopping
                 </Link>
+              </div>
+
+              <div className="mt-6">
+                <CartContactCapture />
               </div>
             </section>
 

@@ -39,15 +39,19 @@ export default function PrivacyPage() {
         We collect information you give us directly — such as your name, phone number,
         email address, and delivery address when you place an order or make an enquiry —
         and basic technical information (such as device and usage data) collected
-        automatically as you browse.
+        automatically as you browse. If you choose to save your cart, we store the email
+        you provide so we can hold your cart and, only if you opt in, send you a reminder.
+        We also record anonymous behavioural events (such as products viewed or added to
+        cart) to understand and improve the website; these are not used to identify you.
       </p>
 
       <h2 id="how-we-use">2. How we use your data</h2>
       <p>
         We use your information to process and deliver orders, respond to enquiries,
         provide customer support, improve our products and website, and — where you have
-        opted in — send you updates. We process WhatsApp orders to confirm availability,
-        delivery charge, and delivery details.
+        opted in — send you updates and cart reminders. We process WhatsApp orders to
+        confirm availability, delivery charge, and delivery details. You can withdraw
+        marketing consent or unsubscribe at any time.
       </p>
 
       <h2 id="sharing">3. Sharing &amp; processors</h2>
