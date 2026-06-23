@@ -4,46 +4,35 @@ The app shows a real packshot on the shop cards, product page, and cart when a
 product has an `image_url`. Products without one fall back to the brand SVG
 illustration automatically — so nothing breaks if an image is missing.
 
-Images live in a **public Supabase Storage bucket** called `product-images`.
-The database stores just the file name (e.g. `metabolic-balance-khichdi.png`);
-the app builds the full public URL from `NEXT_PUBLIC_SUPABASE_URL` at render time.
+Images are hosted on **ImageKit** (`ik.imagekit.io/freshoriginsmart/...`). The
+database stores the **full image URL**, and the app uses it directly. (The
+resolver also accepts Supabase Storage paths or `/public` paths if you ever
+switch hosts.)
 
-## One-time: create the bucket
+## Current 4 packshots
 
-1. Supabase dashboard → **Storage** → **New bucket**.
-2. Name it exactly `product-images`.
-3. Turn **Public bucket** ON (so images load without auth). Create.
+| Product (slug)                          | Image URL                                                                  |
+| --------------------------------------- | -------------------------------------------------------------------------- |
+| `metabolic-balance-khichdi`             | `https://ik.imagekit.io/freshoriginsmart/Products/kichdi-fresh-origins.png`  |
+| `protein-and-fibre-adai-mix`            | `https://ik.imagekit.io/freshoriginsmart/Products/adai-mix-fresh-origins.png` |
+| `gluten-free-protein-and-fibre-roti-mix`| `https://ik.imagekit.io/freshoriginsmart/Products/roti-mix-fresh-origins.png` |
+| `heritage-gut-fibre-kanji-mix`          | `https://ik.imagekit.io/freshoriginsmart/Products/kanji-mix-fresh-origins.png`|
 
-## Upload the 4 packshots
+These are set by migration **`0010_product_images.sql`** (also folded into
+`setup_all.sql`). If the column already exists, just run the four `update`
+statements from that file in the Supabase SQL Editor.
 
-Drag the 4 files into the bucket. **File names must match exactly** (lowercase,
-`.png`):
+## Allowed image host
 
-| Product (slug)                              | File name to upload                          |
-| ------------------------------------------- | -------------------------------------------- |
-| Metabolic Balance Khichdi                   | `metabolic-balance-khichdi.png`              |
-| Protein & Fibre Adai Mix                    | `protein-and-fibre-adai-mix.png`             |
-| Gluten-Free Protein & Fibre Roti Mix        | `gluten-free-protein-and-fibre-roti-mix.png` |
-| Heritage Gut-Fibre Kanji Mix                | `heritage-gut-fibre-kanji-mix.png`           |
-
-> If you upload with different names, either rename them to match the table, or
-> change the `image_url` value for that product (see below).
-
-## Tell the database which file belongs to which product
-
-Run migration **`0010_product_images.sql`** once (Supabase → SQL Editor → paste
-the file contents → Run). It adds the `image_url` column and sets the 4 values
-above. If you've already run the full `setup_all.sql`, it now includes 0010 too.
-
-## Verifying
-
-Open `https://<your-project-ref>.supabase.co/storage/v1/object/public/product-images/metabolic-balance-khichdi.png`
-in a browser — you should see the image. Then reload the live site; the 4
-products will show photos, the other 2 keep the illustration until you add theirs.
+`next.config.mjs` whitelists `ik.imagekit.io/freshoriginsmart/**` under
+`images.remotePatterns`. If you move images to a new host/account, add that host
+there too — otherwise `next/image` will refuse to load it.
 
 ## Adding more later
 
-1. Upload `your-file.png` to the `product-images` bucket.
-2. In SQL Editor: `update products set image_url = 'your-file.png' where slug = '<product-slug>';`
+1. Upload the file to ImageKit and copy its full URL.
+2. In the Supabase SQL Editor:
+   `update products set image_url = '<full-url>' where slug = '<product-slug>';`
 
-That's it — no redeploy needed, since images are served from Storage, not the app.
+No redeploy needed for new images on an already-allowed host. (A redeploy *is*
+needed if you add a brand-new host to `next.config.mjs`.)
