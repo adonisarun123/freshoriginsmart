@@ -64,6 +64,7 @@ export interface Product {
   slug: string;
   short_description: string | null;
   description: unknown | null;
+  image_url: string | null;
   product_type: ProductType;
   status: PublishStatus;
   featured: boolean;

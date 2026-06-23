@@ -16,6 +16,7 @@ export interface CartLineView {
   mrpPaise: number;
   quantity: number;
   slug: string;
+  imageUrl: string | null;
 }
 
 export interface CartView {
@@ -72,7 +73,7 @@ export async function getCart(): Promise<CartView> {
   const { data: items } = await admin
     .from("cart_items")
     .select(
-      "id, quantity, variant_id, product_variants(id, sku, title, mrp_paise, selling_price_paise, products(id, name, slug))",
+      "id, quantity, variant_id, product_variants(id, sku, title, mrp_paise, selling_price_paise, products(id, name, slug, image_url))",
     )
     .eq("cart_id", cartId);
 
@@ -83,7 +84,12 @@ export async function getCart(): Promise<CartView> {
       title: string;
       mrp_paise: number;
       selling_price_paise: number;
-      products: { id: string; name: string; slug: string };
+      products: {
+        id: string;
+        name: string;
+        slug: string;
+        image_url: string | null;
+      };
     };
     return {
       itemId: it.id,
@@ -96,6 +102,7 @@ export async function getCart(): Promise<CartView> {
       mrpPaise: v.mrp_paise,
       quantity: it.quantity,
       slug: v.products.slug,
+      imageUrl: v.products.image_url,
     };
   });
 

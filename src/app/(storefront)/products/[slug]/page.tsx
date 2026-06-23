@@ -3,11 +3,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Disclaimer } from "@/components/content/Disclaimer";
 import { Accordion } from "@/components/content/Accordion";
-import { Placeholder } from "@/components/ui/Placeholder";
-import {
-  Illustration,
-  productIllustration,
-} from "@/components/brand/Illustration";
+import { ProductImage } from "@/components/commerce/ProductImage";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { productJsonLd, breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { productBadges } from "@/lib/commerce/badges";
@@ -102,22 +98,11 @@ export default async function ProductPage({ params }: PageProps) {
       <div className="grid items-start gap-12 pt-6 md:grid-cols-2">
         {/* Gallery */}
         <div className="md:sticky md:top-[90px]">
-          <Illustration
-            name={productIllustration(product)}
-            className="mb-3 aspect-square rounded-card"
-            title={product.name}
+          <ProductImage
+            product={product}
+            priority
+            sizes="(min-width: 768px) 520px, 90vw"
           />
-          <div className="grid grid-cols-5 gap-2.5">
-            {["Front", "Back", "Ingredients", "Cooked dish", "Origin"].map(
-              (thumb, i) => (
-                <Placeholder
-                  key={thumb}
-                  label={thumb}
-                  className={`!text-[0.65rem] ${i === 0 ? "ring-2 ring-fo-green-900" : ""}`}
-                />
-              ),
-            )}
-          </div>
         </div>
 
         {/* Buy box */}

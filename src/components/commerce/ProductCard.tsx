@@ -1,8 +1,5 @@
 import Link from "next/link";
-import {
-  Illustration,
-  productIllustration,
-} from "@/components/brand/Illustration";
+import { ProductImage } from "@/components/commerce/ProductImage";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { WhatsAppButton } from "@/components/commerce/WhatsAppButton";
 import { formatINR, discountPercent } from "@/lib/commerce/format";
@@ -28,10 +25,9 @@ export function ProductCard({ product }: { product: ProductWithVariants }) {
           </div>
         )}
         <Link href={`/products/${product.slug}`}>
-          <Illustration
-            name={productIllustration(product)}
-            className="aspect-square"
-            title={product.name}
+          <ProductImage
+            product={product}
+            sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw"
           />
         </Link>
       </div>

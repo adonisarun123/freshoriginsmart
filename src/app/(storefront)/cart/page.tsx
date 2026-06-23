@@ -3,7 +3,9 @@ import Link from "next/link";
 import { getCart } from "@/features/cart/queries";
 import { formatINR, discountPercent } from "@/lib/commerce/format";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
+import Image from "next/image";
 import { Placeholder } from "@/components/ui/Placeholder";
+import { resolveProductImageUrl } from "@/lib/commerce/product-image";
 import { Section } from "@/components/content/Section";
 import { CartLineControls } from "@/features/cart/CartLineControls";
 import { PincodeCheck } from "@/features/cart/PincodeCheck";
@@ -54,10 +56,22 @@ export default async function CartPage() {
                       className="grid grid-cols-[88px_1fr_auto] items-center gap-4 border-b border-fo-line p-4 last:border-b-0"
                     >
                       <Link href={`/products/${line.slug}`} aria-hidden="false">
-                        <Placeholder
-                          label={line.productName}
-                          className="h-[88px] w-[88px] text-[0.62rem]"
-                        />
+                        {resolveProductImageUrl(line.imageUrl) ? (
+                          <div className="relative h-[88px] w-[88px] overflow-hidden rounded-card bg-fo-cream-50">
+                            <Image
+                              src={resolveProductImageUrl(line.imageUrl)!}
+                              alt={line.productName}
+                              fill
+                              sizes="88px"
+                              className="object-contain"
+                            />
+                          </div>
+                        ) : (
+                          <Placeholder
+                            label={line.productName}
+                            className="h-[88px] w-[88px] text-[0.62rem]"
+                          />
+                        )}
                       </Link>
                       <div>
                         <h4 className="mb-0.5 text-[1rem]">
