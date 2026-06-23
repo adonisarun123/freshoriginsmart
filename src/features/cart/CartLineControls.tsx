@@ -46,7 +46,7 @@ export function CartLineControls({
           aria-label="Decrease quantity"
           disabled={isPending || qty <= 1}
           onClick={() => change(qty - 1)}
-          className="h-[34px] w-[34px] bg-white text-[1.1rem] text-fo-green-900 disabled:opacity-40"
+          className="grid h-11 w-11 place-items-center bg-white text-[1.1rem] text-fo-green-900 disabled:opacity-40"
         >
           −
         </button>
@@ -58,7 +58,7 @@ export function CartLineControls({
           aria-label="Increase quantity"
           disabled={isPending || qty >= 50}
           onClick={() => change(qty + 1)}
-          className="h-[34px] w-[34px] bg-white text-[1.1rem] text-fo-green-900 disabled:opacity-40"
+          className="grid h-11 w-11 place-items-center bg-white text-[1.1rem] text-fo-green-900 disabled:opacity-40"
         >
           +
         </button>

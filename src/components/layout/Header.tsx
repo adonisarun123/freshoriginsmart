@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { primaryNav } from "@/config/navigation";
 import { CartButton } from "@/components/commerce/CartButton";
+import { MobileNav } from "@/components/layout/MobileNav";
+import { Icon } from "@/components/ui/Icon";
 import { getCart } from "@/features/cart/queries";
 
 export async function Header() {
@@ -30,20 +32,14 @@ export async function Header() {
         </nav>
         <div className="ml-auto flex items-center gap-3 lg:ml-0">
           <Link
-            href="/search"
-            aria-label="Search"
-            className="grid h-[42px] w-[42px] place-items-center rounded-xl border-[1.5px] border-fo-line bg-white text-fo-green-900 hover:bg-fo-sage-100"
-          >
-            ⌕
-          </Link>
-          <Link
             href="/account"
             aria-label="Account"
             className="grid h-[42px] w-[42px] place-items-center rounded-xl border-[1.5px] border-fo-line bg-white text-fo-green-900 hover:bg-fo-sage-100"
           >
-            ☻
+            <Icon name="user" size={20} />
           </Link>
           <CartButton count={cartCount} />
+          <MobileNav />
         </div>
       </div>
     </header>

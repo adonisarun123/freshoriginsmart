@@ -26,6 +26,7 @@ const config: Config = {
           whatsapp: "var(--fo-whatsapp)",
           line: "var(--fo-line)",
           muted: "var(--fo-muted)",
+          accent: "var(--fo-accent)",
         },
       },
       fontFamily: {

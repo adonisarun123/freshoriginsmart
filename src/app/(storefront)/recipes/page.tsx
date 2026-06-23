@@ -81,7 +81,7 @@ export default function RecipesPage() {
               <div className="p-5">
                 <h2 className="mb-1 text-[1.05rem]">{recipe.title}</h2>
                 <p className="mb-1.5 text-[0.85rem] text-fo-muted">{recipe.desc}</p>
-                <p className="m-0 text-[0.82rem] font-semibold text-fo-green-600">
+                <p className="m-0 text-[0.82rem] font-semibold text-fo-accent">
                   {recipe.meta}
                 </p>
               </div>

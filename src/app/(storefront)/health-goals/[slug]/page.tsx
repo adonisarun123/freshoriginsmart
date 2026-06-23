@@ -50,10 +50,11 @@ export default async function HealthGoalPage({ params }: PageProps) {
   if (!goal) notFound();
 
   const products = await getProductsForHealthGoal(goal.id);
+  const goalName = goal.name.toLowerCase();
 
   return (
     <>
-      {/* Hero */}
+      {/* 1. Hero */}
       <section className="bg-fo-sage-100 py-16">
         <div className="fo-container max-w-[900px]">
           <Breadcrumbs
@@ -67,62 +68,67 @@ export default async function HealthGoalPage({ params }: PageProps) {
             {goal.icon ?? "◎"}
           </div>
           <p className="fo-eyebrow mt-4">Health goal · Educational guidance</p>
-          <h1 className="mb-4">Food choices for {goal.name.toLowerCase()}</h1>
-          <p className="mb-0 text-[1.1rem] text-fo-muted">{goal.summary}</p>
+          <h1 className="mb-4 text-[clamp(2.1rem,4.4vw,3.1rem)]">
+            Food choices for {goalName}
+          </h1>
+          <p className="mb-0 max-w-[58ch] text-[1.1rem] text-fo-muted">
+            {goal.summary ??
+              `Everyday foods, grouped to help you build meals around ${goalName} — practical guidance, not medical treatment.`}
+          </p>
         </div>
       </section>
 
-      {/* AEO answer block + editorial */}
+      {/* 2. AEO "In short" answer block + editorial */}
       <Section>
         <div className="max-w-editorial">
           <div className="mb-12 rounded-card border border-fo-line border-l-4 border-l-fo-green-600 bg-white p-6 shadow-soft">
-            <span className="mb-2 block text-[0.78rem] font-bold uppercase tracking-[0.06em] text-fo-green-600">
+            <span className="mb-2 block text-[0.78rem] font-bold uppercase tracking-[0.06em] text-fo-accent">
               In short
             </span>
             <p className="m-0 text-[1.08rem]">
-              {goal.name} is best supported by an overall pattern of meals rather than
-              any single ingredient — choosing whole grains over refined ones where you
-              can, combining grains with pulses, and including vegetables and seeds.
-              Fresh Origins formulates several ready-to-cook staples around this
-              pattern, so familiar Indian meals carry more of what this goal needs per
-              serving.
+              {capitalise(goalName)} is supported by your overall pattern of
+              meals rather than any single ingredient. Choosing whole grains over
+              refined ones where you can, combining grains with pulses, and
+              including vegetables and seeds all help. Fresh Origins builds several
+              ready-to-cook staples around this pattern, so familiar Indian meals
+              can carry more of what this theme calls for, per serving.
             </p>
           </div>
 
+          {/* 3. What this goal means + how food fits */}
           <h2 className="text-[1.6rem]">What this goal means</h2>
           <p>
-            A {goal.name.toLowerCase()} approach isn&apos;t about a single
-            &ldquo;super&rdquo; ingredient. It&apos;s about the overall pattern of your
-            meals: choosing whole grains over refined ones where you can, combining
-            grains with pulses, and including vegetables and seeds. Done consistently,
-            this pattern tends to make meals more satisfying and supports a balanced
+            A {goalName} approach isn&apos;t about a single &ldquo;super&rdquo;
+            ingredient. It&apos;s about the overall pattern of your meals: choosing
+            whole grains over refined ones where you can, combining grains with
+            pulses, and including vegetables and seeds. Done consistently, this
+            pattern tends to make meals more satisfying and supports a balanced
             diet.
           </p>
 
-          <h3 className="text-[1.2rem]">The role of whole grains and pulses</h3>
+          <h3 className="mt-8 text-[1.2rem]">How food choices fit</h3>
           <p>
-            Millets and whole grains contribute dietary fibre and contribute to the
-            protein in a meal. Pulses — moong, chana, urad and others — add
+            Whole grains and millets contribute dietary fibre and add to the
+            protein in a meal. Pulses — moong, chana, urad and others — bring
             complementary plant protein. Eating them together across the day is a
-            long-standing feature of Indian cooking, from adai to khichdi to dal-rice.
+            long-standing feature of Indian cooking, from adai to khichdi to
+            dal-rice.
           </p>
-
-          <h3 className="text-[1.2rem]">How to use them in a balanced meal</h3>
           <p>
-            Build a plate around a whole-grain or millet base, add a pulse element, and
-            include a vegetable and a healthy fat such as a small amount of ghee, nuts,
-            or seeds. Keep portions reasonable and vary your grains across the week
-            rather than relying on one.
+            Small, repeatable swaps usually matter more than dramatic changes.
+            Varying your grains across the week, keeping refined flour and added
+            sugar to a minimum, and pairing staples with vegetables are everyday
+            habits that align well with a {goalName} pattern.
           </p>
         </div>
       </Section>
 
-      {/* Relevant products */}
+      {/* 4. Relevant products */}
       {products.length > 0 && (
         <Section tight surface>
           <SectionHead
             eyebrow="Products that may fit this goal"
-            title={`Staples for ${goal.name.toLowerCase()}`}
+            title={`Staples for ${goalName}`}
           >
             <p className="mt-3 text-[0.9rem] text-fo-muted">
               Each product appears here because it has a documented, reviewed
@@ -137,8 +143,38 @@ export default async function HealthGoalPage({ params }: PageProps) {
         </Section>
       )}
 
-      {/* Expert reviewer */}
+      {/* 5. How to use them in a balanced meal */}
       <Section tight>
+        <SectionHead
+          eyebrow="Putting it on the plate"
+          title="How to use them in a balanced meal"
+        />
+        <div className="max-w-editorial">
+          <p>
+            Build a plate around a whole-grain or millet base, add a pulse element,
+            and include a vegetable plus a healthy fat such as a small amount of
+            ghee, nuts, or seeds. Keep portions reasonable and rotate your grains
+            across the week rather than relying on one.
+          </p>
+          <ul className="mt-4 grid gap-2.5 text-[0.95rem]">
+            {[
+              "Start with a whole grain or millet you already enjoy.",
+              "Add a pulse — dal, sprouts, or a ready mix — for protein and fibre.",
+              "Fill the rest of the plate with vegetables and a little healthy fat.",
+            ].map((item) => (
+              <li key={item} className="flex gap-2.5">
+                <span aria-hidden="true" className="font-bold text-fo-green-600">
+                  ✓
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      {/* 6. Expert reviewer */}
+      <Section tight surface>
         <p className="fo-eyebrow">Reviewed for accuracy</p>
         <div className="flex max-w-editorial items-center gap-4 rounded-card border border-fo-line bg-white p-6">
           <div className="grid h-16 w-16 flex-none place-items-center rounded-full bg-fo-sage-100 text-[1.3rem] font-bold text-fo-green-900">
@@ -149,20 +185,20 @@ export default async function HealthGoalPage({ params }: PageProps) {
               Reviewed by [Registered Dietitian name]
             </h3>
             <p className="m-0 text-[0.88rem] text-fo-muted">
-              RD · Scope of review: nutritional accuracy of educational content on this
-              page. Reviewed [date]. Next review: [date].
+              RD · Scope of review: nutritional accuracy of educational content on
+              this page. Reviewed [date]. Next review: [date].
             </p>
           </div>
         </div>
-        <p className="mt-3 text-[0.9rem] text-fo-muted">
+        <p className="mt-3 max-w-editorial text-[0.9rem] text-fo-muted">
           Reviewer details shown are placeholders until an expert is formally
-          onboarded. The reviewer checks educational accuracy — this is not a medical
-          endorsement of any product.
+          onboarded. The reviewer checks educational accuracy — this is not a
+          medical endorsement of any product.
         </p>
       </Section>
 
-      {/* References */}
-      <Section tight surface>
+      {/* 7. References */}
+      <Section tight>
         <p className="fo-eyebrow">References</p>
         <div className="max-w-editorial text-[0.88rem] text-fo-muted">
           <ol className="list-decimal pl-5">
@@ -171,22 +207,22 @@ export default async function HealthGoalPage({ params }: PageProps) {
               source placeholder].
             </li>
             <li className="mb-1.5">
-              Plant protein and grain–pulse complementarity — [authoritative source
-              placeholder].
+              Plant protein and grain–pulse complementarity — [authoritative
+              source placeholder].
             </li>
             <li className="mb-1.5">
               FSSAI nutrition and labelling guidance — [reference placeholder].
             </li>
           </ol>
           <p>
-            Sources are placeholders pending the content-approval workflow (writer →
-            expert review → compliance review → published).
+            Sources are placeholders pending the content-approval workflow (writer
+            → expert review → compliance review → published).
           </p>
         </div>
       </Section>
 
-      {/* FAQ */}
-      <Section tight>
+      {/* 8. FAQ */}
+      <Section tight surface>
         <p className="fo-eyebrow">Questions</p>
         <h2 className="mb-6 text-[clamp(1.9rem,3.4vw,2.6rem)]">
           Frequently asked questions
@@ -207,15 +243,21 @@ export default async function HealthGoalPage({ params }: PageProps) {
         </div>
       </Section>
 
-      {/* Disclaimer */}
+      {/* 9. Disclaimer */}
       <Section tight>
-        <Disclaimer title="Educational information, not medical advice.">
-          This page explains general food choices and is not intended to diagnose,
-          treat, cure, or prevent any disease. Buying a product does not replace
-          medical care, medication, or professional dietary advice. Consult a qualified
-          healthcare professional for personalised guidance.
-        </Disclaimer>
+        <div className="max-w-editorial">
+          <Disclaimer title="Educational information, not medical advice.">
+            This page explains general food choices and is not intended to
+            diagnose, treat, cure, or prevent any disease. Buying a product does
+            not replace medical care, medication, or professional dietary advice.
+            Consult a qualified healthcare professional for personalised guidance.
+          </Disclaimer>
+        </div>
       </Section>
     </>
   );
+}
+
+function capitalise(value: string): string {
+  return value.length > 0 ? value[0].toUpperCase() + value.slice(1) : value;
 }

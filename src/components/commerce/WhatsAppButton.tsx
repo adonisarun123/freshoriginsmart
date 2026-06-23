@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WhatsAppIcon } from "@/components/ui/Icon";
 
 /**
  * Assisted-ordering action. Per spec §12.5 this must NOT match the visual
@@ -21,7 +22,7 @@ export function WhatsAppButton({
         small ? "min-h-[38px] px-4 py-2.5 text-[0.85rem]" : ""
       }`}
     >
-      <span className="inline-block h-[18px] w-[18px] rounded-full bg-fo-whatsapp" />
+      <WhatsAppIcon size={18} className="text-fo-whatsapp" />
       {!iconOnly && "Order on WhatsApp"}
     </Link>
   );

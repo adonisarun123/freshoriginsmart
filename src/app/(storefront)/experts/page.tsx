@@ -139,7 +139,7 @@ export default function ExpertsPage() {
                 RD
               </div>
               <h3 className="mb-0.5 text-[1.1rem]">[Registered Dietitian name]</h3>
-              <p className="mb-3 text-[0.82rem] font-bold text-fo-green-600">
+              <p className="mb-3 text-[0.82rem] font-bold text-fo-accent">
                 {expert.cred}
               </p>
               <p className="mb-4 text-[0.9rem] text-fo-muted">{expert.bio}</p>

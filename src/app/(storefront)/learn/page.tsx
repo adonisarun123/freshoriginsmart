@@ -67,7 +67,7 @@ export default function LearnPage() {
             >
               <Placeholder ratio="16x9" className="!rounded-none" />
               <div className="p-5">
-                <p className="mb-1.5 text-[0.78rem] font-bold uppercase tracking-[0.06em] text-fo-green-600">
+                <p className="mb-1.5 text-[0.78rem] font-bold uppercase tracking-[0.06em] text-fo-accent">
                   {article.meta}
                 </p>
                 <h2 className="mb-1.5 text-[1.15rem]">{article.title}</h2>

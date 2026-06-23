@@ -24,6 +24,10 @@
 
   --fo-line: #e6e3d6;
   --fo-muted: #5d6b60;
+  /* Accessible accent for small text on white/cream (passes WCAG AA 4.5:1).
+     Use this for eyebrows/labels instead of fo-green-600, which is reserved
+     for large headings, borders and decorative fills. */
+  --fo-accent: #2c6a3a;
 }
 
 @layer base {
@@ -84,7 +88,8 @@
     @apply overflow-hidden rounded-card border border-fo-line bg-white;
   }
   .fo-eyebrow {
-    @apply mb-3 text-[0.8rem] font-bold uppercase tracking-[0.08em] text-fo-green-600;
+    @apply mb-3 text-[0.8rem] font-bold uppercase tracking-[0.08em];
+    color: var(--fo-accent);
   }
   /* Legal / policy prose */
   .fo-legal-body h2 {

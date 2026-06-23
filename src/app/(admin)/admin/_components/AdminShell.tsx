@@ -28,10 +28,12 @@ export function AdminTopbar({
 }
 
 export function AdminContent({ children }: { children: ReactNode }) {
+  // Not a <main id="main"> — the root layout already provides that landmark.
+  // Avoids duplicate ids / nested <main> (invalid HTML, breaks the skip link).
   return (
-    <main id="main" className="px-8 py-8 max-[860px]:px-4">
+    <section aria-label="Admin content" className="px-8 py-8 max-[860px]:px-4">
       {children}
-    </main>
+    </section>
   );
 }
 

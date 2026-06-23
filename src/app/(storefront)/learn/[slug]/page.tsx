@@ -62,7 +62,7 @@ export default function ArticleDetailPage({ params }: PageProps) {
 
       {/* AEO answer block */}
       <div className="mx-auto mt-8 max-w-editorial rounded-card border border-fo-line border-l-4 border-l-fo-green-600 bg-white p-6 shadow-soft">
-        <span className="mb-2 block text-[0.78rem] font-bold uppercase tracking-[0.06em] text-fo-green-600">
+        <span className="mb-2 block text-[0.78rem] font-bold uppercase tracking-[0.06em] text-fo-accent">
           In short
         </span>
         <p className="m-0 text-[1.05rem]">

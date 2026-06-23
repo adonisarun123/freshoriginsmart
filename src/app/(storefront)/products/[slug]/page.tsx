@@ -4,13 +4,11 @@ import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Disclaimer } from "@/components/content/Disclaimer";
 import { Accordion } from "@/components/content/Accordion";
 import { Placeholder } from "@/components/ui/Placeholder";
-import { AddToCartButton } from "@/components/commerce/AddToCartButton";
-import { WhatsAppButton } from "@/components/commerce/WhatsAppButton";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { productJsonLd, breadcrumbJsonLd } from "@/lib/seo/jsonld";
-import { formatINR, discountPercent } from "@/lib/commerce/format";
 import { productBadges } from "@/lib/commerce/badges";
 import { getProductDetail, getProductSlugs } from "@/features/catalogue/queries";
+import { ProductBuyBox } from "@/features/catalogue/ProductBuyBox";
 import type { ProductContent } from "@/types/database";
 
 type PageProps = { params: { slug: string } };
@@ -57,10 +55,6 @@ export default async function ProductPage({ params }: PageProps) {
   const badges = productBadges(product);
   const variants = product.product_variants ?? [];
   const primary = variants[0];
-  const hasDiscount = primary && primary.selling_price_paise < primary.mrp_paise;
-  const savePercent = primary
-    ? discountPercent(primary.mrp_paise, primary.selling_price_paise)
-    : 0;
 
   const ingredients = product.product_ingredients ?? [];
   const nutrition = product.nutrition_facts?.[0] ?? null;
@@ -140,59 +134,9 @@ export default async function ProductPage({ params }: PageProps) {
             </div>
           )}
 
-          {primary && (
-            <div className="mb-6 flex items-baseline gap-2.5">
-              <span className="text-[1.8rem] font-bold tabular-nums text-fo-green-900">
-                {formatINR(primary.selling_price_paise)}
-              </span>
-              {hasDiscount && (
-                <>
-                  <span className="text-[1rem] tabular-nums text-fo-muted line-through">
-                    {formatINR(primary.mrp_paise)}
-                  </span>
-                  <span className="rounded-pill bg-[#e9f5ee] px-2.5 py-1 text-[0.8rem] font-bold text-fo-success">
-                    Save {savePercent}%
-                  </span>
-                </>
-              )}
-            </div>
-          )}
-
           {variants.length > 0 && (
-            <>
-              <span className="mb-2 block text-[0.8rem] font-bold uppercase tracking-[0.05em] text-fo-muted">
-                Pack size
-              </span>
-              <div className="mb-6 flex flex-wrap gap-2.5">
-                {variants.map((v, i) => (
-                  <span
-                    key={v.id}
-                    className={`rounded-control border-[1.5px] px-4 py-2.5 text-[0.9rem] font-semibold ${
-                      i === 0
-                        ? "border-fo-green-900 bg-fo-sage-100"
-                        : "border-fo-line bg-white"
-                    }`}
-                  >
-                    {v.title} · {formatINR(v.selling_price_paise)}
-                  </span>
-                ))}
-              </div>
-            </>
+            <ProductBuyBox productName={product.name} variants={variants} />
           )}
-
-          <p className="mb-6 flex items-center gap-2 text-[0.9rem] font-semibold text-fo-success">
-            <span className="inline-block h-2 w-2 rounded-full bg-fo-success" />
-            In stock — typically delivered in 2–3 days
-          </p>
-
-          {primary && (
-            <div className="mb-3 flex gap-2.5">
-              <AddToCartButton variantId={primary.id} />
-            </div>
-          )}
-          <div className="mb-6">
-            <WhatsAppButton />
-          </div>
 
           {/* Validated front-of-pack claims */}
           {content.fopClaims && content.fopClaims.length > 0 && (

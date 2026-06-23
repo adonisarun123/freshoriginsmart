@@ -55,6 +55,7 @@ export function CartContactCapture() {
       <div className="grid gap-3 sm:grid-cols-2">
         <input
           name="name"
+          aria-label="Your name (optional)"
           placeholder="Name (optional)"
           className="rounded-control border-[1.5px] border-fo-line px-3 py-2.5 text-[0.9rem]"
         />
@@ -62,6 +63,7 @@ export function CartContactCapture() {
           name="email"
           type="email"
           required
+          aria-label="Your email"
           placeholder="you@email.com"
           className="rounded-control border-[1.5px] border-fo-line px-3 py-2.5 text-[0.9rem]"
         />
@@ -81,7 +83,7 @@ export function CartContactCapture() {
       <button
         type="submit"
         disabled={status === "saving"}
-        className="fo-btn-secondary btn-sm mt-3"
+        className="fo-btn-secondary mt-3 min-h-[40px] px-4 py-2.5 text-[0.85rem]"
       >
         {status === "saving" ? "Saving…" : "Save my cart"}
       </button>
