@@ -490,7 +490,7 @@ export default async function HomePage() {
               href={tile.href}
               className="relative flex min-h-[280px] items-end overflow-hidden rounded-hero text-white"
             >
-              <Placeholder className="absolute inset-0 !rounded-none" />
+              <Placeholder fill className="absolute inset-0 !rounded-none" />
               <div className="absolute inset-0 bg-gradient-to-t from-fo-charcoal-900/75 to-transparent" />
               <div className="relative z-10 p-6">
                 <h3 className="mb-1 text-white">{tile.name}</h3>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Manrope } from "next/font/google";
+import { Bricolage_Grotesque, Manrope } from "next/font/google";
 import "./globals.css";
 import { site } from "@/config/site";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
@@ -7,7 +7,10 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 
-const fraunces = Fraunces({
+// Heading font: Bricolage Grotesque (modern, warm, characterful). Kept under the
+// existing --font-fraunces variable name so all `font-display` usages map to it
+// without touching every file.
+const fraunces = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-fraunces",
   display: "swap",
