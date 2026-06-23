@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Section, SectionHead } from "@/components/content/Section";
 import {
   Illustration,
@@ -256,11 +257,16 @@ export default async function HomePage() {
               </Link>
             </div>
           </div>
-          <Illustration
-            name="hero"
-            className="aspect-[4/3] rounded-hero"
-            title="Fresh Origins millets, pulses and a ready-to-cook pack"
-          />
+          <div className="relative aspect-[4/3] overflow-hidden rounded-hero bg-fo-cream-50">
+            <Image
+              src="https://ik.imagekit.io/freshoriginsmart/web%20images/hero-image-fresh-origins.png"
+              alt="Fresh Origins millets, pulses and a ready-to-cook pack"
+              fill
+              priority
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 
