@@ -87,6 +87,6 @@ jobs:
           echo "No tracked .env files (only .env.example, which is fine)."
 
       - name: Secret scan (gitleaks)
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
