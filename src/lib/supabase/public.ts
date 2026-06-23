@@ -16,3 +16,16 @@ export function createPublicClient() {
     { auth: { persistSession: false, autoRefreshToken: false } },
   );
 }
+
+/**
+ * True when public Supabase env vars are present. Lets build-time code paths
+ * (generateStaticParams, sitemap) skip DB calls gracefully when the project
+ * hasn't been wired to Supabase yet, instead of throwing "supabaseUrl is
+ * required" and failing the whole build.
+ */
+export function hasSupabaseEnv(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
+}

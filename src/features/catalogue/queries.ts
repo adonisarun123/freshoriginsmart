@@ -1,12 +1,14 @@
-import { createPublicClient as createClient } from "@/lib/supabase/public";
+import {
+  createPublicClient as createClient,
+  hasSupabaseEnv,
+} from "@/lib/supabase/public";
 import type {
   Category,
   HealthGoal,
   ProductWithVariants,
 } from "@/types/database";
 
-const PRODUCT_SELECT =
-  "*, product_variants(*)";
+const PRODUCT_SELECT = "*, product_variants(*)";
 
 function sortVariants(p: ProductWithVariants): ProductWithVariants {
   p.product_variants = (p.product_variants ?? [])
@@ -15,7 +17,10 @@ function sortVariants(p: ProductWithVariants): ProductWithVariants {
   return p;
 }
 
-export async function getFeaturedProducts(limit = 4): Promise<ProductWithVariants[]> {
+export async function getFeaturedProducts(
+  limit = 4,
+): Promise<ProductWithVariants[]> {
+  if (!hasSupabaseEnv()) return [];
   const supabase = createClient();
   const { data } = await supabase
     .from("products")
@@ -27,6 +32,7 @@ export async function getFeaturedProducts(limit = 4): Promise<ProductWithVariant
 }
 
 export async function getAllProducts(): Promise<ProductWithVariants[]> {
+  if (!hasSupabaseEnv()) return [];
   const supabase = createClient();
   const { data } = await supabase
     .from("products")
@@ -39,6 +45,7 @@ export async function getAllProducts(): Promise<ProductWithVariants[]> {
 export async function getProductsByCategory(
   categorySlug: string,
 ): Promise<ProductWithVariants[]> {
+  if (!hasSupabaseEnv()) return [];
   const supabase = createClient();
   const { data: cat } = await supabase
     .from("categories")
@@ -61,6 +68,7 @@ export async function getProductsByCategory(
 export async function getProductBySlug(
   slug: string,
 ): Promise<ProductWithVariants | null> {
+  if (!hasSupabaseEnv()) return null;
   const supabase = createClient();
   const { data } = await supabase
     .from("products")
@@ -72,6 +80,7 @@ export async function getProductBySlug(
 }
 
 export async function getProductSlugs(): Promise<string[]> {
+  if (!hasSupabaseEnv()) return [];
   const supabase = createClient();
   const { data } = await supabase
     .from("products")
@@ -81,6 +90,7 @@ export async function getProductSlugs(): Promise<string[]> {
 }
 
 export async function getCategories(): Promise<Category[]> {
+  if (!hasSupabaseEnv()) return [];
   const supabase = createClient();
   const { data } = await supabase
     .from("categories")
@@ -91,6 +101,7 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 export async function getHealthGoals(): Promise<HealthGoal[]> {
+  if (!hasSupabaseEnv()) return [];
   const supabase = createClient();
   const { data } = await supabase
     .from("health_goals")
@@ -103,6 +114,7 @@ export async function getHealthGoals(): Promise<HealthGoal[]> {
 export async function getHealthGoalBySlug(
   slug: string,
 ): Promise<HealthGoal | null> {
+  if (!hasSupabaseEnv()) return null;
   const supabase = createClient();
   const { data } = await supabase
     .from("health_goals")
@@ -115,6 +127,7 @@ export async function getHealthGoalBySlug(
 export async function getProductsForHealthGoal(
   healthGoalId: string,
 ): Promise<ProductWithVariants[]> {
+  if (!hasSupabaseEnv()) return [];
   const supabase = createClient();
   const { data } = await supabase
     .from("product_health_goals")
