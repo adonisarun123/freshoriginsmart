@@ -502,17 +502,18 @@ export default async function HomePage() {
             <Link
               key={tile.name}
               href={tile.href}
-              className="relative flex min-h-[280px] items-end overflow-hidden rounded-hero text-white"
+              className="group flex flex-col overflow-hidden rounded-hero border border-fo-line bg-white transition hover:shadow-card"
             >
               <Illustration
                 name={tile.illu}
-                className="absolute inset-0"
+                className="aspect-[4/3] w-full"
                 title={tile.name}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-fo-charcoal-900/75 to-transparent" />
-              <div className="relative z-10 p-6">
-                <h3 className="mb-1 text-white">{tile.name}</h3>
-                <p className="text-[0.9rem] text-[#e7f0e9]">{tile.desc}</p>
+              <div className="p-6">
+                <h3 className="mb-1 text-fo-green-900 group-hover:text-fo-green-600">
+                  {tile.name}
+                </h3>
+                <p className="text-[0.9rem] text-fo-muted">{tile.desc}</p>
               </div>
             </Link>
           ))}
