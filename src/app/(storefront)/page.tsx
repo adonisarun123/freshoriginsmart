@@ -54,7 +54,7 @@ const benefits = [
   {
     icon: "clipboard",
     title: "Transparent nutrition & allergens",
-    body: "Clear ingredients, percentages and allergen information — nothing hidden.",
+    body: "Clear ingredient lists and allergen information — nothing hidden.",
   },
   {
     icon: "map-pin",

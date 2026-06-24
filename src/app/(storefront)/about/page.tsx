@@ -34,7 +34,7 @@ const principles = [
 ];
 
 const willClaim = [
-  "List every ingredient and key percentages",
+  "List every ingredient in descending order of quantity",
   "Show region of origin and packing date where available",
   "Use nutrition claims only after lab validation",
   "Have health content reviewed by qualified experts",

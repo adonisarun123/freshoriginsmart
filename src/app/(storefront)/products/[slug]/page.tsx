@@ -199,32 +199,14 @@ export default async function ProductPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* Ingredient composition (full transparency) */}
+      {/* Ingredients (listed in descending order of quantity) */}
       {ingredients.length > 0 && (
         <section className="border-t border-fo-line py-12">
           <h2 className="text-[1.6rem]">What&apos;s inside</h2>
           <p className="mb-5 max-w-editorial text-fo-muted">
-            Every ingredient, with its role and approximate percentage. No maida.
+            Every ingredient and its role, listed in descending order of
+            quantity. No maida.
           </p>
-          {/* Composition bar */}
-          <div className="mb-6 flex h-10 max-w-editorial overflow-hidden rounded-pill">
-            {ingredients.map((ing, i) => (
-              <span
-                key={i}
-                className="grid place-items-center text-[0.7rem] font-bold text-white"
-                style={{
-                  width: `${ing.percentage ?? 0}%`,
-                  background: RAMP[i % RAMP.length],
-                }}
-                title={`${ing.ingredients?.common_name ?? ""} — ${ing.percentage}%`}
-              >
-                {(ing.percentage ?? 0) >= 12
-                  ? `${ing.percentage}%`
-                  : ""}
-              </span>
-            ))}
-          </div>
-          {/* Legend with roles */}
           <ul className="grid max-w-editorial gap-3 sm:grid-cols-2">
             {ingredients.map((ing, i) => (
               <li key={i} className="flex items-start gap-3">
@@ -235,7 +217,6 @@ export default async function ProductPage({ params }: PageProps) {
                 <span className="text-[0.9rem]">
                   <strong className="text-fo-charcoal-900">
                     {ing.ingredients?.common_name}
-                    {ing.percentage != null ? ` — ${ing.percentage}%` : ""}
                   </strong>
                   {ing.display_name_override && (
                     <span className="block text-fo-muted">

@@ -1,0 +1,16 @@
+-- 0011 — DEPRECATED / DO NOT RUN.
+--
+-- This migration was written for a hypothesis that did NOT match the live
+-- database. It assumed duplicate ingredient ROWS caused by a missing unique
+-- constraint on ingredients.common_name. The live DB was actually seeded by a
+-- different script: ingredients have fixed/mixed UUIDs and product_ingredients
+-- has a composite primary key (product_id, ingredient_id), so this migration's
+-- min(uuid) dedup and constraint logic both fail against it.
+--
+-- The real issue was just two products (Khichdi, Adai) carrying a few
+-- duplicate-NAME ingredient links that pushed their composition over 100%.
+-- That was fixed directly with targeted DELETEs against the specific
+-- ingredient_id rows (see the conversation / DB history) — no schema change.
+--
+-- Intentionally left as a no-op so nobody re-runs the broken logic.
+select 1;

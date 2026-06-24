@@ -1499,3 +1499,4 @@ update products set image_url = 'https://ik.imagekit.io/freshoriginsmart/Product
 
 update products set image_url = 'https://ik.imagekit.io/freshoriginsmart/Products/kanji-mix-fresh-origins.png'
   where slug = 'heritage-gut-fibre-kanji-mix';
+
