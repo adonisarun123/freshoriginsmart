@@ -14,6 +14,7 @@ const config: Config = {
           "green-600": "var(--fo-green-600)",
           "green-500": "var(--fo-green-500)",
           "lime-500": "var(--fo-lime-500)",
+          "lime-300": "var(--fo-lime-300)",
           "sage-100": "var(--fo-sage-100)",
           "cream-50": "var(--fo-cream-50)",
           "earth-700": "var(--fo-earth-700)",

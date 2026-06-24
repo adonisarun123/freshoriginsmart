@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Illustration } from "@/components/brand/Illustration";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { recipeJsonLd } from "@/lib/seo/jsonld";
+import { TrackView } from "@/components/analytics/TrackView";
 
 type PageProps = { params: { slug: string } };
 
@@ -48,9 +51,23 @@ const related = [
 ];
 
 export default function RecipeDetailPage({ params }: PageProps) {
-  void params;
   return (
     <div className="fo-container">
+      <TrackView event="view_recipe" properties={{ slug: params.slug }} />
+      <JsonLd
+        data={recipeJsonLd({
+          name: "Vegetable millet khichdi bowl",
+          slug: params.slug,
+          description:
+            "A comforting one-pot bowl made with Metabolic Balance Khichdi and everyday vegetables — fibre-forward, gentle, and ready in under half an hour.",
+          prepTimeMinutes: 10,
+          cookTimeMinutes: 18,
+          recipeYield: "3 servings",
+          ingredients: ingredients.map((ing) => `${ing.qty} ${ing.name}`),
+          instructions: method,
+          authorName: "Fresh Origins kitchen",
+        })}
+      />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },

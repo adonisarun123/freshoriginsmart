@@ -14,6 +14,7 @@ import { CartLineControls } from "@/features/cart/CartLineControls";
 import { PincodeCheck } from "@/features/cart/PincodeCheck";
 import { WhatsAppOrderForm } from "@/features/cart/WhatsAppOrderForm";
 import { CartContactCapture } from "@/features/cart/CartContactCapture";
+import { TrackView } from "@/components/analytics/TrackView";
 
 // Reads the per-user / guest cart (cookies) — never prerender at build time.
 export const dynamic = "force-dynamic";
@@ -47,9 +48,17 @@ export default async function CartPage() {
         <EmptyCart />
       ) : (
         <>
+          <TrackView
+            event="view_cart"
+            properties={{
+              itemCount: cart.itemCount,
+              subtotalPaise: cart.subtotalPaise,
+            }}
+          />
           <div className="grid items-start gap-8 pb-8 lg:grid-cols-[1fr_380px]">
             {/* Line items */}
             <section aria-label="Cart items">
+              <h2 className="sr-only">Cart items</h2>
               <div className="fo-card">
                 {cart.lines.map((line) => {
                   const off = discountPercent(line.mrpPaise, line.unitPricePaise);
@@ -78,14 +87,14 @@ export default async function CartPage() {
                         )}
                       </Link>
                       <div>
-                        <h4 className="mb-0.5 text-[1rem]">
+                        <h3 className="mb-0.5 text-[1rem]">
                           <Link
                             href={`/products/${line.slug}`}
                             className="hover:text-fo-green-600"
                           >
                             {line.productName}
                           </Link>
-                        </h4>
+                        </h3>
                         <p className="mb-2 text-[0.82rem] text-fo-muted">
                           {line.variantName} · SKU {line.sku}
                         </p>
@@ -129,7 +138,7 @@ export default async function CartPage() {
               aria-label="Order summary"
               className="fo-card sticky top-[90px] p-6"
             >
-              <h3 className="text-[1.3rem]">Order summary</h3>
+              <h2 className="text-[1.3rem]">Order summary</h2>
 
               <div className="mt-4">
                 <PincodeCheck />
@@ -213,7 +222,7 @@ function EmptyCart() {
   return (
     <div className="fo-card my-8 flex flex-col items-center gap-4 p-12 text-center">
       <Illustration name="bowl" title="Fresh Origins" className="h-24 w-24" />
-      <h3 className="text-[1.3rem]">Your cart is empty</h3>
+      <h2 className="text-[1.3rem]">Your cart is empty</h2>
       <p className="max-w-md text-fo-muted">
         Explore our purposeful millet blends, traditional rice, and ready-to-cook
         staples — thoughtfully sourced for healthier everyday living.

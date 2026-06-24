@@ -94,9 +94,14 @@ export function ProductBuyBox({
       <div className="mb-3 flex gap-2.5">
         <AddToCartButton variantId={selected.id} />
       </div>
-      <div className="mb-6">
+      <div className="mb-3">
         <WhatsAppButton />
       </div>
+      <p className="mb-6 text-[0.82rem] leading-relaxed text-fo-muted">
+        Add to cart, then complete your order on WhatsApp — no online payment
+        yet. We confirm availability and the delivery charge before anything is
+        due.
+      </p>
 
       {/* Sticky mobile buy bar */}
       <div className="fixed inset-x-0 bottom-0 z-[90] flex items-center gap-3 border-t border-fo-line bg-white p-3 shadow-[0_-4px_16px_rgba(31,42,34,0.08)] lg:hidden">

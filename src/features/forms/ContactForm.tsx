@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/analytics/track";
 
 const TOPICS = [
   "General question",
@@ -36,6 +37,7 @@ export function ContactForm() {
     });
     if (res.ok) {
       setStatus("sent");
+      track("submit_enquiry", { properties: { enquiryType: "general" } });
       form.reset();
     } else {
       const body = await res.json().catch(() => ({}));

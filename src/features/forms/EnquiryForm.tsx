@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/analytics/track";
 
 type EnquiryType =
   | "retail"
@@ -54,6 +55,7 @@ export function EnquiryForm() {
     });
     if (res.ok) {
       setStatus("sent");
+      track("submit_enquiry", { properties: { enquiryType: type } });
       form.reset();
     } else {
       const body = await res.json().catch(() => ({}));

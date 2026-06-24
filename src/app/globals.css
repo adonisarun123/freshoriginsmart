@@ -10,6 +10,8 @@
   --fo-green-600: #5aac55;
   --fo-green-500: #77b156;
   --fo-lime-500: #94b853;
+  /* Brighter lime for small text on the dark green-900 background (WCAG AA). */
+  --fo-lime-300: #c3df84;
   --fo-sage-100: #d9eacc;
   --fo-cream-50: #f7f5ec;
   --fo-earth-700: #6d4c3d;
@@ -117,4 +119,11 @@
   .fo-skip-link {
     @apply absolute left-[-999px] top-0 z-[200] rounded-br-control bg-fo-green-900 px-4 py-3 text-white focus:left-0;
   }
+}
+
+/* Indeterminate top route-progress bar (see components/ui/RouteProgress.tsx). */
+@keyframes routebar {
+  0% { transform: translateX(-100%) scaleX(0.4); }
+  50% { transform: translateX(0%) scaleX(0.7); }
+  100% { transform: translateX(100%) scaleX(0.4); }
 }

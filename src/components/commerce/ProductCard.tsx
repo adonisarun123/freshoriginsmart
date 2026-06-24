@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ProductImage } from "@/components/commerce/ProductImage";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { WhatsAppButton } from "@/components/commerce/WhatsAppButton";
@@ -24,12 +25,17 @@ export function ProductCard({ product }: { product: ProductWithVariants }) {
             ))}
           </div>
         )}
-        <Link href={`/products/${product.slug}`}>
+        <TrackedLink
+          href={`/products/${product.slug}`}
+          event="select_item"
+          productId={product.id}
+          properties={{ name: product.name, slug: product.slug }}
+        >
           <ProductImage
             product={product}
             sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw"
           />
-        </Link>
+        </TrackedLink>
       </div>
       <div className="flex flex-1 flex-col p-4 pb-6">
         <h3 className="mb-1 text-[1.05rem] font-semibold">

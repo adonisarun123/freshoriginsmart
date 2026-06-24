@@ -6,6 +6,15 @@ import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { ToastHost } from "@/components/ui/Toast";
+import { RouteProgress } from "@/components/ui/RouteProgress";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { Suspense } from "react";
+import {
+  organizationJsonLd,
+  websiteJsonLd,
+  localBusinessJsonLd,
+} from "@/lib/seo/jsonld";
 
 // Heading font: Bricolage Grotesque (modern, warm, characterful). Kept under the
 // existing --font-fraunces variable name so all `font-display` usages map to it
@@ -50,13 +59,24 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${manrope.variable}`}>
       <body>
+        <JsonLd
+          data={[
+            organizationJsonLd(),
+            websiteJsonLd(),
+            localBusinessJsonLd(),
+          ]}
+        />
         <a href="#main" className="fo-skip-link">
           Skip to content
         </a>
+        <Suspense fallback={null}>
+          <RouteProgress />
+        </Suspense>
         <AnnouncementBar />
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <ToastHost />
         <GoogleAnalytics />
       </body>
     </html>

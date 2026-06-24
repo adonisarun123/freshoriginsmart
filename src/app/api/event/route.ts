@@ -13,10 +13,13 @@ const ALLOWED = new Set([
   "add_to_cart",
   "remove_from_cart",
   "view_cart",
+  "search",
   "check_serviceability",
   "begin_whatsapp_order",
   "whatsapp_order_created",
+  "purchase",
   "submit_enquiry",
+  "newsletter_signup",
   "view_recipe",
   "click_related_product",
 ]);

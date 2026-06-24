@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section, SectionHead } from "@/components/content/Section";
 import { ProductCard } from "@/components/commerce/ProductCard";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { itemListJsonLd } from "@/lib/seo/jsonld";
+import { TrackView } from "@/components/analytics/TrackView";
 import {
   Illustration,
   type IllustrationName,
@@ -449,6 +452,20 @@ export default async function CategoryPage({ params }: PageProps) {
 
   return (
     <>
+      <TrackView
+        event="view_category"
+        properties={{ category: params.slug, count: products.length }}
+      />
+      {products.length > 0 && (
+        <JsonLd
+          data={itemListJsonLd(
+            products.map((product) => ({
+              name: product.name,
+              url: `/products/${product.slug}`,
+            })),
+          )}
+        />
+      )}
       <div className="fo-container">
         <Breadcrumbs
           items={[

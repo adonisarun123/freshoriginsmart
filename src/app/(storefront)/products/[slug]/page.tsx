@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Disclaimer } from "@/components/content/Disclaimer";
 import { Accordion } from "@/components/content/Accordion";
 import { ProductImage } from "@/components/commerce/ProductImage";
+import { TrackView } from "@/components/analytics/TrackView";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { productJsonLd, breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { productBadges } from "@/lib/commerce/badges";
@@ -64,6 +65,12 @@ export default async function ProductPage({ params }: PageProps) {
 
   return (
     <div className="fo-container">
+      <TrackView
+        event="view_item"
+        productId={product.id}
+        variantId={primary?.id}
+        properties={{ name: product.name, slug: product.slug }}
+      />
       <JsonLd
         data={[
           breadcrumbJsonLd([

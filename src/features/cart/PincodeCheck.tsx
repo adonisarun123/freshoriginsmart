@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { formatINR } from "@/lib/commerce/format";
+import { track } from "@/lib/analytics/track";
 
 interface PincodeResult {
   ok?: boolean;
@@ -43,6 +44,9 @@ export function PincodeCheck() {
       const res = await fetch(`/api/pincode?code=${encodeURIComponent(code.trim())}`);
       const data = (await res.json()) as PincodeResult;
       setResult(data);
+      track("check_serviceability", {
+        properties: { serviceable: data.serviceable ?? false },
+      });
     } catch {
       setError("Could not check this pincode. Please try again.");
     } finally {

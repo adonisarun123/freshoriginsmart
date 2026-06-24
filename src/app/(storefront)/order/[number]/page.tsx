@@ -131,7 +131,7 @@ export default async function OrderSummaryPage({
         <div>
           {/* Status timeline */}
           <section className="fo-card mb-6 p-6">
-            <h3 className="text-[1.2rem]">Order status</h3>
+            <h2 className="text-[1.2rem]">Order status</h2>
             {isCancelled ? (
               <p className="mt-2 text-fo-muted">
                 This order is {statusLabel.toLowerCase()}. If you have any questions,
@@ -177,7 +177,7 @@ export default async function OrderSummaryPage({
 
           {/* Items */}
           <section className="fo-card p-6">
-            <h3 className="text-[1.2rem]">Items</h3>
+            <h2 className="text-[1.2rem]">Items</h2>
             <div className="mt-2">
               {items.map((item, i) => (
                 <div
@@ -190,7 +190,7 @@ export default async function OrderSummaryPage({
                     className="h-16 w-16"
                   />
                   <div>
-                    <h4 className="mb-0.5 text-[0.98rem]">{item.product_name}</h4>
+                    <h3 className="mb-0.5 text-[0.98rem]">{item.product_name}</h3>
                     <div className="text-[0.8rem] text-fo-muted">
                       {[item.variant_name, item.sku ? `SKU ${item.sku}` : null, `Qty ${item.quantity}`]
                         .filter(Boolean)
@@ -212,7 +212,7 @@ export default async function OrderSummaryPage({
         {/* Sidebar */}
         <aside className="space-y-6">
           <section className="fo-card p-6">
-            <h3 className="text-[1.2rem]">Summary</h3>
+            <h2 className="text-[1.2rem]">Summary</h2>
             <div className="mt-2 flex justify-between py-2 text-[0.95rem]">
               <span className="text-fo-muted">Subtotal</span>
               <span className="tabular-nums">{formatINR(order.subtotal_paise)}</span>
@@ -232,7 +232,7 @@ export default async function OrderSummaryPage({
           </section>
 
           <section className="fo-card p-6">
-            <h3 className="text-[1.2rem]">Need help?</h3>
+            <h2 className="text-[1.2rem]">Need help?</h2>
             <p className="mt-1 text-[0.9rem] text-fo-muted">
               Questions about this order? Reach us on WhatsApp.
             </p>

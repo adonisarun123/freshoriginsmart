@@ -73,7 +73,7 @@ export default function SubscriptionsPage() {
           <span className="mb-4 inline-flex items-center gap-2 rounded-pill bg-fo-lime-500 px-3.5 py-1.5 text-[0.78rem] font-bold uppercase tracking-[0.06em] text-fo-green-900">
             Coming soon
           </span>
-          <p className="fo-eyebrow text-fo-lime-500">Subscriptions · Phase 3</p>
+          <p className="fo-eyebrow text-fo-lime-300">Subscriptions · Phase 3</p>
           <h1 className="text-white">
             Your monthly essentials, chosen by meal preference and household size.
           </h1>

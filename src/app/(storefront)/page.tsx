@@ -6,7 +6,9 @@ import {
   type IllustrationName,
 } from "@/components/brand/Illustration";
 import { ProductCard } from "@/components/commerce/ProductCard";
-import { Icon } from "@/components/ui/Icon";
+import { Icon, WhatsAppIcon } from "@/components/ui/Icon";
+import { testimonials, testimonialsAreSample } from "@/config/content";
+import { TrackView } from "@/components/analytics/TrackView";
 import {
   getHealthGoals,
   getFeaturedProducts,
@@ -90,27 +92,6 @@ const focusHighlights = [
   "Whole millet & moong blend — no maida",
   "No added sugar; higher-fibre* staple",
   "Ready in approximately 15–18 minutes",
-] as const;
-
-const sampleTestimonials = [
-  {
-    quote:
-      "Swapping our weeknight rice for the millet khichdi was effortless — the family didn't even notice the change, except it kept us full longer.",
-    name: "Ananya R.",
-    city: "Bangalore",
-  },
-  {
-    quote:
-      "I like that the packs spell out the grains and allergens plainly. It made choosing a higher-fibre staple a simple decision.",
-    name: "Vikram S.",
-    city: "Hosur",
-  },
-  {
-    quote:
-      "Delivery across Bangalore was smooth and the ready-to-cook mixes have become a regular part of our pantry.",
-    name: "Meera K.",
-    city: "Bangalore",
-  },
 ] as const;
 
 const categoryTiles: {
@@ -232,6 +213,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <TrackView event="view_home" />
       {/* 1. HERO */}
       <section className="py-16">
         <div className="fo-container grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
@@ -256,6 +238,20 @@ export default async function HomePage() {
                 Browse by health goal
               </Link>
             </div>
+            <ul className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.85rem] text-fo-muted">
+              <li className="flex items-center gap-1.5">
+                <Icon name="map-pin" size={16} className="text-fo-accent" />
+                Delivering in Bangalore &amp; Hosur
+              </li>
+              <li className="flex items-center gap-1.5">
+                <WhatsAppIcon size={16} className="text-fo-accent" />
+                Order &amp; pay on WhatsApp
+              </li>
+              <li className="flex items-center gap-1.5">
+                <Icon name="leaf" size={16} className="text-fo-accent" />
+                No maida · No added sugar
+              </li>
+            </ul>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-hero bg-fo-cream-50">
             <Image
@@ -466,20 +462,26 @@ export default async function HomePage() {
       {/* 9. SOCIAL PROOF */}
       <Section id="reviews">
         <SectionHead eyebrow="From our community" title="What people are saying">
-          <p className="mt-3 text-[0.85rem] text-fo-muted">
-            Sample testimonials shown during launch — illustrative only, until
-            verified customer reviews are available.
-          </p>
+          {testimonialsAreSample && (
+            <p className="mt-3 text-[0.85rem] text-fo-muted">
+              Sample testimonials shown during launch — illustrative only, until
+              verified customer reviews are available.
+            </p>
+          )}
         </SectionHead>
         <div className="grid gap-6 md:grid-cols-3">
-          {sampleTestimonials.map((t) => (
+          {testimonials.map((t) => (
             <figure
               key={t.name}
               className="flex flex-col rounded-card border border-fo-line bg-white p-6"
             >
               <div
-                className="mb-3 text-[1rem] text-fo-lime-500"
-                aria-label="Five out of five stars (sample rating)"
+                className="mb-3 text-[1rem] text-[#9a6f08]"
+                aria-label={
+                  testimonialsAreSample
+                    ? "Five out of five stars (sample rating)"
+                    : "Five out of five stars"
+                }
               >
                 ★★★★★
               </div>
@@ -553,7 +555,7 @@ export default async function HomePage() {
       {/* 12. B2B STRIP */}
       <Section id="business">
         <div className="rounded-hero bg-fo-green-900 p-12 text-[#eafbef]">
-          <p className="fo-eyebrow text-fo-lime-500">Partner with us</p>
+          <p className="fo-eyebrow text-fo-lime-300">Partner with us</p>
           <h2 className="text-white">For business</h2>
           <p className="max-w-[60ch] text-[#c8ddce]">
             Tailored proof points and a dedicated enquiry path for every partner

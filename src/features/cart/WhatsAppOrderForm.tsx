@@ -54,6 +54,13 @@ export function WhatsAppOrderForm({ cartId }: { cartId: string }) {
         return;
       }
       setResult(json);
+      track("purchase", {
+        properties: {
+          orderNumber: json.publicOrderNumber,
+          valuePaise: json.totalPaise,
+          currency: "INR",
+        },
+      });
     } catch {
       setError("Could not reach the server. Please try again.");
     } finally {

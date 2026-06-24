@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { primaryNav } from "@/config/navigation";
 import { CartButton } from "@/components/commerce/CartButton";
+import { ServiceabilityCheck } from "@/components/commerce/ServiceabilityCheck";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Icon } from "@/components/ui/Icon";
 import { getCart } from "@/features/cart/queries";
@@ -31,6 +32,7 @@ export async function Header() {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-3 lg:ml-0">
+          <ServiceabilityCheck />
           <Link
             href="/account"
             aria-label="Account"

@@ -41,6 +41,72 @@ export function organizationJsonLd(): Record<string, unknown> {
   };
 }
 
+export function websiteJsonLd(): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.name,
+    url: site.url,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${site.url}/shop?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+export function localBusinessJsonLd(): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${site.url}/#localbusiness`,
+    name: site.name,
+    url: site.url,
+    description: site.description,
+    areaServed: site.serviceCities,
+    telephone: site.whatsappNumber ? site.whatsappNumber : undefined,
+  };
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export function faqJsonLd(items: FaqItem[]): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+export interface ItemListEntry {
+  name: string;
+  url: string;
+  position?: number;
+}
+
+export function itemListJsonLd(items: ItemListEntry[]): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: item.position ?? index + 1,
+      url: absoluteUrl(item.url),
+      name: item.name,
+    })),
+  };
+}
+
 export interface ProductJsonLdInput {
   name: string;
   slug: string;

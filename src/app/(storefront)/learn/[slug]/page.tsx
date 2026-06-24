@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Disclaimer } from "@/components/content/Disclaimer";
 import { Illustration } from "@/components/brand/Illustration";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleJsonLd } from "@/lib/seo/jsonld";
 
 type PageProps = { params: { slug: string } };
 
@@ -24,9 +26,18 @@ const related = [
 ];
 
 export default function ArticleDetailPage({ params }: PageProps) {
-  void params;
   return (
     <div className="fo-container">
+      <JsonLd
+        data={articleJsonLd({
+          title: "How to transition from white rice to millets",
+          slug: params.slug,
+          description:
+            "A practical, expert-reviewed guide to gradually introducing millets alongside white rice — cooking ratios, texture, and meal pairings, with sources and a medical disclaimer.",
+          datePublished: "2026-06-12",
+          authorName: "Fresh Origins editorial",
+        })}
+      />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },

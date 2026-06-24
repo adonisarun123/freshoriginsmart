@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { updateCartItem, removeCartItem } from "@/features/cart/actions";
+import { track } from "@/lib/analytics/track";
 
 /**
  * Interactive quantity stepper + remove control for a single cart line.
@@ -29,6 +30,7 @@ export function CartLineControls({
   }
 
   function remove() {
+    track("remove_from_cart", { properties: { itemId, quantity: qty } });
     startTransition(async () => {
       await removeCartItem(itemId);
     });

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/analytics/track";
 
 export function NewsletterForm({ source = "footer" }: { source?: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
@@ -21,6 +22,7 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
     });
     if (res.ok) {
       setStatus("sent");
+      track("newsletter_signup", { properties: { source } });
       form.reset();
     } else {
       const body = await res.json().catch(() => ({}));

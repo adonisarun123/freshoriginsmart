@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { footerColumns, policyLinks } from "@/config/navigation";
 import { site } from "@/config/site";
+import { fssaiLicence } from "@/config/content";
 import { NewsletterForm } from "@/features/forms/NewsletterForm";
 
 export function Footer() {
@@ -27,9 +28,9 @@ export function Footer() {
           </div>
           {footerColumns.map((col) => (
             <div key={col.title}>
-              <h5 className="mb-4 text-[0.95rem] font-bold tracking-[0.02em] text-white">
+              <h2 className="mb-4 text-[0.95rem] font-bold tracking-[0.02em] text-white">
                 {col.title}
-              </h5>
+              </h2>
               {col.links.map((link) => (
                 <Link
                   key={link.label}
@@ -42,10 +43,12 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 flex flex-wrap justify-between gap-4 border-t border-white/15 pt-6 text-[0.8rem] text-[#a9c2b0]">
+        <div className="mt-12 flex flex-wrap justify-between gap-4 border-t border-white/15 pt-6 text-[0.8rem] text-[#bcd2c2]">
           <span>
-            © {new Date().getFullYear()} Fresh Origins. FSSAI licence, legal
-            entity &amp; address to be confirmed before launch.
+            © {new Date().getFullYear()} Fresh Origins.{" "}
+            {fssaiLicence
+              ? `FSSAI Lic. No. ${fssaiLicence}.`
+              : "FSSAI licence, legal entity & address to be confirmed before launch."}
           </span>
           <span className="flex flex-wrap gap-2">
             {policyLinks.map((p, i) => (

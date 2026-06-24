@@ -5,6 +5,9 @@ import { Section, SectionHead } from "@/components/content/Section";
 import { Disclaimer } from "@/components/content/Disclaimer";
 import { Illustration } from "@/components/brand/Illustration";
 import { ProductCard } from "@/components/commerce/ProductCard";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { itemListJsonLd } from "@/lib/seo/jsonld";
+import { TrackView } from "@/components/analytics/TrackView";
 import {
   getHealthGoals,
   getHealthGoalBySlug,
@@ -55,6 +58,21 @@ export default async function HealthGoalPage({ params }: PageProps) {
 
   return (
     <>
+      <TrackView
+        event="select_health_goal"
+        properties={{ goal: params.slug, count: products.length }}
+      />
+      {products.length > 0 && (
+        <JsonLd
+          data={itemListJsonLd(
+            products.map((product) => ({
+              name: product.name,
+              url: `/products/${product.slug}`,
+            })),
+          )}
+        />
+      )}
+
       {/* 1. Hero */}
       <section className="bg-fo-sage-100 py-16">
         <div className="fo-container">

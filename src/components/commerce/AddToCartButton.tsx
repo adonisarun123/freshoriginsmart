@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { addToCart } from "@/features/cart/actions";
 import { track } from "@/lib/analytics/track";
+import { showToast } from "@/components/ui/Toast";
 
 export function AddToCartButton({
   variantId,
@@ -11,6 +13,7 @@ export function AddToCartButton({
   variantId: string;
   small?: boolean;
 }) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [state, setState] = useState<"idle" | "added" | "error">("idle");
 
@@ -20,9 +23,20 @@ export function AddToCartButton({
       if (res?.ok) {
         track("add_to_cart", { variantId });
         setState("added");
+        // Persistent confirmation + a path forward, and refresh the
+        // server-rendered header cart badge without a full reload.
+        showToast({
+          message: "Added to your cart",
+          actionLabel: "View cart →",
+          actionHref: "/cart",
+        });
+        router.refresh();
         setTimeout(() => setState("idle"), 1800);
       } else {
         setState("error");
+        showToast({
+          message: "Couldn't add that to your cart. Please try again.",
+        });
         setTimeout(() => setState("idle"), 3000);
       }
     });

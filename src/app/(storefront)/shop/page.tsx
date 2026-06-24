@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { ProductCard } from "@/components/commerce/ProductCard";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { itemListJsonLd } from "@/lib/seo/jsonld";
 import { getShopProducts } from "@/features/catalogue/queries";
 import type { ShopFilters, ShopSort } from "@/features/catalogue/queries";
+import { TrackView } from "@/components/analytics/TrackView";
 
 export const metadata: Metadata = {
   title: "Shop all products",
@@ -162,6 +165,28 @@ export default async function ShopPage({
 
   return (
     <div className="fo-container">
+      <TrackView
+        event="view_item_list"
+        properties={{
+          list: "shop",
+          count: productCount,
+          category: filters.category ?? null,
+          goal: filters.goal ?? null,
+          diet: filters.diet ?? [],
+          inStock: filters.inStock,
+          sort: filters.sort,
+        }}
+      />
+      {products.length > 0 && (
+        <JsonLd
+          data={itemListJsonLd(
+            products.map((product) => ({
+              name: product.name,
+              url: `/products/${product.slug}`,
+            })),
+          )}
+        />
+      )}
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Shop" }]} />
 
       <header className="py-8 sm:py-10">

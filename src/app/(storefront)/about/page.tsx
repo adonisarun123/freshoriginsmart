@@ -87,7 +87,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="bg-fo-green-900 py-16 text-[#eafbef]">
         <div className="fo-container max-w-[860px]">
-          <p className="fo-eyebrow text-fo-lime-500">About Fresh Origins</p>
+          <p className="fo-eyebrow text-fo-lime-300">About Fresh Origins</p>
           <h1 className="text-white">Healthy tradition made practical.</h1>
           <p className="mb-0 text-[1.1rem] text-[#cfe6d6]">
             Fresh Origins brings thoughtfully selected traditional foods into modern

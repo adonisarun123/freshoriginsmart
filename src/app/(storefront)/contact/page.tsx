@@ -3,6 +3,8 @@ import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section, SectionHead } from "@/components/content/Section";
 import { WhatsAppButton } from "@/components/commerce/WhatsAppButton";
 import { ContactForm } from "@/features/forms/ContactForm";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { faqJsonLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = {
   title: "Contact & FAQ",
@@ -51,6 +53,11 @@ const faqs = [
 export default function ContactPage() {
   return (
     <div className="fo-container">
+      <JsonLd
+        data={faqJsonLd(
+          faqs.map((faq) => ({ question: faq.q, answer: faq.a })),
+        )}
+      />
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
 
       <div className="max-w-[60ch] py-8">
