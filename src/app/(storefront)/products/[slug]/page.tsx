@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Disclaimer } from "@/components/content/Disclaimer";
 import { Accordion } from "@/components/content/Accordion";
 import { ProductImage } from "@/components/commerce/ProductImage";
+import { ProductCard } from "@/components/commerce/ProductCard";
+import { PincodeCheck } from "@/features/cart/PincodeCheck";
 import { TrackView } from "@/components/analytics/TrackView";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { productJsonLd, breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { productBadges } from "@/lib/commerce/badges";
-import { getProductDetail, getProductSlugs } from "@/features/catalogue/queries";
+import {
+  getProductDetail,
+  getProductSlugs,
+  getFeaturedProducts,
+} from "@/features/catalogue/queries";
 import { ProductBuyBox } from "@/features/catalogue/ProductBuyBox";
 import type { ProductContent } from "@/types/database";
 
@@ -48,9 +55,21 @@ const RAMP = [
 const categoryLabel = (t: string) =>
   t === "rice" ? "Traditional Rice" : t === "millet" ? "Millets" : "Ready-to-Cook Mixes";
 
+const categorySlug = (t: string) =>
+  t === "rice"
+    ? "traditional-rice"
+    : t === "millet"
+      ? "millets"
+      : "ready-to-cook-mixes";
+
 export default async function ProductPage({ params }: PageProps) {
   const product = await getProductDetail(params.slug);
   if (!product) notFound();
+
+  // Cross-sell: a few other products from the range (exclude the current one).
+  const related = (await getFeaturedProducts(4))
+    .filter((p) => p.slug !== product.slug)
+    .slice(0, 3);
 
   const content = (product.description ?? {}) as ProductContent;
   const badges = productBadges(product);
@@ -76,6 +95,10 @@ export default async function ProductPage({ params }: PageProps) {
           breadcrumbJsonLd([
             { name: "Home", url: "/" },
             { name: "Shop", url: "/shop" },
+            {
+              name: categoryLabel(product.product_type),
+              url: `/shop/${categorySlug(product.product_type)}`,
+            },
             { name: product.name, url: `/products/${product.slug}` },
           ]),
           ...(primary
@@ -97,6 +120,10 @@ export default async function ProductPage({ params }: PageProps) {
         items={[
           { label: "Home", href: "/" },
           { label: "Shop", href: "/shop" },
+          {
+            label: categoryLabel(product.product_type),
+            href: `/shop/${categorySlug(product.product_type)}`,
+          },
           { label: product.name },
         ]}
       />
@@ -152,14 +179,9 @@ export default async function ProductPage({ params }: PageProps) {
             </div>
           )}
 
-          <div className="mb-6 rounded-card border border-fo-line bg-white p-4">
-            <p className="mb-1 text-[0.9rem] font-bold">
-              Check delivery availability
-            </p>
-            <p className="text-[0.85rem] text-fo-muted">
-              Enter your pincode in the cart to confirm serviceability across
-              Bangalore and Hosur.
-            </p>
+          {/* Real interactive serviceability check (Bangalore & Hosur) */}
+          <div className="mb-6">
+            <PincodeCheck />
           </div>
 
           <p className="flex flex-wrap gap-4 text-[0.85rem] text-fo-muted">
@@ -367,6 +389,26 @@ export default async function ProductPage({ params }: PageProps) {
               body: <p className="m-0">{f.a}</p>,
             }))}
           />
+        </section>
+      )}
+
+      {/* More from the range (cross-sell) */}
+      {related.length > 0 && (
+        <section className="border-t border-fo-line py-12">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+            <h2 className="text-[1.6rem]">More from the range</h2>
+            <Link
+              href="/shop"
+              className="text-[0.9rem] font-bold text-fo-accent underline underline-offset-2 hover:text-fo-green-900"
+            >
+              Shop all products →
+            </Link>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
         </section>
       )}
 
