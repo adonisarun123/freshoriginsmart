@@ -8,6 +8,7 @@ export const primaryNav: NavItem[] = [
   { label: "Learn", href: "/learn" },
   { label: "For Business", href: "/for-business" },
   { label: "About", href: "/about" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 export const footerColumns: { title: string; links: NavItem[] }[] = [
@@ -35,6 +36,7 @@ export const footerColumns: { title: string; links: NavItem[] }[] = [
       { label: "Recipes", href: "/recipes" },
       { label: "Health Education", href: "/learn" },
       { label: "Meet the Experts", href: "/experts" },
+      { label: "FAQ", href: "/faq" },
     ],
   },
   {
@@ -44,6 +46,7 @@ export const footerColumns: { title: string; links: NavItem[] }[] = [
       { label: "Our Sourcing", href: "/our-sourcing" },
       { label: "For Business", href: "/for-business" },
       { label: "Contact", href: "/contact" },
+      { label: "FAQ", href: "/faq" },
     ],
   },
 ];

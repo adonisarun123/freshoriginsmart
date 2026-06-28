@@ -5,13 +5,14 @@ import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { WhatsAppButton } from "@/components/commerce/WhatsAppButton";
 import { formatINR, discountPercent } from "@/lib/commerce/format";
 import { productBadges } from "@/lib/commerce/badges";
-import type { ProductWithVariants } from "@/types/database";
+import type { ProductWithVariants, ProductContent } from "@/types/database";
 
 export function ProductCard({ product }: { product: ProductWithVariants }) {
   const variant = product.product_variants?.[0];
   const badges = productBadges(product);
   const hasDiscount =
     variant && variant.selling_price_paise < variant.mrp_paise;
+  const bestFor = (product.description as ProductContent | null)?.bestFor;
 
   return (
     <article className="flex flex-col overflow-hidden rounded-card border border-fo-line bg-white transition hover:shadow-card">
@@ -41,10 +42,15 @@ export function ProductCard({ product }: { product: ProductWithVariants }) {
         <h3 className="mb-1 text-[1.05rem] font-semibold">
           <Link href={`/products/${product.slug}`}>{product.name}</Link>
         </h3>
-        <p className="mb-3 text-[0.85rem] text-fo-muted">
+        <p className="mb-2 text-[0.85rem] text-fo-muted">
           {product.short_description}
           {variant ? ` · ${variant.title}` : ""}
         </p>
+        {bestFor && (
+          <p className="mb-3 text-[0.8rem] leading-snug text-fo-green-900">
+            <strong className="font-bold">Best for:</strong> {bestFor}
+          </p>
+        )}
         {variant && (
           <p className="mb-4 text-[1.05rem] font-bold text-fo-green-900">
             <span className="tabular-nums">

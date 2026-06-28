@@ -90,6 +90,8 @@ export interface ProductWithVariants extends Product {
 /** Structured PDP content stored in products.description (see migration 0009). */
 export interface ProductContent {
   positioning?: string;
+  /** Short one-line "Best for…" hook shown on the PDP and product cards. */
+  bestFor?: string;
   why?: string;
   benefits?: string[];
   cooking?: { title: string; steps: string[] }[];
