@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity -- Dynamic admin Server Component intentionally computes current time. */
 import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import { formatINR } from "@/lib/commerce/format";
 import { site } from "@/config/site";
