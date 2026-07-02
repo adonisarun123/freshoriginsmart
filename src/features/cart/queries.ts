@@ -41,7 +41,7 @@ const EMPTY: CartView = {
 export async function getCart(): Promise<CartView> {
   if (!hasSupabaseAdminEnv()) return EMPTY;
   const admin = createAdminClient();
-  const ssr = createClient();
+  const ssr = await createClient();
   const {
     data: { user },
   } = await ssr.auth.getUser();
@@ -57,7 +57,7 @@ export async function getCart(): Promise<CartView> {
       .maybeSingle();
     cartId = data?.id ?? null;
   } else {
-    const token = readCartToken();
+    const token = await readCartToken();
     if (!token) return EMPTY;
     const { data } = await admin
       .from("carts")

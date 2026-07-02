@@ -35,7 +35,7 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data } = await supabase
     .from("orders")
     .select("public_order_number")
@@ -51,7 +51,7 @@ export default async function OrderDetailPage({
 }: {
   params: { id: string };
 }) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // RLS ensures the user can only read their own order.
   const { data: order } = await supabase

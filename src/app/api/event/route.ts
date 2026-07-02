@@ -47,7 +47,7 @@ export async function POST(request: Request) {
   }
 
   const admin = createAdminClient();
-  const ssr = createClient();
+  const ssr = await createClient();
   const {
     data: { user },
   } = await ssr.auth.getUser();

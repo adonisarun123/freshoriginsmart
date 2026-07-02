@@ -11,16 +11,17 @@ export function hashToken(raw: string): string {
 }
 
 /** Reads the guest cart token from cookies, if present. */
-export function readCartToken(): string | null {
-  return cookies().get(COOKIE)?.value ?? null;
+export async function readCartToken(): Promise<string | null> {
+  return (await cookies()).get(COOKIE)?.value ?? null;
 }
 
 /** Ensures a guest cart token cookie exists, returning the raw token. */
-export function ensureCartToken(): string {
-  const existing = cookies().get(COOKIE)?.value;
+export async function ensureCartToken(): Promise<string> {
+  const cookieStore = await cookies();
+  const existing = cookieStore.get(COOKIE)?.value;
   if (existing) return existing;
   const raw = randomBytes(24).toString("hex");
-  cookies().set(COOKIE, raw, {
+  cookieStore.set(COOKIE, raw, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",

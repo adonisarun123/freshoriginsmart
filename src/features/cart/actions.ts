@@ -13,7 +13,7 @@ import { cartItemSchema, cartContactSchema } from "@/lib/validation/schemas";
 /** Finds or creates the active cart for the current user/guest. */
 async function resolveCartId(): Promise<string> {
   const admin = createAdminClient();
-  const ssr = createClient();
+  const ssr = await createClient();
   const {
     data: { user },
   } = await ssr.auth.getUser();
@@ -35,7 +35,7 @@ async function resolveCartId(): Promise<string> {
     return created.id;
   }
 
-  const raw = ensureCartToken();
+  const raw = await ensureCartToken();
   const tokenHash = hashToken(raw);
   const { data: existing } = await admin
     .from("carts")
@@ -151,7 +151,7 @@ export async function saveCartContact(input: {
 
   try {
     const admin = createAdminClient();
-    const ssr = createClient();
+    const ssr = await createClient();
     const {
       data: { user },
     } = await ssr.auth.getUser();
@@ -166,7 +166,7 @@ export async function saveCartContact(input: {
         .maybeSingle();
       cartId = data?.id ?? null;
     } else {
-      const token = readCartToken();
+      const token = await readCartToken();
       if (token) {
         const { data } = await admin
           .from("carts")
@@ -200,7 +200,7 @@ export async function saveCartContact(input: {
  *  Best-effort: never throw — a merge failure must not break sign-in. */
 export async function mergeGuestCart(userId: string) {
   try {
-  const raw = readCartToken();
+  const raw = await readCartToken();
   if (!raw) return;
   const admin = createAdminClient();
   const tokenHash = hashToken(raw);

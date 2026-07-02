@@ -31,7 +31,7 @@ export async function createWhatsAppOrder(
     throw new Error("Ordering is temporarily unavailable. Please try again.");
   }
   const admin = createAdminClient();
-  const ssr = createClient();
+  const ssr = await createClient();
   const {
     data: { user },
   } = await ssr.auth.getUser();

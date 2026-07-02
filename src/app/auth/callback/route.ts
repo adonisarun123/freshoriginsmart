@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       ? rawRedirect
       : "/account";
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   let authError: string | null = null;
 

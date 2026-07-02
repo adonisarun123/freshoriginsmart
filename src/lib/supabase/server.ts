@@ -5,8 +5,8 @@ import { cookies } from "next/headers";
  * Server Supabase client for Server Components, Server Actions, and Route
  * Handlers. Reads/writes the auth session via cookies. Constrained by RLS.
  */
-export function createClient() {
-  const cookieStore = cookies();
+export async function createClient() {
+  const cookieStore = await cookies();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
