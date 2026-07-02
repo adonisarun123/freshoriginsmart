@@ -14,7 +14,7 @@ import {
   getProductsForHealthGoal,
 } from "@/features/catalogue/queries";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   const goals = await getHealthGoals();
@@ -24,7 +24,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const goal = await getHealthGoalBySlug(params.slug);
+  const { slug } = await params;
+  const goal = await getHealthGoalBySlug(slug);
   if (!goal) return { title: "Health goal" };
   return {
     title: `Food choices for ${goal.name.toLowerCase()}`,
@@ -50,7 +51,8 @@ const faqs = [
 ];
 
 export default async function HealthGoalPage({ params }: PageProps) {
-  const goal = await getHealthGoalBySlug(params.slug);
+  const { slug } = await params;
+  const goal = await getHealthGoalBySlug(slug);
   if (!goal) notFound();
 
   const products = await getProductsForHealthGoal(goal.id);
@@ -60,7 +62,7 @@ export default async function HealthGoalPage({ params }: PageProps) {
     <>
       <TrackView
         event="select_health_goal"
-        properties={{ goal: params.slug, count: products.length }}
+        properties={{ goal: slug, count: products.length }}
       />
       {products.length > 0 && (
         <JsonLd

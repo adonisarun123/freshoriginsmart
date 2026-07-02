@@ -33,13 +33,14 @@ const SOURCE_LABELS: Record<string, string> = {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
+  const { id } = await params;
   const supabase = await createClient();
   const { data } = await supabase
     .from("orders")
     .select("public_order_number")
-    .eq("id", params.id)
+    .eq("id", id)
     .maybeSingle();
   return {
     title: data ? `Order ${data.public_order_number}` : "Order",
@@ -49,15 +50,16 @@ export async function generateMetadata({
 export default async function OrderDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const supabase = await createClient();
 
   // RLS ensures the user can only read their own order.
   const { data: order } = await supabase
     .from("orders")
     .select("*")
-    .eq("id", params.id)
+    .eq("id", id)
     .maybeSingle<Order>();
 
   if (!order) {

@@ -19,7 +19,7 @@ import {
 import { ProductBuyBox } from "@/features/catalogue/ProductBuyBox";
 import type { ProductContent } from "@/types/database";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   const slugs = await getProductSlugs();
@@ -29,7 +29,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const product = await getProductDetail(params.slug);
+  const { slug } = await params;
+  const product = await getProductDetail(slug);
   if (!product) return { title: "Product not found" };
   return {
     title: product.seo_title ?? product.name,
@@ -63,7 +64,8 @@ const categorySlug = (t: string) =>
       : "ready-to-cook-mixes";
 
 export default async function ProductPage({ params }: PageProps) {
-  const product = await getProductDetail(params.slug);
+  const { slug } = await params;
+  const product = await getProductDetail(slug);
   if (!product) notFound();
 
   // Cross-sell: a few other products from the range (exclude the current one).

@@ -18,14 +18,16 @@ import {
 
 const BRAND_SUFFIX = " | Fresh Origins";
 
-type PageProps = { params: { slug: string } };
+// Next 15+/16: `params` is a Promise and must be awaited.
+type PageProps = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
   return getArticleSlugs().map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const article = getArticleBySlug(params.slug);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const article = getArticleBySlug(slug);
   if (!article) return {};
 
   const withSuffix = article.metaTitle + BRAND_SUFFIX;
@@ -106,8 +108,9 @@ function RelatedCard({ article }: { article: LearnArticle }) {
   );
 }
 
-export default function ArticleDetailPage({ params }: PageProps) {
-  const article = getArticleBySlug(params.slug);
+export default async function ArticleDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const article = getArticleBySlug(slug);
   if (!article) notFound();
 
   const cluster = getCluster(article.cluster);

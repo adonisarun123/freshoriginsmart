@@ -69,10 +69,11 @@ export default async function OrderSummaryPage({
   params,
   searchParams,
 }: {
-  params: { number: string };
-  searchParams: { t?: string };
+  params: Promise<{ number: string }>;
+  searchParams: Promise<{ t?: string }>;
 }) {
-  const token = searchParams.t;
+  const { number } = await params;
+  const { t: token } = await searchParams;
   if (!token) notFound();
   if (!hasSupabaseAdminEnv()) notFound();
 
@@ -82,7 +83,7 @@ export default async function OrderSummaryPage({
     .select(
       "id, public_order_number, public_token_hash, status, subtotal_paise, shipping_paise, total_paise, created_at",
     )
-    .eq("public_order_number", params.number)
+    .eq("public_order_number", number)
     .maybeSingle<OrderRow>();
 
   if (!order) notFound();

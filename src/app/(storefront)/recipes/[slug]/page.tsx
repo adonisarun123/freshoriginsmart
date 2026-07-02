@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { recipeJsonLd } from "@/lib/seo/jsonld";
 import { TrackView } from "@/components/analytics/TrackView";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
   return [{ slug: "vegetable-millet-khichdi-bowl" }];
@@ -50,14 +50,15 @@ const related = [
   { title: "Protein & Fibre goal", meta: "Learn more", href: "/health-goals/protein-and-fibre", label: "Goal" },
 ];
 
-export default function RecipeDetailPage({ params }: PageProps) {
+export default async function RecipeDetailPage({ params }: PageProps) {
+  const { slug } = await params;
   return (
     <div className="fo-container">
-      <TrackView event="view_recipe" properties={{ slug: params.slug }} />
+      <TrackView event="view_recipe" properties={{ slug }} />
       <JsonLd
         data={recipeJsonLd({
           name: "Vegetable millet khichdi bowl",
-          slug: params.slug,
+          slug,
           description:
             "A comforting one-pot bowl made with Metabolic Balance Khichdi and everyday vegetables — fibre-forward, gentle, and ready in under half an hour.",
           prepTimeMinutes: 10,

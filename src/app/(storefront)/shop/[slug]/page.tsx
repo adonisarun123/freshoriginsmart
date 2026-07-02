@@ -17,7 +17,7 @@ import {
 } from "@/features/catalogue/queries";
 import type { Category } from "@/types/database";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 /* -------------------------------------------------------------------------- */
 /*  Per-category content (factual, claim-disciplined — no urgency/scarcity)    */
@@ -348,9 +348,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const category = await resolveCategory(params.slug);
+  const { slug } = await params;
+  const category = await resolveCategory(slug);
   if (!category) return { title: "Category" };
-  const content = categoryContent[params.slug];
+  const content = categoryContent[slug];
   return {
     title: `Shop ${category.name}`,
     description:
@@ -441,20 +442,21 @@ const categoryIllustration: Record<string, IllustrationName> = {
 };
 
 export default async function CategoryPage({ params }: PageProps) {
-  const category = await resolveCategory(params.slug);
+  const { slug } = await params;
+  const category = await resolveCategory(slug);
   if (!category) notFound();
 
-  const products = await getProductsByCategory(params.slug);
-  const content = categoryContent[params.slug];
+  const products = await getProductsByCategory(slug);
+  const content = categoryContent[slug];
 
   const intro = content?.intro ?? category.description ?? undefined;
-  const heroIllu = categoryIllustration[params.slug] ?? "field";
+  const heroIllu = categoryIllustration[slug] ?? "field";
 
   return (
     <>
       <TrackView
         event="view_category"
-        properties={{ category: params.slug, count: products.length }}
+        properties={{ category: slug, count: products.length }}
       />
       {products.length > 0 && (
         <JsonLd

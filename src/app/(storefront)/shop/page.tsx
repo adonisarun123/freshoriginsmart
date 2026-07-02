@@ -70,9 +70,9 @@ const compareRows = [
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
-  const filters = parseFilters(searchParams);
+  const filters = parseFilters(await searchParams);
   const products = await getShopProducts(filters);
   const productCount = products.length;
 

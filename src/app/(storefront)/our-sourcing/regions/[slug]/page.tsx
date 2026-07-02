@@ -5,7 +5,7 @@ import { Section, SectionHead } from "@/components/content/Section";
 import { Disclaimer } from "@/components/content/Disclaimer";
 import { Illustration } from "@/components/brand/Illustration";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
   return [{ slug: "karnataka-drylands" }];
