@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import logoSrc from "../../../public/brand/fresh-origins-logo.png";
 
 /**
  * Fresh Origins logo — transparent PNG, so it sits cleanly on the cream header
@@ -19,8 +18,10 @@ export function Logo({
       className="inline-flex items-center"
     >
       <Image
-        src={logoSrc}
+        src="/brand/fresh-origins-logo.png"
         alt="Fresh Origins"
+        width={170}
+        height={40}
         priority={variant === "default"}
         className="h-10 w-auto"
         sizes="170px"
