@@ -77,6 +77,14 @@ interface ArticleFrontmatter {
   status?: string;
 }
 
+export interface ArticleHeading {
+  /** Anchor id injected into the rendered heading tag. */
+  id: string;
+  /** Plain-text heading label (tags stripped, entities decoded). */
+  text: string;
+  level: 2 | 3;
+}
+
 export interface LearnArticle {
   slug: string;
   title: string;
@@ -104,6 +112,10 @@ export interface LearnArticle {
   ogImage: string;
   /** Rendered, cleaned article HTML (no duplicate H1, no internal notes). */
   bodyHtml: string;
+  /** The leading branded <figure> illustration, extracted for the hero. */
+  heroFigureHtml?: string;
+  /** h2/h3 outline for the table of contents (ids match bodyHtml anchors). */
+  headings: ArticleHeading[];
   readingMinutes: number;
   /** The Article JSON-LD object for this slug, ready for <JsonLd>. */
   schema: Record<string, unknown>;
@@ -207,6 +219,65 @@ function cleanBody(raw: string): string {
   return body;
 }
 
+/** Decode the few HTML entities markdown-it emits inside heading text. */
+function decodeEntities(s: string): string {
+  return s
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+}
+
+/**
+ * Inject anchor ids into rendered <h2>/<h3> tags and collect the outline
+ * for the table of contents.
+ */
+function annotateHeadings(html: string): {
+  html: string;
+  headings: ArticleHeading[];
+} {
+  const headings: ArticleHeading[] = [];
+  const seen = new Map<string, number>();
+  const annotated = html.replace(
+    /<h([23])>([\s\S]*?)<\/h\1>/g,
+    (_match, lvl: string, inner: string) => {
+      const text = decodeEntities(inner.replace(/<[^>]+>/g, "")).trim();
+      let id = slugifyHeading(text) || "section";
+      const n = seen.get(id) ?? 0;
+      seen.set(id, n + 1);
+      if (n > 0) id = `${id}-${n + 1}`;
+      headings.push({ id, text, level: lvl === "2" ? 2 : 3 });
+      return `<h${lvl} id="${id}">${inner}</h${lvl}>`;
+    },
+  );
+  return { html: annotated, headings };
+}
+
+/**
+ * Pull the leading branded <figure> illustration out of the body so the
+ * page can place it in the hero instead of the text column.
+ */
+function extractHeroFigure(html: string): {
+  heroFigureHtml?: string;
+  html: string;
+} {
+  const match = html.match(/^\s*<figure>[\s\S]*?<\/figure>/);
+  if (!match) return { html };
+  return {
+    heroFigureHtml: match[0].trim(),
+    html: html.slice(match[0].length).trimStart(),
+  };
+}
+
 function readingMinutes(raw: string): number {
   const text = raw
     .replace(/<[^>]+>/g, " ") // drop inline HTML/SVG
@@ -226,6 +297,10 @@ function buildArticle(fileContent: string): LearnArticle | null {
 
   const schema = schemaBySlug[slug] ?? {};
   const cleaned = cleanBody(parsed.content);
+  const { heroFigureHtml, html: withoutHero } = extractHeroFigure(
+    md.render(cleaned),
+  );
+  const { html: bodyHtml, headings } = annotateHeadings(withoutHero);
 
   return {
     slug,
@@ -251,7 +326,9 @@ function buildArticle(fileContent: string): LearnArticle | null {
     relatedSlugs: seo.internalLinks?.articles ?? [],
     commerceLinks: seo.internalLinks?.commerce ?? [],
     ogImage: `/og/${slug}.png`,
-    bodyHtml: md.render(cleaned),
+    bodyHtml,
+    heroFigureHtml,
+    headings,
     readingMinutes: readingMinutes(parsed.content),
     schema,
   };

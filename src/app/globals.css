@@ -117,28 +117,58 @@
   }
   /* Editorial article prose (Learn / blog) */
   .fo-article-body {
-    @apply text-[1.02rem] leading-[1.75] text-fo-charcoal-900;
+    @apply text-[1.05rem] leading-[1.8] text-fo-charcoal-900;
+  }
+  /* Lede: give the opening paragraph editorial weight. */
+  .fo-article-body > p:first-child {
+    @apply text-[1.18rem] leading-[1.7];
+    color: #35443a;
+  }
+  .fo-article-body > p:first-child::first-letter {
+    @apply float-left mr-2.5 mt-1 font-display text-[3.4rem] font-bold leading-[0.82] text-fo-green-900;
   }
   .fo-article-body h2 {
-    @apply mt-11 scroll-mt-24 text-[clamp(1.4rem,2.4vw,1.75rem)] leading-tight;
+    @apply mt-14 scroll-mt-28 text-[clamp(1.45rem,2.5vw,1.85rem)] leading-tight;
+  }
+  /* Small brand tick above each section heading for scannable rhythm. */
+  .fo-article-body h2::before {
+    content: "";
+    @apply mb-3.5 block h-[5px] w-11 rounded-pill bg-gradient-to-r from-fo-green-600 to-fo-lime-500;
   }
   .fo-article-body h3 {
-    @apply mt-8 text-[1.15rem] leading-snug;
+    @apply mt-9 scroll-mt-28 text-[1.18rem] leading-snug;
   }
   .fo-article-body p {
     @apply mt-4;
   }
   .fo-article-body ul {
-    @apply my-4 list-disc pl-6;
+    @apply my-5 list-none pl-0;
+  }
+  .fo-article-body ul > li {
+    @apply relative mb-2.5 pl-7;
+  }
+  .fo-article-body ul > li::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 0.6em;
+    width: 8px;
+    height: 8px;
+    border-radius: 2.5px;
+    transform: rotate(45deg);
+    background: var(--fo-green-600);
   }
   .fo-article-body ol {
-    @apply my-4 list-decimal pl-6;
+    @apply my-5 list-decimal pl-6 marker:font-bold marker:text-fo-green-600;
   }
   .fo-article-body li {
     @apply mb-2;
   }
   .fo-article-body li > p {
     @apply mt-0;
+  }
+  .fo-article-body li > strong:first-child {
+    @apply text-fo-green-900;
   }
   .fo-article-body a {
     @apply font-medium text-fo-green-900 underline underline-offset-2 hover:text-fo-green-600;
@@ -147,23 +177,37 @@
     @apply font-bold text-fo-charcoal-900;
   }
   .fo-article-body blockquote {
-    @apply my-6 border-l-4 border-l-fo-green-600 bg-fo-cream-50 py-2 pl-5 pr-4 italic text-fo-muted;
+    @apply my-7 rounded-card border-l-4 border-l-fo-green-600 bg-white px-6 py-4 italic text-fo-muted shadow-soft;
   }
   .fo-article-body blockquote p {
     @apply mt-0;
   }
   .fo-article-body hr {
-    @apply my-8 border-0 border-t border-fo-line;
+    @apply mx-auto my-10 h-[6px] w-24 border-0;
+    background: radial-gradient(circle, var(--fo-green-600) 2.5px, transparent 3px);
+    background-size: 12px 6px;
+    background-repeat: repeat-x;
   }
   .fo-article-body figure {
-    @apply my-8;
+    @apply my-10 overflow-hidden rounded-card border border-fo-line bg-white p-3 shadow-soft;
   }
   .fo-article-body figure svg,
   .fo-article-body figure img {
-    @apply w-full rounded-card border border-fo-line;
+    @apply mx-auto max-h-[380px] w-full rounded-[12px];
   }
   .fo-article-body figcaption {
-    @apply mt-2 text-center text-[0.82rem] italic text-fo-muted;
+    @apply mt-3 pb-1 text-center text-[0.82rem] italic text-fo-muted;
+  }
+  /* Hero figure (extracted from the article body, rendered by the page). */
+  .fo-hero-figure figure {
+    @apply m-0 overflow-hidden rounded-hero border border-fo-line bg-white p-2 shadow-card;
+  }
+  .fo-hero-figure svg,
+  .fo-hero-figure img {
+    @apply h-auto w-full rounded-[20px];
+  }
+  .fo-hero-figure figcaption {
+    @apply px-3 pb-2 pt-2.5 text-center text-[0.8rem] italic text-fo-muted;
   }
   .fo-article-body table {
     @apply my-6 w-full border-collapse overflow-hidden rounded-card border border-fo-line text-[0.9rem];
