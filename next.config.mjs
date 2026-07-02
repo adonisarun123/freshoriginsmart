@@ -22,6 +22,12 @@ const nextConfig = {
         hostname: "ik.imagekit.io",
         pathname: "/freshoriginsmart/**",
       },
+      {
+        // Curated editorial photography for /learn (see features/learn/heroImages.ts)
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/photo-**",
+      },
     ],
   },
   typedRoutes: false,

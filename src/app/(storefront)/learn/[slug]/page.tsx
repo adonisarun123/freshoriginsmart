@@ -8,6 +8,7 @@ import { Disclaimer } from "@/components/content/Disclaimer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { ArticleToc } from "@/features/learn/ArticleToc";
+import { HERO_IMAGES } from "@/features/learn/heroImages";
 import { ReadingProgress } from "@/features/learn/ReadingProgress";
 import {
   getArticleBySlug,
@@ -130,6 +131,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
   const reviewedAt = formatDate(article.reviewedAt);
   const nextReviewAt = formatDate(article.nextReviewAt);
   const tocHeadings = article.headings.filter((h) => h.level === 2);
+  const heroImage = HERO_IMAGES[article.slug];
 
   return (
     <>
@@ -209,11 +211,24 @@ export default async function ArticleDetailPage({ params }: PageProps) {
               </div>
             </div>
 
-            {article.heroFigureHtml && (
-              <div
-                className="fo-hero-figure hidden lg:block"
-                dangerouslySetInnerHTML={{ __html: article.heroFigureHtml }}
-              />
+            {heroImage ? (
+              <div className="relative hidden aspect-[4/3] overflow-hidden rounded-hero border border-fo-line shadow-card lg:block">
+                <Image
+                  src={heroImage.src}
+                  alt={heroImage.alt}
+                  fill
+                  priority
+                  sizes="400px"
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              article.heroFigureHtml && (
+                <div
+                  className="fo-hero-figure hidden lg:block"
+                  dangerouslySetInnerHTML={{ __html: article.heroFigureHtml }}
+                />
+              )
             )}
           </div>
         </div>
@@ -241,12 +256,24 @@ export default async function ArticleDetailPage({ params }: PageProps) {
               </p>
             </div>
 
-            {/* Hero illustration inline on small screens */}
-            {article.heroFigureHtml && (
-              <div
-                className="fo-hero-figure mt-8 lg:hidden"
-                dangerouslySetInnerHTML={{ __html: article.heroFigureHtml }}
-              />
+            {/* Hero image / illustration inline on small screens */}
+            {heroImage ? (
+              <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-card border border-fo-line shadow-soft lg:hidden">
+                <Image
+                  src={heroImage.src}
+                  alt={heroImage.alt}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              article.heroFigureHtml && (
+                <div
+                  className="fo-hero-figure mt-8 lg:hidden"
+                  dangerouslySetInnerHTML={{ __html: article.heroFigureHtml }}
+                />
+              )
             )}
 
             {/* Mobile / tablet table of contents (no JS needed) */}
