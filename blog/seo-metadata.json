@@ -1,0 +1,227 @@
+{
+  "$comment": "Machine-readable SEO metadata + internal-linking map for Fresh Origins /learn articles. metaTitle is brand-suffix-free (append ' | Fresh Origins' in generateMetadata if it fits <=60 chars). canonical = /learn/{slug}. internalLinks.articles are /learn slugs; internalLinks.commerce are full paths.",
+  "brandSuffix": " | Fresh Origins",
+  "articles": [
+    {
+      "slug": "millet-foxtail",
+      "canonical": "/learn/millet-foxtail",
+      "cluster": "millets",
+      "primaryKeyword": "foxtail millet",
+      "secondaryKeywords": ["thinai", "kangni millet", "foxtail millet cooking", "wheat-free grain"],
+      "metaTitle": "Foxtail Millet (Thinai): Taste, Cooking & Uses",
+      "metaDescription": "Foxtail millet (thinai/kangni) is a mild, quick-cooking traditional grain. How it tastes, how to cook it, and how to use it in everyday meals.",
+      "internalLinks": {
+        "articles": ["millet-little", "millet-barnyard", "switching-from-white-rice-to-millets"],
+        "commerce": ["/shop/millets", "/products/metabolic-balance-khichdi", "/products/protein-fibre-adai-mix"]
+      }
+    },
+    {
+      "slug": "millet-barnyard",
+      "canonical": "/learn/millet-barnyard",
+      "cluster": "millets",
+      "primaryKeyword": "barnyard millet",
+      "secondaryKeywords": ["kuthiraivali", "sanwa millet", "samvat", "fast-cooking millet"],
+      "metaTitle": "Barnyard Millet (Kuthiraivali): Cooking & Uses",
+      "metaDescription": "Barnyard millet (sanwa/kuthiraivali) is a fast-cooking, fibre-forward millet. How it tastes, how to cook it soft, and where to use it.",
+      "internalLinks": {
+        "articles": ["millet-foxtail", "millet-little", "switching-from-white-rice-to-millets"],
+        "commerce": ["/shop/millets", "/products/metabolic-balance-khichdi"]
+      }
+    },
+    {
+      "slug": "millet-little",
+      "canonical": "/learn/millet-little",
+      "cluster": "millets",
+      "primaryKeyword": "little millet",
+      "secondaryKeywords": ["samai", "kutki millet", "little millet pongal", "rice alternative"],
+      "metaTitle": "Little Millet (Samai): Taste, Cooking & Uses",
+      "metaDescription": "Little millet (samai/kutki) cooks a lot like rice — soft, mild and versatile. A guide to its taste, cooking method and everyday uses.",
+      "internalLinks": {
+        "articles": ["millet-foxtail", "millet-barnyard", "switching-from-white-rice-to-millets"],
+        "commerce": ["/shop/millets", "/products/metabolic-balance-khichdi", "/products/heritage-gut-fibre-kanji-mix"]
+      }
+    },
+    {
+      "slug": "millet-kodo",
+      "canonical": "/learn/millet-kodo",
+      "cluster": "millets",
+      "primaryKeyword": "kodo millet",
+      "secondaryKeywords": ["varagu", "kodra", "high-fibre millet", "kodo millet kanji"],
+      "metaTitle": "Kodo Millet (Varagu): Taste, Cooking & Uses",
+      "metaDescription": "Kodo millet (varagu/kodra) is a hardy, high-fibre grain with an earthy taste. How to soak, cook and use it in porridges and one-pot meals.",
+      "internalLinks": {
+        "articles": ["millet-little", "millet-proso", "fibre-rich-meal-planning"],
+        "commerce": ["/shop/millets", "/products/protein-fibre-adai-mix", "/products/heritage-gut-fibre-kanji-mix"]
+      }
+    },
+    {
+      "slug": "millet-proso",
+      "canonical": "/learn/millet-proso",
+      "cluster": "millets",
+      "primaryKeyword": "proso millet",
+      "secondaryKeywords": ["panivaragu", "barri millet", "proso millet upma", "protein millet"],
+      "metaTitle": "Proso Millet (Panivaragu): Cooking & Uses",
+      "metaDescription": "Proso millet (panivaragu/barri) is a quick-cooking grain with a protein edge. How it tastes, how to cook it fluffy, and how to use it.",
+      "internalLinks": {
+        "articles": ["millet-foxtail", "millet-kodo", "pairing-grains-and-pulses"],
+        "commerce": ["/shop/millets", "/products/protein-fibre-adai-mix"]
+      }
+    },
+    {
+      "slug": "millet-jowar-sorghum",
+      "canonical": "/learn/millet-jowar-sorghum",
+      "cluster": "millets",
+      "primaryKeyword": "jowar sorghum",
+      "secondaryKeywords": ["jowar roti", "cholam", "bhakri", "jowar flour", "gluten-free flour"],
+      "metaTitle": "Jowar (Sorghum): Flour, Roti & How to Cook It",
+      "metaDescription": "Jowar (sorghum) is the grain behind jowar roti and bhakri. How its gluten-free flour behaves, how to make soft rotis, and how to use it.",
+      "internalLinks": {
+        "articles": ["millet-bajra-pearl", "rice-traditional-red", "switching-from-white-rice-to-millets"],
+        "commerce": ["/shop/millets", "/products/gluten-free-protein-fibre-roti-mix"]
+      }
+    },
+    {
+      "slug": "millet-bajra-pearl",
+      "canonical": "/learn/millet-bajra-pearl",
+      "cluster": "millets",
+      "primaryKeyword": "bajra pearl millet",
+      "secondaryKeywords": ["bajra roti", "kambu", "sajje", "bajra rotla", "pearl millet flour"],
+      "metaTitle": "Bajra (Pearl Millet): Flour, Roti & Cooking",
+      "metaDescription": "Bajra (pearl millet) is the robust grain behind winter bhakri and rotla. How its flour works, how to make soft bajra roti, and how to use it.",
+      "internalLinks": {
+        "articles": ["millet-jowar-sorghum", "fibre-rich-meal-planning"],
+        "commerce": ["/shop/millets", "/products/gluten-free-protein-fibre-roti-mix"]
+      }
+    },
+    {
+      "slug": "rice-traditional-red",
+      "canonical": "/learn/rice-traditional-red",
+      "cluster": "traditional-rice",
+      "primaryKeyword": "traditional red rice",
+      "secondaryKeywords": ["matta rice", "red rice cooking", "unpolished rice", "red rice"],
+      "metaTitle": "Traditional Red Rice: Taste, Cooking & Uses",
+      "metaDescription": "Traditional red rice keeps its reddish bran for a nutty bite and more fibre. Varieties, cooking ratios and how to use red rice every day.",
+      "internalLinks": {
+        "articles": ["rice-black", "rice-brown-heritage", "pairing-grains-and-pulses"],
+        "commerce": ["/shop/traditional-rice", "/products/protein-fibre-adai-mix", "/products/heritage-gut-fibre-kanji-mix"]
+      }
+    },
+    {
+      "slug": "rice-black",
+      "canonical": "/learn/rice-black",
+      "cluster": "traditional-rice",
+      "primaryKeyword": "black rice",
+      "secondaryKeywords": ["chak-hao", "forbidden rice", "purple rice", "black rice kheer"],
+      "metaTitle": "Black Rice: Taste, Cooking & How to Use It",
+      "metaDescription": "Black rice cooks to a striking deep purple with a nutty, chewy bite. Where it comes from, how to soak and cook it, and how to use it.",
+      "internalLinks": {
+        "articles": ["rice-traditional-red", "rice-brown-heritage"],
+        "commerce": ["/shop/traditional-rice", "/products/heritage-gut-fibre-kanji-mix"]
+      }
+    },
+    {
+      "slug": "rice-brown-heritage",
+      "canonical": "/learn/rice-brown-heritage",
+      "cluster": "traditional-rice",
+      "primaryKeyword": "brown rice polishing",
+      "secondaryKeywords": ["unpolished rice", "semi-polished rice", "brown rice vs white", "rice polishing"],
+      "metaTitle": "Brown & Heritage Rice: Polishing, Bran & Bite",
+      "metaDescription": "Brown and lightly polished heritage rice keep more bran than white rice. Understand polishing, cooking, and choosing rice with intent.",
+      "internalLinks": {
+        "articles": ["rice-traditional-red", "rice-black", "switching-from-white-rice-to-millets", "fibre-rich-meal-planning"],
+        "commerce": ["/shop/traditional-rice"]
+      }
+    },
+    {
+      "slug": "metabolic-balance-khichdi",
+      "canonical": "/learn/metabolic-balance-khichdi",
+      "cluster": "blends",
+      "primaryKeyword": "millet khichdi mix",
+      "secondaryKeywords": ["ready-to-cook khichdi", "moong dal khichdi", "one-pot meal", "millet khichdi"],
+      "metaTitle": "Metabolic Balance Khichdi: Millet & Moong Meal",
+      "metaDescription": "Inside our Metabolic Balance Khichdi — three millets and moong dal for an easy, fibre-forward one-pot meal. Ingredients, cooking, serving ideas.",
+      "internalLinks": {
+        "articles": ["millet-barnyard", "millet-foxtail", "millet-little", "switching-from-white-rice-to-millets", "fibre-rich-meal-planning"],
+        "commerce": ["/products/metabolic-balance-khichdi", "/shop/ready-to-cook-mixes", "/health-goals/protein-fibre", "/health-goals/gut-health"]
+      }
+    },
+    {
+      "slug": "protein-fibre-adai-mix",
+      "canonical": "/learn/protein-fibre-adai-mix",
+      "cluster": "blends",
+      "primaryKeyword": "adai mix",
+      "secondaryKeywords": ["millet adai", "adai recipe", "protein pancake", "savoury pancake"],
+      "metaTitle": "Protein & Fibre Adai Mix: Savoury Pancake",
+      "metaDescription": "Inside our Protein & Fibre Adai Mix — millets, pulses, red rice and flax for a hearty adai. Full ingredients, how to make the batter, serving ideas.",
+      "internalLinks": {
+        "articles": ["millet-proso", "millet-foxtail", "millet-kodo", "rice-traditional-red", "pairing-grains-and-pulses"],
+        "commerce": ["/products/protein-fibre-adai-mix", "/shop/ready-to-cook-mixes", "/health-goals/protein-fibre"]
+      }
+    },
+    {
+      "slug": "heritage-gut-fibre-kanji-mix",
+      "canonical": "/learn/heritage-gut-fibre-kanji-mix",
+      "cluster": "blends",
+      "primaryKeyword": "kanji mix",
+      "secondaryKeywords": ["rice porridge", "savoury kanji", "millet kanji", "kanji recipe"],
+      "metaTitle": "Heritage Gut-Fibre Kanji Mix: Grain Porridge",
+      "metaDescription": "Inside our Heritage Gut-Fibre Kanji Mix — red rice, black rice, millets and green gram in a comforting porridge. Ingredients and how to cook it.",
+      "internalLinks": {
+        "articles": ["rice-traditional-red", "rice-black", "millet-kodo", "millet-little", "fibre-rich-meal-planning"],
+        "commerce": ["/products/heritage-gut-fibre-kanji-mix", "/shop/ready-to-cook-mixes", "/health-goals/gut-health", "/health-goals/senior-nutrition"]
+      }
+    },
+    {
+      "slug": "gluten-free-protein-fibre-roti-mix",
+      "canonical": "/learn/gluten-free-protein-fibre-roti-mix",
+      "cluster": "blends",
+      "primaryKeyword": "gluten-free roti mix",
+      "secondaryKeywords": ["millet roti mix", "wheat-free flatbread", "multigrain roti", "gluten-free roti"],
+      "metaTitle": "Gluten-Free Roti Mix: Soft Wheat-Free Rotis",
+      "metaDescription": "Inside our Gluten-Free Protein & Fibre Roti Mix — millets, pulse flours and binders for soft wheat-free rotis. Ingredients and how to make them.",
+      "internalLinks": {
+        "articles": ["millet-jowar-sorghum", "millet-bajra-pearl", "rice-traditional-red"],
+        "commerce": ["/products/gluten-free-protein-fibre-roti-mix", "/shop/ready-to-cook-mixes", "/health-goals/protein-fibre"]
+      }
+    },
+    {
+      "slug": "switching-from-white-rice-to-millets",
+      "canonical": "/learn/switching-from-white-rice-to-millets",
+      "cluster": "how-to",
+      "primaryKeyword": "how to switch to millets",
+      "secondaryKeywords": ["millets for beginners", "millet vs rice", "how to cook millets", "white rice to millets"],
+      "metaTitle": "How to Switch from White Rice to Millets",
+      "metaDescription": "A gentle, practical guide to adding millets to a rice kitchen — where to start, a mixing-ratio ladder, cooking tips, and winning the family over.",
+      "internalLinks": {
+        "articles": ["millet-foxtail", "millet-little", "millet-barnyard", "metabolic-balance-khichdi", "fibre-rich-meal-planning"],
+        "commerce": ["/shop/millets", "/shop/ready-to-cook-mixes"]
+      }
+    },
+    {
+      "slug": "pairing-grains-and-pulses",
+      "canonical": "/learn/pairing-grains-and-pulses",
+      "cluster": "how-to",
+      "primaryKeyword": "grains and pulses",
+      "secondaryKeywords": ["complete protein vegetarian", "dal chawal nutrition", "grain pulse combination"],
+      "metaTitle": "Grains + Pulses: Balanced Vegetarian Meals",
+      "metaDescription": "Why khichdi, dal-chawal and idli pair grains with pulses — how the combination builds a more balanced plant-protein plate, with everyday examples.",
+      "internalLinks": {
+        "articles": ["metabolic-balance-khichdi", "protein-fibre-adai-mix", "fibre-rich-meal-planning"],
+        "commerce": ["/shop/ready-to-cook-mixes", "/shop/millets"]
+      }
+    },
+    {
+      "slug": "fibre-rich-meal-planning",
+      "canonical": "/learn/fibre-rich-meal-planning",
+      "cluster": "how-to",
+      "primaryKeyword": "fibre-rich Indian meals",
+      "secondaryKeywords": ["high fibre Indian diet", "fibre foods India", "soluble insoluble fibre"],
+      "metaTitle": "Fibre-Rich Meal Planning for Indian Kitchens",
+      "metaDescription": "What dietary fibre is and a simple way to build more into everyday Indian meals — with a full-day and 7-day fibre-forward framework.",
+      "internalLinks": {
+        "articles": ["switching-from-white-rice-to-millets", "pairing-grains-and-pulses", "rice-brown-heritage"],
+        "commerce": ["/shop/ready-to-cook-mixes", "/health-goals/gut-health", "/health-goals/protein-fibre"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,680 @@
+{
+  "_usage": "One Article JSON-LD object per /learn article, keyed by slug. Inject inside the page's <head> as <script type=\"application/ld+json\">{...}</script>. OG images are in blog/og/{slug}.png (1200x630); deploy them to /public/og/ so they resolve at https://www.freshoriginsmart.com/og/{slug}.png.",
+  "articles": {
+    "fibre-rich-meal-planning": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Fibre-Rich Meal Planning: A Practical Guide for Indian Kitchens",
+      "description": "What dietary fibre is and a simple way to build more into everyday Indian meals — with a full-day and 7-day fibre-forward framework.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/fibre-rich-meal-planning.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/fibre-rich-meal-planning"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health",
+        "Weight management"
+      ],
+      "isAccessibleForFree": true
+    },
+    "gluten-free-protein-fibre-roti-mix": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Inside the Gluten-Free Protein & Fibre Roti Mix: Wheat-Free, Everyday",
+      "description": "Inside our Gluten-Free Protein & Fibre Roti Mix — millets, pulse flours and binders for soft wheat-free rotis. Ingredients and how to make them.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/gluten-free-protein-fibre-roti-mix.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/gluten-free-protein-fibre-roti-mix"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health",
+        "Weight management"
+      ],
+      "isAccessibleForFree": true
+    },
+    "heritage-gut-fibre-kanji-mix": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Inside the Heritage Gut-Fibre Kanji Mix: A Comforting Grain Porridge",
+      "description": "Inside our Heritage Gut-Fibre Kanji Mix — red rice, black rice, millets and green gram in a comforting porridge. Ingredients and how to cook it.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/heritage-gut-fibre-kanji-mix.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/heritage-gut-fibre-kanji-mix"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Gut health",
+        "Protein and fibre",
+        "Senior nutrition"
+      ],
+      "isAccessibleForFree": true
+    },
+    "metabolic-balance-khichdi": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Inside Metabolic Balance Khichdi: A Millet-and-Moong One-Pot Meal",
+      "description": "Inside our Metabolic Balance Khichdi — three millets and moong dal for an easy, fibre-forward one-pot meal. Ingredients, cooking, serving ideas.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/metabolic-balance-khichdi.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/metabolic-balance-khichdi"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health",
+        "Blood-sugar-conscious eating"
+      ],
+      "isAccessibleForFree": true
+    },
+    "millet-bajra-pearl": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Bajra (Pearl Millet): The Robust, Mineral-Rich Winter Grain",
+      "description": "Bajra (pearl millet) is the robust grain behind winter bhakri and rotla. How its flour works, how to make soft bajra roti, and how to use it.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/millet-bajra-pearl.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/millet-bajra-pearl"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health"
+      ],
+      "isAccessibleForFree": true
+    },
+    "millet-barnyard": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Barnyard Millet: The Fast-Cooking, Fibre-Rich Little Grain",
+      "description": "Barnyard millet (sanwa/kuthiraivali) is a fast-cooking, fibre-forward millet. How it tastes, how to cook it soft, and where to use it.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/millet-barnyard.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/millet-barnyard"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health",
+        "Weight management"
+      ],
+      "isAccessibleForFree": true
+    },
+    "millet-foxtail": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Foxtail Millet: The Everyday Grain Behind Our Millet Blends",
+      "description": "Foxtail millet (thinai/kangni) is a mild, quick-cooking traditional grain. How it tastes, how to cook it, and how to use it in everyday meals.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/millet-foxtail.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/millet-foxtail"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Blood-sugar-conscious eating",
+        "Gut health"
+      ],
+      "isAccessibleForFree": true
+    },
+    "millet-jowar-sorghum": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Jowar (Sorghum): The Flatbread Grain That Anchors Our Roti Mix",
+      "description": "Jowar (sorghum) is the grain behind jowar roti and bhakri. How its gluten-free flour behaves, how to make soft rotis, and how to use it.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/millet-jowar-sorghum.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/millet-jowar-sorghum"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health",
+        "Weight management"
+      ],
+      "isAccessibleForFree": true
+    },
+    "millet-kodo": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Kodo Millet: The High-Fibre Grain for Comforting Meals",
+      "description": "Kodo millet (varagu/kodra) is a hardy, high-fibre grain with an earthy taste. How to soak, cook and use it in porridges and one-pot meals.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/millet-kodo.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/millet-kodo"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Gut health",
+        "Protein and fibre",
+        "Blood-sugar-conscious eating"
+      ],
+      "isAccessibleForFree": true
+    },
+    "millet-little": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Little Millet: Small Grain, Everyday Versatility",
+      "description": "Little millet (samai/kutki) cooks a lot like rice — soft, mild and versatile. A guide to its taste, cooking method and everyday uses.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/millet-little.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/millet-little"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health",
+        "Blood-sugar-conscious eating"
+      ],
+      "isAccessibleForFree": true
+    },
+    "millet-proso": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Proso Millet: A Quick-Cooking Grain with a Protein Edge",
+      "description": "Proso millet (panivaragu/barri) is a quick-cooking grain with a protein edge. How it tastes, how to cook it fluffy, and how to use it.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/millet-proso.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/millet-proso"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Blood-sugar-conscious eating"
+      ],
+      "isAccessibleForFree": true
+    },
+    "pairing-grains-and-pulses": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Grains + Pulses: The Everyday Pairing Behind Balanced Vegetarian Meals",
+      "description": "Why khichdi, dal-chawal and idli pair grains with pulses — how the combination builds a more balanced plant-protein plate, with everyday examples.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/pairing-grains-and-pulses.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/pairing-grains-and-pulses"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health"
+      ],
+      "isAccessibleForFree": true
+    },
+    "protein-fibre-adai-mix": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Inside the Protein & Fibre Adai Mix: A Multi-Grain Savoury Pancake",
+      "description": "Inside our Protein & Fibre Adai Mix — millets, pulses, red rice and flax for a hearty adai. Full ingredients, how to make the batter, serving ideas.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/protein-fibre-adai-mix.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/protein-fibre-adai-mix"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health"
+      ],
+      "isAccessibleForFree": true
+    },
+    "rice-black": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Black Rice: The Heritage Grain with a Deep Purple Hue",
+      "description": "Black rice cooks to a striking deep purple with a nutty, chewy bite. Where it comes from, how to soak and cook it, and how to use it.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/rice-black.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/rice-black"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Gut health",
+        "Protein and fibre"
+      ],
+      "isAccessibleForFree": true
+    },
+    "rice-brown-heritage": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Brown & Heritage Rice: Understanding Polishing, Bran and Bite",
+      "description": "Brown and lightly polished heritage rice keep more bran than white rice. Understand polishing, cooking, and choosing rice with intent.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/rice-brown-heritage.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/rice-brown-heritage"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health",
+        "Blood-sugar-conscious eating"
+      ],
+      "isAccessibleForFree": true
+    },
+    "rice-traditional-red": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Traditional Red Rice: Colour, Character and Everyday Fibre",
+      "description": "Traditional red rice keeps its reddish bran for a nutty bite and more fibre. Varieties, cooking ratios and how to use red rice every day.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/rice-traditional-red.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/rice-traditional-red"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health",
+        "Blood-sugar-conscious eating"
+      ],
+      "isAccessibleForFree": true
+    },
+    "switching-from-white-rice-to-millets": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Switch from White Rice to Millets (Without a Kitchen Revolution)",
+      "description": "A gentle, practical guide to adding millets to a rice kitchen — where to start, a mixing-ratio ladder, cooking tips, and winning the family over.",
+      "image": [
+        "https://www.freshoriginsmart.com/og/switching-from-white-rice-to-millets.png"
+      ],
+      "inLanguage": "en-IN",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.freshoriginsmart.com/learn/switching-from-white-rice-to-millets"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Fresh Origins Editorial",
+        "url": "https://www.freshoriginsmart.com"
+      },
+      "reviewedBy": {
+        "@type": "Person",
+        "name": "Marcus",
+        "jobTitle": "Registered Dietitian"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fresh Origins",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.freshoriginsmart.com/brand/fresh-origins-logo.png"
+        }
+      },
+      "datePublished": "2026-07-01",
+      "dateModified": "2026-07-01",
+      "about": [
+        "Protein and fibre",
+        "Gut health",
+        "Blood-sugar-conscious eating"
+      ],
+      "isAccessibleForFree": true
+    }
+  }
+}

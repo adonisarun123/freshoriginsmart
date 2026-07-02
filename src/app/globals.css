@@ -115,6 +115,69 @@
   .fo-legal-body a {
     @apply text-fo-green-900 underline;
   }
+  /* Editorial article prose (Learn / blog) */
+  .fo-article-body {
+    @apply text-[1.02rem] leading-[1.75] text-fo-charcoal-900;
+  }
+  .fo-article-body h2 {
+    @apply mt-11 scroll-mt-24 text-[clamp(1.4rem,2.4vw,1.75rem)] leading-tight;
+  }
+  .fo-article-body h3 {
+    @apply mt-8 text-[1.15rem] leading-snug;
+  }
+  .fo-article-body p {
+    @apply mt-4;
+  }
+  .fo-article-body ul {
+    @apply my-4 list-disc pl-6;
+  }
+  .fo-article-body ol {
+    @apply my-4 list-decimal pl-6;
+  }
+  .fo-article-body li {
+    @apply mb-2;
+  }
+  .fo-article-body li > p {
+    @apply mt-0;
+  }
+  .fo-article-body a {
+    @apply font-medium text-fo-green-900 underline underline-offset-2 hover:text-fo-green-600;
+  }
+  .fo-article-body strong {
+    @apply font-bold text-fo-charcoal-900;
+  }
+  .fo-article-body blockquote {
+    @apply my-6 border-l-4 border-l-fo-green-600 bg-fo-cream-50 py-2 pl-5 pr-4 italic text-fo-muted;
+  }
+  .fo-article-body blockquote p {
+    @apply mt-0;
+  }
+  .fo-article-body hr {
+    @apply my-8 border-0 border-t border-fo-line;
+  }
+  .fo-article-body figure {
+    @apply my-8;
+  }
+  .fo-article-body figure svg,
+  .fo-article-body figure img {
+    @apply w-full rounded-card border border-fo-line;
+  }
+  .fo-article-body figcaption {
+    @apply mt-2 text-center text-[0.82rem] italic text-fo-muted;
+  }
+  .fo-article-body table {
+    @apply my-6 w-full border-collapse overflow-hidden rounded-card border border-fo-line text-[0.9rem];
+  }
+  .fo-article-body th,
+  .fo-article-body td {
+    @apply border border-fo-line px-3 py-2 text-left align-top;
+  }
+  .fo-article-body th {
+    @apply bg-fo-sage-100 font-bold text-fo-green-900;
+  }
+  .fo-article-body code {
+    @apply rounded bg-fo-sage-100 px-1.5 py-0.5 text-[0.85em] text-fo-green-900;
+  }
   /* Skip link */
   .fo-skip-link {
     @apply absolute left-[-999px] top-0 z-[200] rounded-br-control bg-fo-green-900 px-4 py-3 text-white focus:left-0;

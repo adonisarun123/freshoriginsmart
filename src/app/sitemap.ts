@@ -6,6 +6,7 @@ import {
   getHealthGoals,
   getProductSlugs,
 } from "@/features/catalogue/queries";
+import { getArticleSlugs } from "@/features/learn/content";
 
 /** Build an absolute URL from a path using site.url as the base. */
 function url(path: string): string {
@@ -70,10 +71,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
+  const learnEntries: MetadataRoute.Sitemap = getArticleSlugs().map((slug) => ({
+    url: url(`/learn/${slug}`),
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   return [
     ...staticEntries,
     ...productEntries,
     ...categoryEntries,
     ...healthGoalEntries,
+    ...learnEntries,
   ];
 }
