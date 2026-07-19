@@ -19,6 +19,10 @@ export const footerColumns: { title: string; links: NavItem[] }[] = [
       { label: "Traditional Rice", href: "/shop/traditional-rice" },
       { label: "Ready-to-Cook Mixes", href: "/shop/ready-to-cook-mixes" },
       { label: "Shop All", href: "/shop" },
+      { label: "Millets in Bangalore", href: "/millets-online-bangalore" },
+      { label: "Millets in Hosur", href: "/millets-online-hosur" },
+      { label: "Traditional Rice in Bangalore", href: "/traditional-rice-online-bangalore" },
+      { label: "Gluten-Free Flour in Bangalore", href: "/gluten-free-flour-bangalore" },
     ],
   },
   {
@@ -35,6 +39,8 @@ export const footerColumns: { title: string; links: NavItem[] }[] = [
     links: [
       { label: "Recipes", href: "/recipes" },
       { label: "Health Education", href: "/learn" },
+      { label: "Buying Guides", href: "/guides" },
+      { label: "Grain Comparisons", href: "/compare" },
       { label: "Meet the Experts", href: "/experts" },
       { label: "FAQ", href: "/faq" },
     ],

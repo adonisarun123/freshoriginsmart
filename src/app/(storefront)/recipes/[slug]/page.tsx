@@ -1,97 +1,84 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Illustration } from "@/components/brand/Illustration";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { recipeJsonLd } from "@/lib/seo/jsonld";
+import { breadcrumbJsonLd, recipeJsonLd } from "@/lib/seo/jsonld";
 import { TrackView } from "@/components/analytics/TrackView";
+import { getRecipeBySlug, getRecipeSlugs } from "@/features/recipes/content";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return [{ slug: "vegetable-millet-khichdi-bowl" }];
+  return getRecipeSlugs().map((slug) => ({ slug }));
 }
 
-export const metadata: Metadata = {
-  title: "Vegetable Millet Khichdi Bowl — Recipe",
-  description:
-    "A simple vegetable millet khichdi bowl made with Metabolic Balance Khichdi — ingredients, step-by-step method, nutrition estimate, allergens, and related products.",
-};
-
-const ingredients = [
-  { name: "Metabolic Balance Khichdi mix", qty: "1 cup" },
-  { name: "Water", qty: "3 cups" },
-  { name: "Mixed vegetables (carrot, beans, peas)", qty: "1 cup" },
-  { name: "Ghee or oil", qty: "1 tbsp" },
-  { name: "Cumin seeds", qty: "1 tsp" },
-  { name: "Ginger, grated", qty: "1 tsp" },
-  { name: "Salt", qty: "to taste" },
-];
-
-const method = [
-  "Rinse the khichdi mix until the water runs clear, then drain.",
-  "Heat ghee in a pressure cooker, add cumin and ginger, and let them sizzle.",
-  "Add the chopped vegetables and sauté for 2 minutes.",
-  "Add the rinsed mix, water, and salt. Stir well.",
-  "Pressure cook for 3–4 whistles, or simmer 15–18 minutes until soft.",
-  "Rest 5 minutes, fluff gently, and serve warm with a spoon of ghee or curd.",
-];
-
-const nutrition = [
-  ["Energy", "~260 kcal"],
-  ["Protein", "~9 g"],
-  ["Fibre", "~6 g"],
-  ["Fat", "~6 g"],
-];
-
-const related = [
-  { title: "Metabolic Balance Khichdi", meta: "₹245", href: "/products/metabolic-balance-khichdi", label: "Khichdi" },
-  { title: "Protein & Fibre Adai Mix", meta: "₹220", href: "/shop", label: "Adai" },
-  { title: "Protein & Fibre goal", meta: "Learn more", href: "/health-goals/protein-and-fibre", label: "Goal" },
-];
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const recipe = getRecipeBySlug(slug);
+  if (!recipe) return { title: "Recipe" };
+  return {
+    title: `${recipe.title} — Recipe`,
+    description: recipe.metaDescription,
+    alternates: { canonical: `/recipes/${recipe.slug}` },
+  };
+}
 
 export default async function RecipeDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  const recipe = getRecipeBySlug(slug);
+  if (!recipe) notFound();
+
+  const productHref = `/products/${recipe.productSlug}`;
+
   return (
     <div className="fo-container">
       <TrackView event="view_recipe" properties={{ slug }} />
       <JsonLd
-        data={recipeJsonLd({
-          name: "Vegetable millet khichdi bowl",
-          slug,
-          description:
-            "A comforting one-pot bowl made with Metabolic Balance Khichdi and everyday vegetables — fibre-forward, gentle, and ready in under half an hour.",
-          prepTimeMinutes: 10,
-          cookTimeMinutes: 18,
-          recipeYield: "3 servings",
-          ingredients: ingredients.map((ing) => `${ing.qty} ${ing.name}`),
-          instructions: method,
-          authorName: "Fresh Origins kitchen",
-        })}
+        data={[
+          recipeJsonLd({
+            name: recipe.title,
+            slug: recipe.slug,
+            description: recipe.description,
+            prepTimeMinutes: recipe.prepTimeMinutes,
+            cookTimeMinutes: recipe.cookTimeMinutes,
+            recipeYield: recipe.servings,
+            ingredients: recipe.ingredients.map(
+              (ing) => `${ing.qty} ${ing.name}`,
+            ),
+            instructions: recipe.method,
+            authorName: "Fresh Origins kitchen",
+          }),
+          breadcrumbJsonLd([
+            { name: "Home", url: "/" },
+            { name: "Recipes", url: "/recipes" },
+            { name: recipe.title, url: `/recipes/${recipe.slug}` },
+          ]),
+        ]}
       />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
           { label: "Learn", href: "/learn" },
           { label: "Recipes", href: "/recipes" },
-          { label: "Vegetable Millet Khichdi Bowl" },
+          { label: recipe.title },
         ]}
       />
 
       {/* Hero */}
       <div className="grid items-center gap-12 pt-6 md:grid-cols-2">
         <div>
-          <p className="fo-eyebrow">Recipe · Lunch</p>
-          <h1>Vegetable millet khichdi bowl</h1>
-          <p className="text-fo-muted">
-            A comforting one-pot bowl made with Metabolic Balance Khichdi and everyday
-            vegetables — fibre-forward, gentle, and ready in under half an hour.
-          </p>
+          <p className="fo-eyebrow">{recipe.eyebrow}</p>
+          <h1>{recipe.title}</h1>
+          <p className="text-fo-muted">{recipe.description}</p>
           <div className="my-4 flex flex-wrap gap-6">
             {[
-              ["Prep", "10 min"],
-              ["Cook", "18 min"],
-              ["Serves", "3"],
+              ["Prep", `${recipe.prepTimeMinutes} min`],
+              ["Cook", `${recipe.cookTimeMinutes} min`],
+              ["Makes", recipe.servings],
             ].map(([label, val]) => (
               <div key={label} className="text-[0.9rem]">
                 <span className="block text-[0.78rem] uppercase tracking-[0.05em] text-fo-muted">
@@ -105,21 +92,21 @@ export default async function RecipeDetailPage({ params }: PageProps) {
                 Uses
               </span>
               <Link
-                href="/products/metabolic-balance-khichdi"
+                href={productHref}
                 className="font-bold text-fo-green-900 underline"
               >
-                Khichdi mix
+                {recipe.productLinkLabel}
               </Link>
             </div>
           </div>
-          <Link href="/products/metabolic-balance-khichdi" className="fo-btn-primary">
+          <Link href={productHref} className="fo-btn-primary">
             Shop the product
           </Link>
         </div>
         <Illustration
           name="bowl"
           className="aspect-[4/3] rounded-card"
-          title="Prepared dish — vegetable millet khichdi bowl"
+          title={`Prepared dish — ${recipe.title.toLowerCase()}`}
         />
       </div>
 
@@ -129,7 +116,7 @@ export default async function RecipeDetailPage({ params }: PageProps) {
         <aside className="rounded-card bg-fo-sage-100 p-6 md:sticky md:top-24">
           <h2 className="text-[1.2rem]">Ingredients</h2>
           <ul>
-            {ingredients.map((ing) => (
+            {recipe.ingredients.map((ing) => (
               <li
                 key={ing.name}
                 className="flex justify-between gap-4 border-b border-fo-green-900/15 py-2.5 text-[0.92rem] last:border-none"
@@ -143,11 +130,11 @@ export default async function RecipeDetailPage({ params }: PageProps) {
           </ul>
         </aside>
 
-        {/* Method + nutrition + related */}
+        {/* Method + tips + nutrition + related */}
         <div>
           <h2 className="text-[clamp(1.6rem,3vw,2rem)]">Method</h2>
           <ol className="grid gap-6">
-            {method.map((step, i) => (
+            {recipe.method.map((step, i) => (
               <li key={step} className="flex items-start gap-4">
                 <span className="grid h-9 w-9 flex-none place-items-center rounded-full bg-fo-green-900 font-bold text-white">
                   {i + 1}
@@ -157,15 +144,41 @@ export default async function RecipeDetailPage({ params }: PageProps) {
             ))}
           </ol>
 
-          <h2 className="mt-12 text-[clamp(1.6rem,3vw,2rem)]">Nutrition estimate</h2>
+          {recipe.tips.length > 0 && (
+            <>
+              <h2 className="mt-12 text-[clamp(1.6rem,3vw,2rem)]">
+                Kitchen notes
+              </h2>
+              <ul className="grid gap-2.5 text-[0.95rem]">
+                {recipe.tips.map((tip) => (
+                  <li key={tip} className="flex gap-2.5">
+                    <span
+                      aria-hidden="true"
+                      className="font-bold text-fo-green-600"
+                    >
+                      ✓
+                    </span>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          <h2 className="mt-12 text-[clamp(1.6rem,3vw,2rem)]">
+            Nutrition estimate
+          </h2>
           <div className="rounded-card border border-fo-line bg-white p-6">
             <p className="mt-0 text-[0.85rem] text-fo-muted">
-              Per serving, approximate — varies with vegetables and ghee used.
+              Per serving, approximate — varies with exact ingredients used.
             </p>
             <table className="w-full text-[0.92rem]">
               <tbody>
-                {nutrition.map(([label, val]) => (
-                  <tr key={label} className="border-b border-fo-line last:border-none">
+                {recipe.nutrition.map(([label, val]) => (
+                  <tr
+                    key={label}
+                    className="border-b border-fo-line last:border-none"
+                  >
                     <th scope="row" className="py-2 text-left font-semibold">
                       {label}
                     </th>
@@ -175,21 +188,21 @@ export default async function RecipeDetailPage({ params }: PageProps) {
               </tbody>
             </table>
             <p className="mb-0 text-[0.85rem] text-fo-muted">
-              <strong className="text-fo-charcoal-900">Allergens:</strong> contains
-              pulses; may contain gluten and tree nuts depending on garnish.
+              <strong className="text-fo-charcoal-900">Allergens:</strong>{" "}
+              {recipe.allergens}
             </p>
           </div>
 
           <p className="mt-6 text-[0.85rem] text-fo-muted">
-            Recipe by Fresh Origins kitchen · Reviewed for accuracy by [reviewer name,
-            placeholder].
+            Recipe by Fresh Origins kitchen · Reviewed for accuracy by
+            [reviewer name, placeholder].
           </p>
 
           <h2 className="mt-12 text-[clamp(1.6rem,3vw,2rem)]">
             Products used &amp; related
           </h2>
           <div className="grid gap-4 sm:grid-cols-3">
-            {related.map((item) => (
+            {recipe.related.map((item) => (
               <Link
                 key={item.title}
                 href={item.href}

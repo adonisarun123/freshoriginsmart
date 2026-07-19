@@ -1,0 +1,19 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { LocalLanding } from "@/features/growth/LocalLanding";
+import { getLocalPageBySlug } from "@/features/growth/local-pages";
+
+const page = getLocalPageBySlug("traditional-rice-online-bangalore");
+
+export const metadata: Metadata = page
+  ? {
+      title: page.metaTitle,
+      description: page.metaDescription,
+      alternates: { canonical: `/${page.slug}` },
+    }
+  : {};
+
+export default async function TraditionalRiceOnlineBangalorePage() {
+  if (!page) notFound();
+  return <LocalLanding page={page} />;
+}

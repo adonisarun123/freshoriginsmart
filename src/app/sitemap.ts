@@ -7,6 +7,10 @@ import {
   getProductSlugs,
 } from "@/features/catalogue/queries";
 import { getArticleSlugs } from "@/features/learn/content";
+import { getComparisonSlugs } from "@/features/growth/comparisons";
+import { getGuideSlugs } from "@/features/growth/guides";
+import { getLocalPageSlugs } from "@/features/growth/local-pages";
+import { getRecipeSlugs } from "@/features/recipes/content";
 
 /** Build an absolute URL from a path using site.url as the base. */
 function url(path: string): string {
@@ -27,6 +31,8 @@ const STATIC_PATHS: string[] = [
   "/for-business",
   "/contact",
   "/subscriptions",
+  "/compare",
+  "/guides",
   // Policy pages
   "/privacy",
   "/terms",
@@ -78,11 +84,48 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
+  // Local-intent money pages — highest-priority landers after the homepage.
+  const localEntries: MetadataRoute.Sitemap = getLocalPageSlugs().map(
+    (slug) => ({
+      url: url(`/${slug}`),
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    }),
+  );
+
+  const comparisonEntries: MetadataRoute.Sitemap = getComparisonSlugs().map(
+    (slug) => ({
+      url: url(`/compare/${slug}`),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    }),
+  );
+
+  const guideEntries: MetadataRoute.Sitemap = getGuideSlugs().map((slug) => ({
+    url: url(`/guides/${slug}`),
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const recipeEntries: MetadataRoute.Sitemap = getRecipeSlugs().map((slug) => ({
+    url: url(`/recipes/${slug}`),
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   return [
     ...staticEntries,
+    ...localEntries,
     ...productEntries,
     ...categoryEntries,
     ...healthGoalEntries,
     ...learnEntries,
+    ...comparisonEntries,
+    ...guideEntries,
+    ...recipeEntries,
   ];
 }

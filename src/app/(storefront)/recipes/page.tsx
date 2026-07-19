@@ -3,55 +3,31 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/content/Breadcrumbs";
 import { Section } from "@/components/content/Section";
 import { Illustration } from "@/components/brand/Illustration";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo/jsonld";
+import { recipes } from "@/features/recipes/content";
 
 export const metadata: Metadata = {
   title: "Recipes",
   description:
     "Simple, practical recipes matched to Fresh Origins products — millet khichdi bowls, protein adai, heritage kanji, and more.",
+  alternates: { canonical: "/recipes" },
 };
-
-const recipes = [
-  {
-    title: "Vegetable millet khichdi bowl",
-    meta: "Lunch · 25 min",
-    desc: "A comforting one-pot bowl made with Metabolic Balance Khichdi and everyday vegetables.",
-    href: "/recipes/vegetable-millet-khichdi-bowl",
-  },
-  {
-    title: "Protein adai with chutney",
-    meta: "Breakfast · 20 min",
-    desc: "A savoury multi-grain pancake combining millets and pulses.",
-    href: "/recipes/vegetable-millet-khichdi-bowl",
-  },
-  {
-    title: "Savoury heritage kanji",
-    meta: "Light dinner · 30 min",
-    desc: "A gentle, fibre-forward porridge with red rice, black rice, and millets.",
-    href: "/recipes/vegetable-millet-khichdi-bowl",
-  },
-  {
-    title: "Foxtail millet pongal",
-    meta: "Breakfast · 25 min",
-    desc: "A South Indian breakfast classic with a fibre-forward twist.",
-    href: "/recipes/vegetable-millet-khichdi-bowl",
-  },
-  {
-    title: "Mixed millet rotis",
-    meta: "Lunch / dinner · 30 min",
-    desc: "Soft everyday flatbreads using a five-grain millet flour.",
-    href: "/recipes/vegetable-millet-khichdi-bowl",
-  },
-  {
-    title: "Barnyard millet khichdi",
-    meta: "Dinner · 20 min",
-    desc: "A quick, soft one-pot meal ready in under 20 minutes.",
-    href: "/recipes/vegetable-millet-khichdi-bowl",
-  },
-];
 
 export default function RecipesPage() {
   return (
     <div className="fo-container">
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: "Home", url: "/" },
+            { name: "Recipes", url: "/recipes" },
+          ]),
+          itemListJsonLd(
+            recipes.map((r) => ({ name: r.title, url: `/recipes/${r.slug}` })),
+          ),
+        ]}
+      />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
@@ -64,8 +40,9 @@ export default function RecipesPage() {
         <p className="fo-eyebrow">Cook with us</p>
         <h1 className="mb-3">Recipes matched to products</h1>
         <p className="max-w-[60ch] text-fo-muted">
-          Practical, everyday recipes that put traditional grains to work — each one
-          matched to a Fresh Origins product so you can shop and cook in one go.
+          Practical, everyday recipes that put traditional grains to work — each
+          one matched to a Fresh Origins product so you can shop and cook in one
+          go. More recipes are added as the range grows.
         </p>
       </div>
 
@@ -73,8 +50,8 @@ export default function RecipesPage() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {recipes.map((recipe) => (
             <Link
-              key={recipe.title}
-              href={recipe.href}
+              key={recipe.slug}
+              href={`/recipes/${recipe.slug}`}
               className="overflow-hidden rounded-card border border-fo-line bg-white transition hover:shadow-card"
             >
               <Illustration
@@ -84,9 +61,12 @@ export default function RecipesPage() {
               />
               <div className="p-5">
                 <h2 className="mb-1 text-[1.05rem]">{recipe.title}</h2>
-                <p className="mb-1.5 text-[0.85rem] text-fo-muted">{recipe.desc}</p>
+                <p className="mb-1.5 text-[0.85rem] text-fo-muted">
+                  {recipe.description}
+                </p>
                 <p className="m-0 text-[0.82rem] font-semibold text-fo-accent">
-                  {recipe.meta}
+                  {recipe.occasion} ·{" "}
+                  {recipe.prepTimeMinutes + recipe.cookTimeMinutes} min
                 </p>
               </div>
             </Link>
